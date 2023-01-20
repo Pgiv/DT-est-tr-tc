@@ -131,74 +131,54 @@ rev_table  %>%
 
 ## Série réelle
 
-Les différentes méthodes sont également comparées sur deux exemples issus de la base FRED-MD @fredmd contenant des séries économiques sur les États-Unis^[
+Les différences entre les méthodes sont également illustrée à partir d'un exemple issu de la base FRED-MD (@fredmd) contenant des séries économiques sur les États-Unis^[
 Les séries étudiées correspondent à la base publiée en novembre 2022.
-] :
-
-- autour du point de retournement de février 2001 sur le niveau d'emploi aux États-Unis (série `CE160V`, utilisée en logarithme) ;
-
-- autour du point de retournement de novembre 2007 sur les ventes au détail des États-Unis (série `RETAILx`, utilisée en logarithme).
-
-Ces séries ont une variabilité moyenne^[
+].
+La série étudiée est le niveau d'emploi aux États-Unis (série `CE160V`, utilisée en logarithme) autour du point de retournement de février 2001.
+Cette série a une variabilité moyenne^[
 La variabilité est déterminée en étudiant les séries jusqu'en janvier 2020.
 ] (un filtre symétrique de 13 termes est donc adapté).
-Les figures \@ref(fig:ce16ovlp) à \@ref(fig:retailxautres) montrent les estimations successives de la tendance-cycle avec les différentes méthodes étudiées.
+Les figures \@ref(fig:ce16ovlp) et \@ref(fig:ce16ovautres) montrent les estimations successives de la tendance-cycle avec les différentes méthodes étudiées.
 
+Sur cette série, le déphasage est de 6 mois pour les méthodes RKHS, la méthode LC (sans paramétrisation locale), la méthode CQ et le prolongement par ARIMA de la série. 
+La paramétrisation locale permet de réduire à 3 mois le déphasage mais a peu d'impact lorsque l'on s'éloigne de la date du point de retournement.
+Pour les autres méthodes le déphasage est de 6 mois.
 
-```{r ce16ovlp, echo=FALSE, out.width="90%", fig.cap="Estimations successives de la tendance-cycle des ventes au détail aux États-Unis avec les méthodes polynomiales locales."}
-series <- "CE16OV"
-date <- "fev2001"
-img <- sprintf("img/nber/%s_%s_%s.%s",
-               tolower(series),
-               date,
-               "lp",
-               fig.ext)
-knitr::include_graphics(img)
-```
-
-```{r ce16ovautres, echo=FALSE, out.width="90%", fig.cap="Estimations successives de la tendance-cycle des ventes au détail aux États-Unis avec les RKHS, la méthode FST et en prolongeant la série par modèle ARIMA."}
-img <- sprintf("img/nber/%s_%s_%s.%s",
-               tolower(series),
-               date,
-               "autres",
-               fig.ext)
-knitr::include_graphics(img)
-```
-
-```{r retailxlp, echo=FALSE, out.width="90%", fig.cap="Estimations successives de la tendance-cycle des ventes au détail aux États-Unis avec les méthodes polynomiales locales."}
-series <- "RETAILx"
-date <- "nov2007"
-img <- sprintf("img/nber/%s_%s_%s.%s",
-               tolower(series),
-               date,
-               "lp",
-               fig.ext)
-knitr::include_graphics(img)
-```
-
-```{r retailxautres, echo=FALSE, out.width="90%", fig.cap="Estimations successives de la tendance-cycle des ventes au détail aux États-Unis avec les RKHS, la méthode FST et en prolongeant la série par modèle ARIMA."}
-img <- sprintf("img/nber/%s_%s_%s.%s",
-               tolower(series),
-               date,
-               "autres",
-               fig.ext)
-knitr::include_graphics(img)
-```
-
-
-
-Même si presque toutes les méthodes ont un déphasage d'au plus 3 mois sur ce point de retournement, les estimations intermédiaires différent grandement. 
-Il y a par exemple nettement plus de variabilités dans les estimations en temps réel pour les méthode QL, CQ et DAF et les filtres FST (figures \@ref(fig:retailxlp),  \@ref(fig:retailxfst1) et \@ref(fig:retailxfst2)), avec des estimations intermédiaires qui semblent peu plausibles (notamment pour la première estimation du mois d'avril 2020). Les premières estimations avec le filtre LC ne capte pas la remontée en mai et juin 2020 : cela peut provenir du fait qu'en fin de série, la tendance modélisée est linéaire.
+Les polynomiales CQ et DAF conduisent à plus de variabilité dans les estimations intermédiaires, en particulier en février 2001.
 Concernant les filtres RKHS, les estimations intermédiaires du filtre $b_{q,\varphi}$ semblent très erratiques, ce qui s'explique, encore une fois, par le fait que les moyennes mobiles asymétriques utilisées lorsque l'on se rapproche du cas symétrique sont éloignées de la moyenne mobile symétrique d'Henderson.
-En revanche, les filtres $b_{q,\Gamma}$ et $b_{q,G}$ donnent des estimations intermédiaires proches de l'estimation finale, tout en minimisant le déphasage.
-
-La qualité des estimations intermédiaires peut également être analysée grâces aux prévisions implicites des différentes méthodes. Pour rappel, il s'agit des prévisions de la série brute qui, en appliquant le filtre symétrique de Henderson sur la série prolongée, donne les mêmes estimations que les moyennes mobiles asymétriques. L'annexe \@ref(an-implicitforecasts) rassemble les différentes prévisions implicites des filtres étudiés dans cette section. 
-Les prévisions implicites des filtres polynomiaux autres que LC, des filtres FST et du filtre $b_{q,\varphi}$ sont très peu plausibles et très éloignés des valeurs futures.
-Le contrecoup en mai 2020 suite à la baisse d'avril 2020 ne sont pas prévus par le modèle ARIMA mais le sont par les filtres LC et RKHS, en revanche, les prévisions à l'horizon de 6 mois peuvent être assez éloignées des valeurs attendues.
+Les filtres $b_{q,\Gamma}$ et $b_{q,G}$ conduisent à des estimations intermédiaires relativement constantes (estimations en temps réel proches des estimations lorsque quelques points dans le futur est connu) : ces estimations intermédiaires sont peu cohérentes en période de points de retournement et conduisent, dans ce cas, à un déphasage élevé.
 
 
+```{r ce16ovlp, echo=FALSE, out.width="95%", fig.cap="Estimations successives de la tendance-cycle des ventes au détail aux États-Unis avec les méthodes polynomiales locales."}
+series <- "CE16OV"
+date <- "fev2001"
+img <- sprintf("img/nber/%s_%s_%s.%s",
+               tolower(series),
+               date,
+               "lp",
+               fig.ext)
+knitr::include_graphics(img)
+```
 
-```{r ce16ov-previmp-lp, echo=FALSE, out.width="90%", fig.cap="Prévisions implicites liées aux estimations successives de la tendance-cycle des ventes au détail aux États-Unis avec les méthodes polynomiales locales."}
+```{r ce16ovautres, echo=FALSE, out.width="95%", fig.cap="Estimations successives de la tendance-cycle des ventes au détail aux États-Unis avec les RKHS, la méthode FST et en prolongeant la série par modèle ARIMA."}
+img <- sprintf("img/nber/%s_%s_%s.%s",
+               tolower(series),
+               date,
+               "autres",
+               fig.ext)
+knitr::include_graphics(img)
+```
+
+
+La qualité des estimations intermédiaires peut également être analysée grâces aux prévisions implicites des différentes méthodes (figures \@ref(fig:ce16ov-previmp-lp) et \@ref(fig:ce16ov-previmp-autres). 
+Pour rappel, il s'agit des prévisions de la série brute qui, en appliquant le filtre symétrique de Henderson sur la série prolongée, donne les mêmes estimations que les moyennes mobiles asymétriques. 
+Les prévisions du modèle ARIMA sont naïve et ne prennent pas en compte le point de retournement, contrairement aux autres méthodes.
+Autour du point de retournement, les prévisions implicites de la méthode FST sont peu plausibles, essentiellement du fait de la moyenne mobile utilisée pour l'estimation en temps réel.
+Enfin, la paramétrisation locale du filtre QL permet d'aboutir à des prévisions bien plus cohérentes même si le déphasage n'est pas modifié.
+
+
+
+```{r ce16ov-previmp-lp, echo=FALSE, out.width="95%", fig.cap="Prévisions implicites liées aux estimations successives de la tendance-cycle des ventes au détail aux États-Unis avec les méthodes polynomiales locales."}
 series <- "CE16OV"
 date <- "fev2001"
 img <- sprintf("img/nber/%s_%s_prev_imp_%s.%s",
@@ -209,7 +189,7 @@ img <- sprintf("img/nber/%s_%s_prev_imp_%s.%s",
 knitr::include_graphics(img)
 ```
 
-```{r ce16ov-previmp-autres, echo=FALSE, out.width="90%", fig.cap="Prévisions implicites liées aux estimations successives de la tendance-cycle des ventes au détail aux États-Unis avec les RKHS, la méthode FST et en prolongeant la série par modèle ARIMA."}
+```{r ce16ov-previmp-autres, echo=FALSE, out.width="95%", fig.cap="Prévisions implicites liées aux estimations successives de la tendance-cycle des ventes au détail aux États-Unis avec les RKHS, la méthode FST et en prolongeant la série par modèle ARIMA."}
 img <- sprintf("img/nber/%s_%s_prev_imp_%s.%s",
                tolower(series),
                date,
@@ -217,27 +197,6 @@ img <- sprintf("img/nber/%s_%s_prev_imp_%s.%s",
                fig.ext)
 knitr::include_graphics(img)
 ```
-
-```{r retailx-previmp-lp, echo=FALSE, out.width="90%", fig.cap="Prévisions implicites liées aux estimations successives de la tendance-cycle des ventes au détail aux États-Unis avec les méthodes polynomiales locales."}
-series <- "RETAILx"
-date <- "nov2007"
-img <- sprintf("img/nber/%s_%s_prev_imp_%s.%s",
-               tolower(series),
-               date,
-               "lp",
-               fig.ext)
-knitr::include_graphics(img)
-```
-
-```{r retailx-previmp-autres, echo=FALSE, out.width="90%", fig.cap="Prévisions implicites liées aux estimations successives de la tendance-cycle des ventes au détail aux États-Unis avec les RKHS, la méthode FST et en prolongeant la série par modèle ARIMA."}
-img <- sprintf("img/nber/%s_%s_prev_imp_%s.%s",
-               tolower(series),
-               date,
-               "autres",
-               fig.ext)
-knitr::include_graphics(img)
-```
-
 
 
 
