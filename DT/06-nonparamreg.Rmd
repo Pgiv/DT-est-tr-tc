@@ -355,7 +355,7 @@ img <- sprintf("img/filters_used/mm_penteconcavite.%s", fig.ext)
 knitr::include_graphics(img)
 ```
 
-
+Dans les applications empirique, la paramétrisation locale finale correspond à celle où $delta$ est estimé en utilisant l'ensemble des données (c'est-à-dire en utilisant les filtres symétriques de la figure \@ref(fig:mmpenteconcac)) mais en gardant une estimation en temps réel de $\sigma^2$.
 
 ## Extension avec le critère de *timeliness* {#subsec-lptimeliness}
 
