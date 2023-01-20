@@ -45,5 +45,8 @@ knitr::include_graphics(img)
 ```
 
 
-
+```{r graphsfst, echo=FALSE, out.width="100%", fig.cap="Coefficients, fonctions de gain et de déphasage pour le filtre FST préservant les polynômes de degré 2 avec $\\alpha = 0,00$ (*fidelity*), $\\beta =0,05$ (*smoothness*) et $\\gamma = 0,95$ (*timeliness)*."}
+img <- sprintf("img/filters_used/%s.%s", tolower("fst"), fig.ext)
+knitr::include_graphics(img)
+```
 
