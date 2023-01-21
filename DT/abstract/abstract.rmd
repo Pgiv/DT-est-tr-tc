@@ -80,3 +80,4 @@ All the methods are implemented in the `r fa_r_project` package `rjd3filters` an
 The programs used, and a web version of this report, are available at https://github.com/InseeFrLab/XXXXXXXXX.
 ::::
 
+\newpage
