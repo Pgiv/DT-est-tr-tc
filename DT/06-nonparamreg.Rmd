@@ -345,17 +345,16 @@ $$
 - Le paramètre $\delta$ peut être estimé par moyenne mobile à partir de l'équation  \@ref(eq:mmsym). 
 Par exemple, pour la méthode LC on peut utiliser la moyenne mobile $\theta_2=KX(X'KX)^{-1}e_{2}$ pour avoir un estimation locale de la pente et pour la méthode QL on peut utiliser $\theta_3=KX(X'KX)^{-1}e_{3}$ pour avoir une estimation locale de la concavité. 
 La méthode DAF permet alors de simplement calculer les moyennes mobiles asymétriques associées.  
-Une moyenne mobile de longueur différente de celle utilisée pour l'estimation de la tendance pourrait être envisagée. 
-En utilisant la même méthodologie que dans la section \@ref(sec:sec-comparison), cela semble dégrader les résultats.   
+Même si une moyenne mobile de longueur différente de celle utilisée pour l'estimation de la tendance pourrait être envisagée, cela semble dégrader les résultats en termes de déphasage (en utilisant la même méthodologie que dans la section \@ref(sec-comparison))
 Par ailleurs, pour la construction des moyennes mobiles, utiliser la méthode DAF en modélisant une tendance de degré 2 semble donner des meilleurs résultats qu'en utilisant une tendance de degré 3. 
 La figure \@ref(fig:mmpenteconcac) montre les moyennes mobiles utilisées.
 
-```{r mmpenteconcac, echo=FALSE, out.width="90%", fig.cap="Moyennes mobiles utilisées pour l'estimations de la pente et de la concavité."}
+```{r mmpenteconcac, echo=FALSE, out.width="90%", fig.cap="Moyennes mobiles utilisées pour l'estimation en temps-réel de la pente et de la concavité."}
 img <- sprintf("img/filters_used/mm_penteconcavite.%s", fig.ext)
 knitr::include_graphics(img)
 ```
 
-Dans les applications empirique, la paramétrisation locale finale correspond à celle où $delta$ est estimé en utilisant l'ensemble des données (c'est-à-dire en utilisant les filtres symétriques de la figure \@ref(fig:mmpenteconcac)) mais en gardant une estimation en temps réel de $\sigma^2$.
+Dans les applications empirique, la paramétrisation locale finale correspond à celle où $\delta$ est estimé en utilisant l'ensemble des données (c'est-à-dire en utilisant les filtres symétriques de la figure \@ref(fig:mmpenteconcac)) mais en gardant une estimation en temps réel de $\sigma^2$.
 
 ## Extension avec le critère de *timeliness* {#subsec-lptimeliness}
 
@@ -397,7 +396,7 @@ $$
 $$
 où $\alpha_T$ est le poids associé au critère de *timeliness*. 
 Avec $\alpha_T=0$ on retrouve $\varphi(v)$.
-Cette extension permet donc de retrouver tous les filtres symétriques et asymétriques présentés dans la section précédente mais généralise également l'approche de @GrayThomson1996 présentée dans la section \@ref(subsec-graythomson). Elle est proche de l'approche FRST.
+Cette extension permet donc de retrouver tous les filtres symétriques et asymétriques présentés dans la section précédente mais généralise également l'approche de @GrayThomson1996 présentée dans la section \@ref(subsec-graythomson).
 
 Cette extension s'inscrit dans le cadre de la formule générale définie dans la section \@ref(subsec-formulegen).
 Cela revient en effet à minimiser une somme pondérée de l'erreur quadratique de révision :
@@ -682,31 +681,7 @@ Par cohérence, simplicité, nous utiliserons dans cet article les valeurs optim
 
 
 ```{r optimalbwrkhs, echo = FALSE}
-# data_bw <- rbind(rkhs_optimal_bw(asymmetricCriterion  = "FrequencyResponse",
-#                                  passband = pi,optimal.minBandwidth = 6.01),
-#                  rkhs_optimal_bw(asymmetricCriterion  = "FrequencyResponse",
-#                                  passband = 2*pi/12,optimal.minBandwidth = 6.01),
-#                  rkhs_optimal_bw(asymmetricCriterion  = "Accuracy",
-#                                  passband =pi,optimal.minBandwidth = 6.01),
-#                  rkhs_optimal_bw(asymmetricCriterion  = "Accuracy",
-#                                  passband =2*pi/12,optimal.minBandwidth = 6.01),
-#                  c(6.01, 6.01, 7.12, 8.44, 9.46, 10.39),
-#                  rkhs_optimal_bw(asymmetricCriterion  = "Timeliness",
-#                                  passband = 2*pi/36,optimal.minBandwidth = 6.01),
-#                  rkhs_optimal_bw(asymmetricCriterion  = "Timeliness",
-#                                  passband = 2*pi/12,optimal.minBandwidth = 6.01)
-# )
-# data_bw <- round(data_bw,2)
-# rownames(data_bw) <- c("$\\omega_1 = \\pi$",
-#                        "$\\omega_1 = 2\\pi/12$",
-#                        "$\\omega_1 = \\pi$",
-#                        "$\\omega_1 = 2\\pi/12$",
-#                        "Valeurs de l'article (avec $\\omega_1 = 2\\pi/36$)",
-#                        "$\\omega_1 = 2\\pi/36$",
-#                        "$\\omega_1 = 2\\pi/12$")
-# colnames(data_bw) <- sprintf("$%s$", colnames(data_bw))
-# saveRDS(data_bw, "data/bw_optimal.RDS")
-data_bw <- readRDS("data/bw_optimal.RDS")
+data_bw <- readRDS("data/rkhs_bw_optimal.RDS")
 title = "Fenêtres optimales pour les filtres asymétriques associés à un filtre symétrique de 13 termes ($h=6$) avec le noyau biweight."
 data_bw%>%     
     kable(format.args = list(digits = 3,
