@@ -9,24 +9,23 @@ Elles sont par ailleurs facilement mobilisables et comparables grâce au *packag
 Celui-ci permet d'utiliser plusieurs outils, comme la construction des prévisions implicites, qui peuvent aider les statisticiens à évaluer la qualité des estimations récentes des différents filtres.
 
 La comparaison des différentes méthodes, bien que perfectible, permet de tirer quelques enseignements pour la construction de ces moyennes mobiles.
-Premièrement, en fin de période, chercher à conserver des tendances polynomiales de degré supérieur à un (filtres QL, CQ et DAF et certains filtres FST) semble introduire de la variance dans les estimations (et donc plus de révisions) sans gain significatif en termes de détection de point de retournement. 
-La méthode de désaisonnalisation STL utilisant les filtres DAF en fin de période, elle pourrait facilement être améliorée.
-Il faut en revanche que la longueur du filtre utilisé soit adapté à la variabilité de la série : si le filtre utilisé est trop long (c'est-à-dire si la variabilité de la série est « moyenne »), conserver des tendances polynomiale de degré au plus 1 (méthode LC) produit de moins bons résultats en termes de détection des points de retournement.
+Premièrement, en période de retournement conjoncturel, des filtres asymétriques utilisées comme alternative au prolongement de la série par modèle ARIMA peuvent donner de bons résultats.
 
-Deuxièmement, plus d'investigations devraient être faites sur la théorie des RKHS qui pourrait donner un bon compromis entre minimisation du déphasage et révisions. 
-En revanche, ils devraient uniquement être utilisées pour les premières estimations de la tendance-cycle (lorsque peu de points dans le futur sont connus), lorsqu'au moins 3 points dans le futur sont connus, un filtre simple (comme le filtre LC) peut être utiliser pour limiter les révisions avec le filtre final.
-Par ailleurs, leur calibration peut être sujette à des problèmes d'optimisation (filtre $b_{q,\varphi}$).
+Deuxièmement, en fin de période, modéliser des tendances polynomiales de degré supérieur à deux (CQ et DAF) semble introduire de la variance dans les estimations (et donc plus de révisions) sans gain significatif en termes de détection de point de retournement. 
+Par ailleurs, paramétrer localement les filtres polynomiaux améliore les résultats en termes de déphasage et de révision.
+En revanche, avec ces méthodes, il faut en revanche que la longueur du filtre utilisé soit adapté à la variabilité de la série : si le filtre utilisé est trop court (c'est-à-dire si la variabilité de la série est « faible »), conserver des tendances polynomiale de degré au plus 1 (méthode LC) produit de moins bons résultats en termes de détection des points de retournement.
 
-Enfin, la moins bonne performance apparente de certains filtres basés sur l'approche FST ou les RKHS pourrait provenir de l'utilisation de filtres sous-optimaux lorsque que l'on s'approche du cas d'utilisation du filtre symétrique. 
+Enfin, la moins bonne performance apparente des certains filtres (notamment RKHS) pourrait provenir de l'utilisation de filtres sous-optimaux lorsque que l'on s'approche du cas d'utilisation du filtre symétrique. 
 Sur l'approche FST par exemple, rien ne justifie que l'on devrait utiliser les mêmes poids entre fidélité, lissage et temporalité pour la construction de toutes les moyennes mobiles asymétriques.
-Chaque moyenne mobile asymétrique devraient ainsi être construite de manière indépendante
+Chaque moyenne mobile asymétrique devraient ainsi être construite de manière indépendante.
 
 Cette étude pourrait être étendue de plusieurs manières.
 
 Tout d'abord, elle n'est pas exhaustive et pourrait donc être complétée.  
 Parmi les approches étudiées, l'extension proposée aux méthodes polynomiales locales afin d'ajouter un critère sur le déphasage pourrait donner des résultats prometteurs. 
-Sur les méthodes FST et DAF, des méthodes de réduction de dimension pourraient être mobilisées afin d'étudier les paramètres les plus déterminants sur les performances des filtres.  
-Parmi les approches récentes non étudiées, nous pouvons citer @vasyechko2014new qui utilisent le noyau d'Epanechnikov pour construire des filtres asymétriques de 13 termes (i.e., en utilisant un nombre de points dans le passé différent du filtre symétrique), et @FengSchafer2021 qui proposent, en fin de période, l'utilisation de poids optimaux (au sens de l'erreur quadratique moyenne) dans les régressions polynomiales locales.
+Parmi les approches récentes non étudiées, nous pouvons citer @vasyechko2014new qui utilisent le noyau d'Epanechnikov pour construire des filtres asymétriques de 13 termes^[
+Cela consiste à choisir la fenêtre par la méthode des plus proches voisins : toujours 13 termes sont utilisés, un nombre de points dans le passé différent du filtre symétrique est donc utilisé.
+], et @FengSchafer2021 qui proposent, en fin de période, l'utilisation de poids optimaux (au sens de l'erreur quadratique moyenne) dans les régressions polynomiales locales.
 
 Parmi les pistes d'extension, on pourrait s'intéresser à l'impact de la longueur des filtres dans la détection des points de retournement.
 En effet, les filtres asymétriques sont calibrés avec des indicateurs calculés pour l'estimation des filtres symétriques (par exemple pour déterminer automatiquement sa longueur), alors qu'une estimation locale pourrait être préférée.
