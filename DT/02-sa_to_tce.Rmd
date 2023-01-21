@@ -44,7 +44,7 @@ Cela a un double intérêt.
 D'une part, cela permet de faire une première revue de la littérature sur les méthodes de construction des filtres linéaires pour l'analyse conjoncturelle.
 D'autre part, cela permet de montrer les liens entre toutes ces approches et de les comparer en utilisant une même méthodologie.
  
-Pour cela nous utiliserons l'approche générale de @ch15HBSA (section \@ref(subsec-theoriegen)) qui ont également proposé une procédure globale pour construire des moyennes mobiles asymétriques permettant de minimiser les effets de déphasage (section \@ref(subsec-GuggemosEtAl)).
+Pour cela nous utiliserons l'approche générale de @ch15HBSA (section \@ref(subsec-formulegen)) qui ont également proposé une procédure globale pour construire des moyennes mobiles asymétriques permettant de minimiser les effets de déphasage (section \@ref(subsec-GuggemosEtAl)).
 Des diagrammes synthétiques des liens entre les différentes méthodes étudiées sont présentés dans l'annexe \@ref(an-diag).
  
 Nous nous intéresserons uniquement aux estimations intermédiaires de la tendance-cycle faites en temps réels.
