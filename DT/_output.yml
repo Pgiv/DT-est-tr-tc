@@ -7,6 +7,7 @@ bookdown::gitbook:
     download: ["pdf", "docx", "tex"]
   includes:
     before_body: preamble.html
+    
 bookdown::pdf_document2:
   toc: true
   toc_depth: 3
