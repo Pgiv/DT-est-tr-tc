@@ -345,8 +345,9 @@ $$
 - Le paramètre $\delta$ peut être estimé par moyenne mobile à partir de l'équation  \@ref(eq:mmsym). 
 Par exemple, pour la méthode LC on peut utiliser la moyenne mobile $\theta_2=KX(X'KX)^{-1}e_{2}$ pour avoir un estimation locale de la pente et pour la méthode QL on peut utiliser $\theta_3=KX(X'KX)^{-1}e_{3}$ pour avoir une estimation locale de la concavité. 
 La méthode DAF permet alors de simplement calculer les moyennes mobiles asymétriques associées.  
-Même si une moyenne mobile de longueur différente de celle utilisée pour l'estimation de la tendance pourrait être envisagée, cela semble dégrader les résultats en termes de déphasage (en utilisant la même méthodologie que dans la section \@ref(sec-comparison))
-Par ailleurs, pour la construction des moyennes mobiles, utiliser la méthode DAF en modélisant une tendance de degré 2 semble donner des meilleurs résultats qu'en utilisant une tendance de degré 3. 
+Même si une moyenne mobile de longueur différente de celle utilisée pour l'estimation de la tendance pourrait être envisagée, cela semble dégrader les résultats en termes de déphasage (en utilisant la même méthodologie que dans la section \@ref(sec-comparison)).
+De plus, pour la construction des moyennes mobiles, la tendance peut être modélisée comme étant localement de degré 2 ou 3 (cela n'a pas d'impact pour l'estimation finale de la concavité).
+Nous retenons ici une modélisation de tendance de degré 2 : cela diminue le déphasage (en utilisant la même méthodologie que dans la section \@ref(sec-comparison)) mais augmente légèrement les révisions liées à la première estimation de la tendance-cycle. 
 La figure \@ref(fig:mmpenteconcac) montre les moyennes mobiles utilisées.
 
 ```{r mmpenteconcac, echo=FALSE, out.width="90%", fig.cap="Moyennes mobiles utilisées pour l'estimation en temps-réel de la pente et de la concavité."}
