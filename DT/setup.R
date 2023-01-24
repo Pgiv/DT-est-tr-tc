@@ -321,41 +321,6 @@ local({
 #   })
 # })
 
-library(htmltools)
-carousel <- function(files, div_id, enableControl = TRUE){
-    carousel_file <- function(x, active = FALSE){
-        tags$div(class = sprintf("carousel-item%s", ifelse(active, " active", "")),
-                 tags$img(class="d-block w-100", src = x)
-        )
-        
-    }
-    control <- NULL
-    if(enableControl){
-        p1 <- withTags({
-            a(class ="carousel-control-prev", href = paste0("#", div_id), `data-slide`="prev",
-              span(class="carousel-control-prev-icon")
-            )})
-        p2 <- withTags({
-            a(class ="carousel-control-next", href = paste0("#", div_id), `data-slide`="next",
-              span(class="carousel-control-next-icon")
-            )})
-        control <- tagList(p1, p2)
-    }
-    first_file <- carousel_file(files[[1]], active = TRUE)
-    all_files <- c(list(first_file), lapply(files[-1], carousel_file, active = FALSE))
-    all_files <- tags$div(class = "carousel-inner",
-                          tagList(all_files)
-    )
-    all_files
-    withTags({
-        div(class="carousel slide", `data-ride`="carousel", id = div_id,
-            all_files,
-            control
-        )
-    })
-}
-# carousel(div_id = "carouselExampleSlidesOnly",
-# files = sprintf("img/kernels/%i.png",2:4))
 
 ## Graphiques 3D
 
@@ -421,44 +386,3 @@ scatter_3D <- function(x, titre = NULL, phi = 40,
     }
 }
 
-table_tp <- function(x, digits = 2, diff = FALSE, rapport = FALSE, quartile = FALSE){
-    x <- do.call(rbind, x)
-    if(length(grep("X12|X13|X11", colnames(x)))>0){
-        col_names <- c("X13-ARIMA",colnames(x)[-1])
-    }else{
-        col_names <- colnames(x)
-    }
-    
-    # On enlève les deux dernières colonnes qui contiennent dates + nom série
-    x <- x[, c(1,0)-ncol(x)] 
-    col_names <- col_names[c(1,0)-length(col_names)] 
-    if(diff & !rapport){
-        x <- diff_x13(x)
-        col_names <- col_names[-1]
-    }
-    if(!diff & rapport){
-        x <- rapport_x13(x)
-        col_names <- col_names[-1]
-    }
-    nb_series = nrow(x)
-    if(quartile){
-        by <- 0.25
-        def_row <- c("Q1", "Méd.", "Q3")
-    }else{
-        by <- 0.1
-        def_row <- c("D1", "D2", "D3", "D4", "Méd.", "D6", "D7",
-                     "D8", "D9")
-    }
-    data_q <- apply(x,2,quantile,seq(0,1, by))
-    data_q <- round(rbind(data_q,
-                          apply(x, 2, mean)), digits)
-    colnames(data_q) <- col_names
-    rownames(data_q) <- c("Min", def_row, "Max", "Moy")
-    list(n = nb_series, table = data_q)
-}
-
-capitalize <- function(x){
-    gsub("(^|[[:space:]])([[:alpha:]])", "\\1\\U\\2",    # Uppercase with Base R
-         x,
-         perl = TRUE)
-}
