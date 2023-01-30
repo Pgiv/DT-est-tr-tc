@@ -16,12 +16,12 @@ Comme montré dans cette étude, la majorité des filtres linéaires peut s'obte
 
 $$
 \begin{cases}
-\underset{\theta}{\min} & \sum \alpha_i I(\theta,\, q_i,\, y_t,\, u_t^{(i)})+
+\underset{\theta}{\min} & \sum_i \alpha_i I(\theta,\, q_i,\, y_t,\, u_t^{(i)})+
 \beta_iJ(\theta,\, f_i,\, \omega_{1,i},\, \omega_{2,i})\\
 s.t. & C\theta=a
 \end{cases}
 $$
-
+<!-- je ne comprends pas bien comment est u, comment la fonction est choisie, son rôle ... est-ce que tu penses qu’il faudrait donner un peu plus d’infos au lecteur à ce moment? -->
 C'est en particulier le cas de l'approche *Fidelity-Smoothness-Timeliness* (FST) développée par les mêmes auteurs.
 
 ## Approche *Fidelity-Smoothness-Timeliness* (FST) {#subsec-GuggemosEtAl}
@@ -30,7 +30,7 @@ Pour construire les moyennes mobiles symétriques, @GrunRehommeLadiray1994 et @G
 @ch15HBSA étendent ces approches en les appliquant à la construction des filtres asymétriques et en ajoutant un critère permettant de contrôler le déphasage. 
 Il s'agit de l'approche *Fidelity-Smoothness-Timeliness* --- Fidélité-Lissage-Temporalité --- (FST).
 Pour la construction des filtres asymétriques, un quatrième critère pourrait également être rajouté qui prendrait en compte les révisions par rapport à l'utilisation d'un filtre symétrique de référence (cette méthode pourrait alors être appelée la méthode FRST --- *Fidelity-Revisions-Smoothness-Timeliness*).
-Cependant, le *package* `rjd3filters` n'ayant implémenté que l'approche FST, nous nous restreignons dans cette étude qu'à la description de l'approche sans critère de révision.
+Cependant, le *package* `rjd3filters` n'ayant implémenté que l'approche FST, nous nous restreignons dans cette étude à la description de l'approche sans critère de révision.
 
 Les trois critères utilisés sont les suivants :
 
@@ -63,6 +63,7 @@ $$
 Comme fonction de pénalité, les auteurs suggèrent de prendre $f\colon(\rho,\varphi)\mapsto\rho^2\sin(\varphi)^2$. 
 Cela permet notamment d'avoir une *timeliness* qui peut s'écrire comme une forme quadratique positive ($T_g(\theta)=\theta'T\theta$ avec $T$ une matrice carré symétrique d'ordre $p+f+1$, voir @ch15HBSA pour la démonstration).
 Dans cet article nous utilisons $\omega_1=0$ et $\omega_2=2\pi/12$ : on ne s'intéresse qu'à des séries mensuelles et au déphasage qui impactent les cycles d'au minimum 12 mois.
+<!-- pas évident pourquoi ce choix de omega_2 implique de regarder des déphasages d’aun moins 12 mois? -->
 
 En somme, l'approche FST consiste à minimiser une somme pondérée de ces trois critères sous certaines contraintes (généralement préservation polynomiale).
 

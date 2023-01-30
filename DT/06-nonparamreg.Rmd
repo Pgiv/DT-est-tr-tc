@@ -28,6 +28,7 @@ $$
 y_{t+j}=m_{t+j}+\varepsilon_{t+j},\quad m_{t+j}=\sum_{i=0}^{d}\beta_{i}j^{i}.
 $$
 Le problème d'extraction de la tendance est équivalent à l'estimation de $m_t=\beta_0$. 
+<!-- est-ce que c’est le même beta_0 que celui du coef ^0 dans le polynome? ou c’est la vraie valeur de beta? -->
 En notation matricielle :
 $$
 \underbrace{\begin{pmatrix}y_{t-h}\\
@@ -66,7 +67,7 @@ $$
 S(\hat{\beta}_{0},\dots,\hat{\beta}_{d})=\sum_{j=-h}^{h}\kappa_{j}(y_{t+j}-\hat{\beta}_{0}-\hat{\beta}_{1}j-\dots-\hat{\beta}_{d}j^{d})^{2}
 $$
 où $\kappa_j$ est un ensemble de poids appelés *noyaux* (*kernel*). 
-On a $\kappa_j\geq 0:\kappa_{-j}=\kappa_j$, et en notant $K=diag(\kappa_{-h},\dots,\kappa_{h})$, l'estimateur $\beta$ peut s'écrire $\hat{\beta}=(X'KX)^{1}X'Ky$. 
+On a $\kappa_j\geq 0:\kappa_{-j}=\kappa_j$, et en notant $K=diag(\kappa_{-h},\dots,\kappa_{h})$, l'estimateur $\beta$ peut s'écrire $\hat{\beta}=(X'KX)^{-1}X'Ky$. 
 Avec $e_{1}=\begin{pmatrix}1&0&\cdots&0\end{pmatrix}'$, l'estimateur de la tendance peut donc s'écrire :
 \begin{equation}
 \hat{m}_{t}=e_{1}\hat{\beta}=\theta'y=\sum_{j=-h}^{h}\theta_{j}y_{t-j}\text{ avec }\theta=KX(X'KX)^{-1}e_{1}
@@ -94,8 +95,8 @@ Le noyau uniforme est donc à éviter.
 ### Les différents noyaux {#sec-kernels}
 
 Dans les problèmes d'extraction du signal, les observations sont généralement pondérées par rapport à leur distance à la date $t$ : pour estimer la tendance-cycle à la date $t$, on accorde généralement plus d'importance aux observations qui sont proches de $t$.
-
-Dans le cas continu, un noyau $K$ est une fonction positive, paire et intégrable telle que $\int_{-\infty}^{+\infty}\kappa(u) \ud u=1$ et $\kappa(u)=\kappa(-u)$. 
+<!-- a moins qu’on ne désigne pas le noyau K par sa densité kappa? -->
+Dans le cas continu, un noyau $\kappa$ est une fonction positive, paire et intégrable telle que $\int_{-\infty}^{+\infty}\kappa(u) \ud u=1$ et $\kappa(u)=\kappa(-u)$. 
 Dans le cas discret, un noyau est un ensemble de poids $\kappa_j$, $j=0,\pm1,\dots,\pm h$ avec $\kappa_j \geq0$ et $\kappa_j=\kappa_{-j}$.
 
 Une classe importante de noyaux est celle des noyaux Beta. 
@@ -194,9 +195,10 @@ $$
 
 Les noyaux d'Henderson, trapézoïdal et gaussien sont particuliers :
 
-- Les fonctions noyau d'Henderson et trapézoïdal changent avec la fenêtre (les autres dépendent uniquement du rapport $j/h+1$).
+- Les fonctions noyau d'Henderson et trapézoïdal changent avec la fenêtre (les autres dépendent uniquement du rapport $j/(h+1)$).
 
-- Pour les noyaux trapézoïdal et gaussien, d'autres définitions pourraient être utilisées et sont donc définis arbitrairement.  
+- Pour les noyaux trapézoïdal et gaussien, d'autres définitions pourraient être utilisées et ils sont donc définis arbitrairement.
+<!-- pas clair pour moi: c’est les constantes qui pourraient changer? le 1/3, 2/3 et 3/3 pour trapézoïdal? -->
 Le noyau trapézoïdal est implémenté dans `rjd3filters` car il permet de calculer les moyennes mobiles utilisées dans l'algorithme X-13ARIMA pour l'extraction des composantes saisonnières. 
 Il n'est pas adapté dans le cas de l'extraction de la tendance-cycle.
 
@@ -237,8 +239,8 @@ Elles sont également équivalentes à la troisième approche sous les mêmes co
 Cette méthode est appelée *direct asymmetric filter* (DAF).
 C'est cette méthode qui est utilisée pour l'estimation en temps réel dans la méthode de désaisonnalisation STL (*Seasonal-Trend decomposition based on Loess*, voir @cleveland90).
 Même si les estimations des filtres DAF sont sans biais, c'est au coût d'une plus grande variance dans les estimations. 
-
-Pour résoudre le problème de la variance des estimations des filtres temps réel, @proietti2008 proposent une méthode générale pour construire les filtres asymétriques qui permet de faire un compromis biais-variance.
+<!-- pas sûr … -->
+Pour résoudre le problème de la variance des estimations des filtres en temps réel, @proietti2008 proposent une méthode générale pour construire les filtres asymétriques qui permet de faire un compromis biais-variance.
 Il s'agit d'une généralisation des filtres asymétriques de @musgrave1964set (utilisés dans l'algorithme de désaisonnalisation X-13ARIMA).
 
 On modélise ici la série en entrée par :
@@ -248,7 +250,7 @@ y=U\gamma+Z\delta+\varepsilon,\quad
 (\#eq:lpgeneralmodel)
 \end{equation}
 où $[U,Z]$ est de rang plein et forme un sous-ensemble des colonnes de $X$.
-L'objectif est de trouver un filtre $v$ qui minimisent l'erreur quadratique moyenne de révision (au filtre symétrique $\theta$) sous certaines contraintes.
+L'objectif est de trouver un filtre $v$ qui minimise l'erreur quadratique moyenne de révision (au filtre symétrique $\theta$) sous certaines contraintes.
 Ces contraintes sont représentées par la matrice $U=\begin{pmatrix}U_{p}'&U_{f}'\end{pmatrix}'$ : $U_p'v=U'\theta$ (avec $U_p$ la matrice $(h+q+1)\times (d+1)$ qui contient les observations de la matrice $U$ connues lors de l'estimation par le filtre asymétrique).
 Le problème est équivalent à trouver $v$ qui minimise :
 \begin{equation}
@@ -266,7 +268,8 @@ où $l$ est le vecteur des multiplicateurs de Lagrange.
 Lorsque $U=X$, la contrainte équivaut à préserver les polynômes de degré $d$ : on retrouve les filtres directs asymétriques (DAF) lorsque $D=K^{-1}$.
 
 Lorsque $U=\begin{pmatrix}1&\cdots&1\end{pmatrix}'$, $Z=\begin{pmatrix}-h&\cdots&+h\end{pmatrix}'$, $\delta=\delta_1$, $D=\sigma^2I$ et lorsque le filtre symétrique est le filtre d'Henderson, on retrouve les filtres asymétriques de Musgrave.
-Ce filtre suppose, que pour l'estimation en temps réel, les données sont générées par un processus linéaire et que les filtres asymétriques préservent les constantes ($\sum v_i=\sum \theta_i=1$).
+Ce filtre suppose que, pour l'estimation en temps réel, les données sont générées par un processus linéaire et que les filtres asymétriques préservent les constantes ($\sum v_i=\sum \theta_i=1$).
+<!-- sépare les 2 formules s’il ne faut pas penser que la parenthèse $\delta_1/\sigma=2/(R\sqrt{\pi})$ multiplie le ratio -->
 Ces filtres asymétriques dépendent du rapport $\lvert\delta_1/\sigma\rvert$, qui est lié à l'I-C ratio $R=\frac{\bar{I}}{\bar{C}}=\frac{\sum\lvert I_t-I_{t-1}\rvert}{\sum\lvert C_t-C_{t-1}\rvert}$ ($\delta_1/\sigma=2/(R\sqrt{\pi})$), qui est notamment utilisé dans X-13ARIMA pour déterminer la longueur du filtre d'Henderson^[
 Dans la majorité des cas un filtre de 13 termes est utilisé.
 Si le ratio est grand alors un filtre de 23 termes est utilisé (pour supprimer davantage de bruit) et si le ratio est petit un filtre de 9 termes est utilisé.
@@ -288,6 +291,8 @@ Pour les filtres en temps réel ($q=0$), plus le filtre asymétrique est complex
 Ce résultat varie lorsque $q$ augmente : pour $q=2$ le filtre QL a une plus grande *timeliness* que le filtre LC. 
 Ce résultat étonnant souligne le fait que le déphasage n'est pas contrôlé par l'approche de @proietti2008.
 
+<!-- si $A_w+S_w+T_w+R_w$ est une grandeur pertinente, ajouter une colonne avec cette somme ? je comprends aussi qu’on ne sait pas bien agréger les 3 F, S et T, donc difficile de dire a priori lequel on préfèrerait.
+peut-être ajouter un peu plus d’analyse économique de ces résultats ou de conséquence sur la pratique de l’économètre ? -->
 En termes de révision, ($A_w+S_w+T_w+R_w$), les filtres LC et QL donnent toujours de meilleurs résultats que les filtres CQ et DAF. 
 
 
@@ -330,7 +335,7 @@ Toutefois, il dépend indirectement des données si le filtre est calibré sur l
 
 ### Paramétrisation locale des filtres asymétriques {#subsec-localic}
 
-Pour paramétrer les filtres asymétriques, on pourrait préférer une paramétrisation locale (rapport $\lvert\delta/\sigma\rvert$ qui varie en fonction du temps) à une paramétrisation globale ($\lvert\delta/\sigma\rvert$ estimé à partir l'ensemble des données à partir de l'IC-ratio ou d'un critère de validation croisée).
+Pour paramétrer les filtres asymétriques, on pourrait préférer une paramétrisation locale (rapport $\lvert\delta/\sigma\rvert$ qui varie en fonction du temps) à une paramétrisation globale ($\lvert\delta/\sigma\rvert$ estimé sur l'ensemble des données à partir de l'IC-ratio ou d'un critère de validation croisée).
 En effet, même si la paramétrisation globale est en moyenne valide, supposer le rapport  $\lvert\delta/\sigma\rvert$ constant pour l'ensemble des filtres asymétriques ne parait pas pertinent pour l'estimation en temps réel, en particulier pour des périodes de retournement conjoncturel.
 Par exemple, avec la méthode LC, effectuer une paramétrisation globale revient à supposer que la pente de la tendance est constante, alors que pendant les périodes de retournement conjoncturel elle tend vers 0 jusqu'au point de retournement.
 
@@ -343,7 +348,7 @@ $$
 \hat\sigma^2=\frac{1}{n-2h}\sum_{t=h+1}^{n-h}\frac{(y_t-\hat \mu_t)^2}{1-2w_0^2+\sum w_i^2}.
 $$
 - Le paramètre $\delta$ peut être estimé par moyenne mobile à partir de l'équation  \@ref(eq:mmsym). 
-Par exemple, pour la méthode LC on peut utiliser la moyenne mobile $\theta_2=KX(X'KX)^{-1}e_{2}$ pour avoir un estimation locale de la pente et pour la méthode QL on peut utiliser $\theta_3=KX(X'KX)^{-1}e_{3}$ pour avoir une estimation locale de la concavité. 
+Par exemple, pour la méthode LC on peut utiliser la moyenne mobile $\theta_2=KX(X'KX)^{-1}e_{2}$ pour avoir une estimation locale de la pente et pour la méthode QL on peut utiliser $\theta_3=KX(X'KX)^{-1}e_{3}$ pour avoir une estimation locale de la concavité. 
 La méthode DAF permet alors de simplement calculer les moyennes mobiles asymétriques associées.  
 Même si une moyenne mobile de longueur différente de celle utilisée pour l'estimation de la tendance pourrait être envisagée, cela semble dégrader les résultats en termes de déphasage (en utilisant la même méthodologie que dans la section \@ref(sec-comparison)).
 De plus, pour la construction des moyennes mobiles, la tendance peut être modélisée comme étant localement de degré 2 ou 3 (cela n'a pas d'impact pour l'estimation finale de la concavité).
@@ -355,12 +360,13 @@ img <- sprintf("img/filters_used/mm_penteconcavite.%s", fig.ext)
 knitr::include_graphics(img)
 ```
 
-Dans les applications empirique, la paramétrisation locale finale correspond à celle où $\delta$ est estimé en utilisant l'ensemble des données (c'est-à-dire en utilisant les filtres symétriques de la figure \@ref(fig:mmpenteconcac)) mais en gardant une estimation en temps réel de $\sigma^2$.
+Dans les applications empiriques, la paramétrisation locale finale correspond à celle où $\delta$ est estimé en utilisant l'ensemble des données (c'est-à-dire en utilisant les filtres symétriques de la figure \@ref(fig:mmpenteconcac)) mais en gardant une estimation en temps réel de $\sigma^2$.
 
 ## Extension avec le critère de *timeliness* {#subsec-lptimeliness}
 
 Un inconvénient de la méthode précédente est que le déphasage n'est pas contrôlé. 
 Il est en revanche possible de généraliser davantage la modélisation en ajoutant le critère de *timeliness* définit par @ch15HBSA dans l'équation \@ref(eq:lppasym). 
+<!-- ref de jean palate? -->
 C'est ce qui a été proposé par Jean Palate, puis codé en Java^[https://github.com/palatej/jdemetra-core.] et intégré dans `rjd3filters`.
 
 En utilisant les mêmes notations que dans \@ref(subsec-lppasymf), $\theta$ le filtre symétrique et $v$ le filtre asymétrique. 

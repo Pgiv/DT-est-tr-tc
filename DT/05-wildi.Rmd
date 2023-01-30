@@ -2,7 +2,7 @@
 
 @trilemmaWMR2019 proposent une approche dépendante des données (*data-dependent*) pour calculer des filtres linéaires.
 Ils décomposent l'erreur quadratique moyenne de révision en un trilemme de trois quantités appelées *accuracy* (précision), *timeliness* (temporalité) et *smoothness* (lissage), d'où son nom *ATS-trilemna*.
-
+<!-- trilemma ou trilemna ? -->
 Soient :
 
 - $\left\{ y_{t}\right\}$ notre série temporelle en entrée^[
@@ -17,7 +17,7 @@ Une approche directe^[Par opposition aux approches indirectes par exemple utilis
 $$
 \underset{\widehat{TC}_{t}}{\min} \E{(TC_{t}-\widehat{TC}_{t})^{2}}.
 $$
-Cette approche peut être approfondie en décomposant l'erreur de quadratique moyenne en plusieurs éléments d'intérêt.
+Cette approche peut être approfondie en décomposant l'erreur quadratique moyenne en plusieurs éléments d'intérêt.
 
 Si l'on suppose que la série $\left\{ y_{t}\right\}$ est faiblement stationnaire avec une densité spectrale continue $h$, l'erreur quadratique moyenne de révision, $\E{(TC_{t}-\widehat{TC}_{t})^{2}}$, peut s'écrire dans le domaine spectral comme:
 \begin{equation}
@@ -34,7 +34,7 @@ On a :
 \end{align}
 
 L'intervalle $[0,\pi]$ peut être coupé en deux : une partie dite *pass-band* $[0,\omega_1]$ (l'intervalle de fréquences qui contient le signal cible) et une partie dite *stop-band*  $[\omega_1,\pi]$ (l'intervalle de fréquences associé aux résidus).
-
+<!-- (je ne vois pas le (4.1) dans le document, mais je vois bien à quelle équation il fait référence quand je clique dessus) -->
 L'erreur de l'équation \@ref(eq:msedef) peut être décomposée en 4 quantités :
 \begin{align*}
 Accuracy =A_w(\theta)&= 2\int_0^{\omega_1}\left(\rho_s(\omega)-\rho_\theta(\omega)\right)^{2}h(\omega)\ud\omega\\
