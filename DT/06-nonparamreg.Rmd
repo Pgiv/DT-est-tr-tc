@@ -422,7 +422,7 @@ sous une contrainte linéaire.
 ### Filtres symétriques
 
 L'approche de @GrayThomson1996 est proche de celles de @proietti2008 et de @ch15HBSA.
-De la même façon que pour les autres méthodes, ils considèrent que la série initiale $y_t$ peut se décomposer entre une somme entre la tendance-cycle $g_t$ et d'un bruit blanc $\varepsilon_t$ de variance $\sigma^2$ : 
+De la même façon que pour les autres méthodes, ils considèrent que la série initiale $y_t$ peut se décomposer en une somme de la tendance-cycle $g_t$ et d'un bruit blanc $\varepsilon_t$ de variance $\sigma^2$ : 
 $$y_t = g_t+\varepsilon_t.$$
 Toutefois, plutôt que de directement remplacer $g_t$ par un polynôme local de degré $d$, ils prennent en compte l'erreur d'approximation de la tendance :
 $$
@@ -493,7 +493,7 @@ La formule générale définie dans la section \@ref(subsec-formulegen) permet �
 
 :::: {.remarque data-latex=""}
 Pour la construction des filtres asymétriques, une approche alternative pourrait être d'utiliser la même méthode que celle utilisée pour construire les filtres symétriques.
-C'est-à-dire minimiser $Q$ (équation \@ref(eq:graythomsonindicators)) sous contrainte que le filtre asymétrique fournisse un estimateur dans biais de la tendance.
+C'est-à-dire minimiser $Q$ (équation \@ref(eq:graythomsonindicators)) sous contrainte que le filtre asymétrique fournisse un estimateur sans biais de la tendance.
 Comme discuté dans @GrayThomson1996, les auteurs ne retiennent pas cette méthode pour deux raisons :
 
 - Il n'est pas évident qu'il faudrait chercher à maintenir le même équilibre entre *smoothness* et *fidelity* en fin de série et au centre de la série.
@@ -502,7 +502,7 @@ Minimiser des critères de révision serait donc préférable puisque cela revie
 
 - Les valeurs de la *fidelity* et de la *smoothness* ne dépendent pas du temps au centre de la série mais en dépendent en fin de série. 
 Ainsi, même si au centre de la série le choix des poids entre les deux critères contrôle indirectement le niveau des indicateurs, ce n'est plus le cas en fin de série.
-De plus, en fin de série, cela pourrait introduire des déphasages plus importants car $S_{GT}$ dépend du temps et des valeurs passées (du fait du l'utilisation de l'opérateur différence).
+De plus, en fin de série, cela pourrait introduire des déphasages plus importants car $S_{GT}$ dépend du temps et des valeurs passées (du fait de l'utilisation de l'opérateur différence).
 
 Inversement, @ch15HBSA justifie de ne pas intégrer le critère de révision dans leur problème car ce critère est fortement corrélé à une combinaison fixée, donc non ajustable par l'utilisateur, des critères *fidelity* et *timeliness*.
 ::::
@@ -533,8 +533,9 @@ La théorie des *Reproducing Kernel Hilbert Space* (RKHS) --- espaces de Hilbert
 C'est par exemple le cas des méthodes de régression par moindres carrés pénalisés, des Support Vector Machine (SVM), du filtre d'Hodrick-Prescott (utilisé pour décomposer tendance et cycle) ou encore des moyennes mobiles telles que celle d'Henderson.
 Ainsi, @dagumbianconcini2008 utilise la théorie des RKHS pour approcher le filtre d'Henderson et en dériver des filtres asymétriques associés.
 
+<!-- je pense que la plupart des lecteurs ne comprendront pas la phrase suivante: faut-il définir plus et préciser les différents termes ? -->
 Un RKHS $\mathbb{L}^{2}(f_{0})$ est un espace de Hilbert caractérisé par un noyau qui permet de reproduire toutes les fonctions de cet espace.
-Il est caractérisé par une fonction de densité $f_0$ et un produit scalaire $\ps{\cdot}{\cdot}$ définit par :
+Il est caractérisé par une fonction de densité $f_0$ et un produit scalaire $\ps{\cdot}{\cdot}$ défini par :
 $$
 \left\langle U(t),V(t)\right\rangle =\E{U(t)V(t)}=\int_{\R}U(t)V(t)f_{0}(t)\ud t\quad
 \forall U,V\in\mathbb{L}^{2}(f_{0}).
@@ -579,7 +580,8 @@ Cette solution s'écrit alors :
 \widehat{TC}(t)=\int_{[-1,1]} y(t-s)K_{d+1}(s) \ud s.
 (\#eq:rkhssoltc2)
 \end{equation}
-On peut, par ailleurs, montrer que $K_{d+1}$ s'écrit en fonction $f_0$ et du noyau reproduisant $K(\cdot,\cdot)$ et que ce dernier peut s'écrire en fonction de polynômes $(P_i)_{i\in \llbracket 0, d-1 \rrbracket}$ qui forme une base orthonormée de $\mathbb L^2(f_0)$ (voir par exemple @berlinet1993) :
+<!-- un nb fini de polynomes, puisque i est plus petit que d-1, forme une base orthonormée de L2? -->
+On peut, par ailleurs, montrer que $K_{d+1}$ s'écrit en fonction de $f_0$ et du noyau reproduisant $K(\cdot,\cdot)$ et que ce dernier peut s'écrire en fonction de polynômes $(P_i)_{i\in \llbracket 0, d-1 \rrbracket}$ qui forme une base orthonormée de $\mathbb L^2(f_0)$ (voir par exemple @berlinet1993) :
 $$
 K_{d+1}(t) = R_d(t,0)f_0(t) = \sum_{i=0}^dP_i(t)P_i(0)f_0(t).
 $$
@@ -681,10 +683,10 @@ où $\Omega_S=[0,2\pi/32]$ est l'intervalle de fréquences associées aux cycles
 ::::
 
 
-Un des inconvénients de cette méthode est qu'il n'y a pas unicité de la solution et donc qu'il y a parfois plusieurs extremum (uniquement pour le calcul de $b_{q,\varphi}$.
-Ainsi, la valeur optimal retenue par défaut par `rjd3filters` produit des discontinuités dans l'estimation de la tendance-cycle.  
+Un des inconvénients de cette méthode est qu'il n'y a pas unicité de la solution et donc qu'il y a parfois plusieurs extremum (uniquement pour le calcul de $b_{q,\varphi}$).
+Ainsi, la valeur optimale retenue par défaut par `rjd3filters` produit des discontinuités dans l'estimation de la tendance-cycle.  
 Par ailleurs, les valeurs de $b_{q,G}$ varient fortement en fonction de si l'on retient $\omega_1=2\pi/12$ ou $\omega_1=\pi$ (tableau \@ref(tab:optimalbwrkhs)). 
-Par cohérence, simplicité, nous utiliserons dans cet article les valeurs optimales présentées dans @dagumbianconcini2015new.
+Par cohérence et simplicité, nous utiliserons dans cet article les valeurs optimales présentées dans @dagumbianconcini2015new.
 
 
 ```{r optimalbwrkhs, echo = FALSE}
@@ -715,7 +717,7 @@ RKHS filters - @dagumbianconcini2008
 - Il peut y avoir des problèmes de minimisation (notamment en minimisant la *timeliness*).
 ::::
 
-Tous les critères utilisés de la sélection optimale du paramètre $b$ pouvant s'écrire comme cas particuliers du critère $J$ défini dans l'équation \@ref(eq:formulegen1) (voir section \@ref(sec-WildiMcLeroy)), cette méthode s'inscrit dans le cadre de la théorie générale définie dans la section \@ref(subsec-formulegen) en imposant comme contrainte linéaire que les coefficients soient sous la forme $w_j=\frac{K_{d+1}(j/b)}{\sum_{i=-h}^{^p}K_{d+1}(i/b)}$.
+Tous les critères utilisés lors de la sélection optimale du paramètre $b$ pouvant s'écrire comme cas particuliers du critère $J$ défini dans l'équation \@ref(eq:formulegen1) (voir section \@ref(sec-WildiMcLeroy)), cette méthode s'inscrit dans le cadre de la théorie générale définie dans la section \@ref(subsec-formulegen) en imposant comme contrainte linéaire que les coefficients soient sous la forme $w_j=\frac{K_{d+1}(j/b)}{\sum_{i=-h}^{^p}K_{d+1}(i/b)}$.
 
 ## Liens entre les différentes méthodes {#subsec-equivlpfst}
 
@@ -723,7 +725,7 @@ Tous les critères utilisés de la sélection optimale du paramètre $b$ pouvant
 
 Les critères $F_g$ et $S_g$ peuvent se déduire de $F_{GT}$ et $S_{GT}$.
 Les approches de @GrayThomson1996 et @ch15HBSA sont donc équivalentes pour la construction de filtres symétriques.
-
+<!-- en indice le beta_d? -->
 Notons $x_{t}=\begin{pmatrix}1 & t & t^{2} & \cdots & t^{d}\end{pmatrix}$, $\beta_{t}=\begin{pmatrix}\beta_{0} & \cdots & \beta^{d}\end{pmatrix}'$. 
 
 Pour le critère de *fidelity* :
@@ -763,6 +765,7 @@ Dans ce sens, @henderson1916note a montré que les poids $w=(w_{-p},\dots w_{f})
 $$
 w_i = \kappa_i P\left(\frac{i}{p+f+1}\right)\text{ où }P\text{ est un polynôme de degré }d.
 $$
+<!-- est-ce qu’il faut définir diagramme des coefficients? -->
 Il a également montré l'inverse : toute moyenne mobile $\theta=(\theta_{-p},\dots, \theta_{f})$ qui préserve les tendances de degré $d$ et dont le diagramme des coefficients change au plus $d$ fois de signes peut être obtenue par une régression polynomiale locale de degré $p$ estimée par moindres carrés pondérés. 
 Pour cela il suffit de trouver un polynôme $P\left(\frac{X}{p+f+1}\right)$ de degré inférieur ou égal à $d$ et dont les changements de signes coïncident avec les changements de signes de $\theta$. 
 Le noyau associé est alors $\kappa_i=\frac{ \theta_i}{P\left(\frac{i}{p+f+1}\right)}$.
