@@ -1,11 +1,11 @@
 # Comparaison des différentes méthodes {#sec-comparison}
 
-Les différentes méthode de construction de moyennes mobiles asymétriques sont comparées sur des données simulées et des données réelles. 
+Les différentes méthodes de construction de moyennes mobiles asymétriques sont comparées sur des données simulées et des données réelles. 
 Pour toutes les séries, un filtre symétrique de 13 termes est utilisé.
 Ces méthodes sont également comparées aux estimations obtenues en prolongeant la série par un modèle ARIMA^[Le modèle ARIMA est déterminé automatiquement en n'utilisant pas de retard saisonnier (les séries étant désaisonnalisées) et en n'utilisant aucune variable extérieure (comme des régresseurs externes pour la correction des points atypiques).] puis en appliquant un filtre symétrique de Henderson de 13 termes.
 
 ## Méthodologie
-
+<!-- une partie de la méthodo (tout le début) ne concerne que la partie des séries simulées, à mettre dans la partie série simulée? tu pourrais aussi faire une partie méthodo qui donne la méthodo pour tout, et les résultats seulement dans les parties suivantes. mais tu donnes (et répètes un tout petit peu aussi) aussi la méthodo dans la partie séries 6.2 -->
 En suivant une méthodologie proche de celle de @DarneDagum2009, neuf séries mensuelles sont simulées entre janvier 1960 et décembre 2020 avec différent niveaux de variabilité. Chaque série simulée $y_t= C_t+ T_t + I_t$ peut s'écrire comme la somme de trois composantes :
 
 - le cycle $C_t = \rho [\cos (2 \pi t / \lambda) +\sin (2 \pi t / \lambda)]$, $\lambda$ est fixé à 72 (cycles de 6 ans, il y a donc 19 points de retournement détectables) ;
@@ -14,7 +14,7 @@ En suivant une méthodologie proche de celle de @DarneDagum2009, neuf séries me
 
 - et l'irrégulier $I_t = e_t$ avec $e_t \sim \mathcal{N}(0, \sigma_e^2)$.
 
-Pour les différentes simulations, nous faisons varier les paramètre $\rho$ et $\sigma_e^2$ afin d'avoir d'avoir des séries avec différents rapports signal sur bruit (voir graphique \@ref(fig:graphs-data-simul)) :
+Pour les différentes simulations, nous faisons varier les paramètres $\rho$ et $\sigma_e^2$ afin d'avoir des séries avec différents rapports signal sur bruit (voir graphique \@ref(fig:graphs-data-simul)) :
 
 - Fort rapport signal sur bruit (c'est-à-dire un I-C ratio faible et une faible variabilité) : $\sigma_e^2=0,2$ et $\rho = 3,0,\, 3,5$ ou $4,0$ (I-C ratio compris entre 0,9 et 0,7) ;
 
@@ -28,22 +28,25 @@ img <- sprintf("img/simulations/simul_data.%s", fig.ext)
 knitr::include_graphics(img)
 ```
 
-Pour chaque série et chaque date, la tendance-cycle est estimée en utilisant les différentes méthodes présentées dans de ce rapport.
+Pour chaque série et chaque date, la tendance-cycle est estimée en utilisant les différentes méthodes présentées dans ce rapport.
 Pour les régressions polynomiales locales, les filtres asymétriques sont calibrés en utilisant l'I-C ratio estimé à chaque date (en appliquant un filtre de Henderson de 13 termes) et pour la méthode FST, un quadrillage du plan est réalisé avec un pas de $0,05$ et avec comme contraintes linéaires la préservation des polynômes de degrés 0 à 3.
 Trois critères de qualité sont également calculés :
 
-1. Calcul du déphasage dans la détection des points de retournement. La définition @Zellner1991 est utilisée pour déterminer les points de retournement :  
+1. Calcul du déphasage dans la détection des points de retournement. La définition de @Zellner1991 est utilisée pour déterminer les points de retournement :  
     - on parle de redressement (*upturn*) lorsque l'on passe d'une phase de récession à une phase d'expansion de l'économie. 
     C'est le cas à la date $t$ lorsque $y_{t-3}\geq y_{t-2}\geq y_{t-1}<y_t\leq y_{t+1}$.  
     - on parle de ralentissement (*downturn*) lorsque l'on passe d'une phase d'expansion à une phase de récession.
 C'est le cas à la date $t$ lorsque $y_{t-3}\leq y_{t-2}\leq y_{t-1}>y_t\geq y_{t+1}$.  
 
-    Le déphasage est souvent définit comme le nombre de mois nécessaires pour détecter le bon point de retournement (i.e., le point de retournement sur la composante cyclique).
-    Nous utilisons ici un critère légèrement modifié : le déphasage est définit comme le nombre de mois nécessaires pour détecter le bon point de retournement sans aucune révision future.
-    Il peut en effet arriver que le bon point de retournement soit détecté par des filtres asymétriques mais ne le soit pas avec l'estimation finale avec un filtre symétrique (c'est le cas de 41 points de retournements sur l'ensemble des 9 séries avec les filtres asymétriques de Musgrave) ou qu'il y ait des révisions dans les estimations successives (c'est le cas de 7 points de retournements sur l'ensemble des 9 séries avec les filtres asymétriques de Musgrave).
+    Le déphasage est souvent défini comme le nombre de mois nécessaires pour détecter le bon point de retournement (i.e., le point de retournement sur la composante cyclique).
+    <!-- en temps réel, ce concept perd un peu de sa pertinence: conditionner à des observations futures n’est pas possible. si on est en temps réel, le filtre va nous donner un point de retournement, on ne sait pas ce que donneront les points suivants, mais il faut quand même décider maintenant. -->
+    Nous utilisons ici un critère légèrement modifié : le déphasage est défini comme le nombre de mois nécessaires pour détecter le bon point de retournement sans aucune révision future.
+    Il peut en effet arriver que le bon point de retournement soit détecté par des filtres asymétriques mais ne le soit pas avec l'estimation finale avec un filtre symétrique 
+    <!-- ce qui suit me semble plutôt devoir être dans la partie "séries simulées" -->
+    (c'est le cas de 41 points de retournements sur l'ensemble des 9 séries avec les filtres asymétriques de Musgrave) ou qu'il y ait des révisions dans les estimations successives (c'est le cas de 7 points de retournements sur l'ensemble des 9 séries avec les filtres asymétriques de Musgrave).
     Finalement, relativement peu de points de retournement sont détectés à la bonne date avec l'estimation finale.
     Avec le filtre de Henderson de 13 termes, 18 sont correctement détectés sur les séries avec une faible variabilité (sur les 57 possibles), 11 sur les séries à variabilité moyenne et 12 sur les séries à forte variabilité.
-
+<!-- jusque la -->
 2. Calcul de deux critères de révisions : la moyenne des écarts relatifs entre la $q$\ieme{} estimation et la dernière estimation $MAE_{fe}(q)$ et la moyenne des écarts relatifs entre la $q$\ieme{} et la $q+1$\ieme{} estimation $MAE_{qe}(q)$
 $$
 MAE_{fe}(q)=\mathbb E\left[
@@ -78,8 +81,8 @@ Comme il n'est pas possible d'avoir un poids associé à la *timeliness* ($\gamm
 Pour chaque combinaison de poids, quatre ensembles de moyennes mobiles sont construits en forçant dans la minimisation la préservation de polynômes de degré 0 à 3. 
 Le filtre symétrique utilisé est toujours celui de Henderson. 
 Le degré de préservation polynomiale et l'ensemble de poids retenus sont ceux minimisant (en moyenne) le déphasage sur les séries simulées : pour l'ensemble des degrés de liberté, il s'agit toujours du filtre préservant les polynômes de degré 2 avec $\alpha = 0,00$ (*fidelity*), $\beta  =0,05$ (*smoothness*) et $\gamma = 0,95$ (*timeliness)*.
-
-En excluant pour l'instant les paramétrisations locales des filtres polynomiaux, ce sont les filtres FST et LC semblent donner les meilleurs résultats en termes de déphasage dans la détection des points de retournement (figure \@ref(fig:graphstpsimul)). 
+<!-- FST a l’air bien meilleur que LC non? -->
+En excluant pour l'instant les paramétrisations locales des filtres polynomiaux, ce sont les filtres FST et LC qui semblent donner les meilleurs résultats en termes de déphasage dans la détection des points de retournement (figure \@ref(fig:graphstpsimul)). 
 Les performances sont relativement proches de celles obtenues en prolongeant la série grâce à un modèle ARIMA.
 Toutefois, lorsque la variabilité est faible, le filtre LC semble donner de moins bons résultats et c'est le filtre QL qui semble donner les meilleurs résultats.
 Étonnement, c'est le filtre $b_{q,\varphi}$ qui minimise le déphasage qui donne les moins bons résultats.
@@ -98,15 +101,18 @@ knitr::include_graphics(img)
 
 Concernant les révisions, la variabilité de la série a peu d'impact sur les performances respectives des différentes méthodes mais joue sur les ordres de grandeurs, c'est pourquoi les résultats ne sont présentés qu'avec les séries à variabilité moyenne (tableau \@ref(tab:simulrev))
 Globalement, les filtres LC minimisent toujours les révisions (avec globalement peu d'impact de la paramétrisation locale des filtres) et les révisions sont plus importantes avec les filtres CQ, DAF et les filtres RKHS autres que $b_{q,\varphi}$.
+<!-- tu ne donne pas je crois ces raisons dans le paragraphe précédent … -->
 Par ailleurs, c'est le filtre $b_{q,\varphi}$ qui conduit à le plus de révision entre l'avant-dernière et la dernière estimation, pour les mêmes raisons que celles évoquées dans le paragraphe précédent.   
 Pour le filtre QL, il y a une forte révision entre la deuxième et la troisième estimation : cela peut venir du fait que pour la deuxième estimation (lorsque l'on connait un point dans le futur), le filtre QL associe un poids plus important à l'estimation en $t+1$ qu'à l'estimation en $t$, ce qui crée une discontinuité. 
 Cette révision est fortement réduite avec la paramétrisation locale du filtre.
-Pour les filtres polynomiaux autres que le filtre LC, les révisions importantes à la première estimation étaient prévisibles au vu de la courbe des coefficients : un poids très important est associé à l'observation courante et il y une forte discontinuité entre la moyenne mobile utilisée pour l'estimation en temps réelle (lorsqu'aucun point dans le futur n'est connu) et les autres moyennes mobiles.   
-Enfin, pour le filtre issu de la méthode FST, la première estimation est fortement révisé, ce qui pouvait être attendu au vu de l'analyse de la courbe de coefficients (figure \@ref(fig:graphsfst)).
+Pour les filtres polynomiaux autres que le filtre LC, les révisions importantes à la première estimation étaient prévisibles au vu de la courbe des coefficients : un poids très important est associé à l'observation courante et il y une forte discontinuité entre la moyenne mobile utilisée pour l'estimation en temps réel (lorsqu'aucun point dans le futur n'est connu) et les autres moyennes mobiles.   
+Enfin, pour le filtre issu de la méthode FST, la première estimation est fortement révisée, ce qui pouvait être attendu au vu de l'analyse de la courbe de coefficients (figure \@ref(fig:graphsfst)).
 Ainsi, pour cette méthode, utiliser le même ensemble de poids ($\alpha$, $\beta$ et $\gamma$) pour construire l'ensemble des moyennes mobiles asymétriques ne semble pas pertinent : pour le filtre utilisé en temps réel (lorsqu'aucun point dans le futur est connu), on pourrait préférer donner un poids plus important à la fidélité afin de minimiser ces révisions.
 
-Le prolongement de la série par un modèle ARIMA donnent révisions avec les dernières estimations du même ordre de grandeur que le filtre LC mais des révisions plus importantes entre les estimations consécutives (on pouvait s'y attendre comme souligné dans la section \@ref(subec:mmetprev)).
+<!-- elles sont à peine plus grandes entre les estimations consécutives? en regardant vite le tableau, j’aurais plutôt envie de dire que c’est quasiment la même chose entre le panneau du haut et du bas -->
+Le prolongement de la série par un modèle ARIMA donne des révisions avec les dernières estimations du même ordre de grandeur que le filtre LC mais des révisions légèrement plus importantes entre les estimations consécutives (on pouvait s'y attendre comme souligné dans la section \@ref(subec:mmetprev)).
 
+<!-- 2 points qui semblent très élevés, dans le tableau du bas, pour ARIMA q = 4 et b_{q,Tau} q=4 -->
 ```{r simulrev, echo = FALSE}
 rev_table <- readRDS("data/simulations_revisions.RDS")
 title = "Moyenne des écarts relatifs des révisions pour les différents filtres sur les séries à variabilité moyenne."
@@ -131,22 +137,26 @@ rev_table  %>%
 
 ## Série réelle
 
-Les différences entre les méthodes sont également illustrée à partir d'un exemple issu de la base FRED-MD (@fredmd) contenant des séries économiques sur les États-Unis^[
+Les différences entre les méthodes sont également illustrées à partir d'un exemple issu de la base FRED-MD (@fredmd) contenant des séries économiques sur les États-Unis^[
 Les séries étudiées correspondent à la base publiée en novembre 2022.
 ].
+<!-- tu écris l’emploi, mais dans les titres des figures, ce sont les ventes au détail -->
 La série étudiée est le niveau d'emploi aux États-Unis (série `CE160V`, utilisée en logarithme) autour du point de retournement de février 2001.
+<!-- peut être utile d’indiquer que tu as choisi ce point car il ressort clairement des données, tu peux même montrer la série pour qu’on en soit bien convaincu. -->
 Cette série a une variabilité moyenne^[
 La variabilité est déterminée en étudiant les séries jusqu'en janvier 2020.
 ] (un filtre symétrique de 13 termes est donc adapté).
 Les figures \@ref(fig:ce16ovlp) et \@ref(fig:ce16ovautres) montrent les estimations successives de la tendance-cycle avec les différentes méthodes étudiées.
-
+<!-- visuellement, j’aurais dit moins que 6 mois pour plusieurs figures. Par ex la première LC de la 6.3, j’aurais dit qu’en mai, elle indique le bon mois de retournement. Il faut pour toi qu’il y ait ta définition, c’est-à-dire 2 mois de hausse, puis 2 mois de baisse, c’est peut-être l’un de ces critères qui empêche de s’en rendre compte plus tôt? -->
+<!-- autre question: par définition, on ne peut pas faire moins que 2 mois, n’est-ce-pas? puisqu’il faut une baisse après le point haut de 2 périodes. ça peut valoir le coup de l’indiquer (je ne sais plus si c’est dit ailleurs) -->
 Sur cette série, le déphasage est de 6 mois pour les méthodes RKHS, la méthode LC (sans paramétrisation locale), la méthode CQ et le prolongement par ARIMA de la série. 
 La paramétrisation locale permet de réduire à 3 mois le déphasage mais a peu d'impact lorsque l'on s'éloigne de la date du point de retournement.
+<!-- donc c’est cool ou pas? si ça permet de mieux appréhender ce qu’il se passe en temps réel, mais que ça ne dégrade pas les estimations quand on est plus loin (ce qui est le risque principal à prendre des estimations trop locales, non?), alors c’est positif, non? D’un autre côté, tu ne peux pas être ultra assertif, car tu n’as qu’un exemple, et pas un résultat valable sur tout un échantillon -->
 Pour les autres méthodes le déphasage est de 6 mois.
 
 Les polynomiales CQ et DAF conduisent à plus de variabilité dans les estimations intermédiaires, en particulier en février 2001.
 Concernant les filtres RKHS, les estimations intermédiaires du filtre $b_{q,\varphi}$ semblent très erratiques, ce qui s'explique, encore une fois, par le fait que les moyennes mobiles asymétriques utilisées lorsque l'on se rapproche du cas symétrique sont éloignées de la moyenne mobile symétrique d'Henderson.
-Les filtres $b_{q,\Gamma}$ et $b_{q,G}$ conduisent à des estimations intermédiaires relativement constantes (estimations en temps réel proches des estimations lorsque quelques points dans le futur est connu) : ces estimations intermédiaires sont peu cohérentes en période de points de retournement et conduisent, dans ce cas, à un déphasage élevé.
+Les filtres $b_{q,\Gamma}$ et $b_{q,G}$ conduisent à des estimations intermédiaires relativement constantes (estimations en temps réel proches des estimations lorsque quelques points dans le futur sont connus) : ces estimations intermédiaires sont peu cohérentes en période de points de retournement et conduisent, dans ce cas, à un déphasage élevé.
 
 
 ```{r ce16ovlp, echo=FALSE, out.width="95%", fig.cap="Estimations successives de la tendance-cycle des ventes au détail aux États-Unis avec les méthodes polynomiales locales."}
@@ -170,14 +180,14 @@ knitr::include_graphics(img)
 ```
 
 
-La qualité des estimations intermédiaires peut également être analysée grâces aux prévisions implicites des différentes méthodes (figures \@ref(fig:ce16ov-previmp-lp) et \@ref(fig:ce16ov-previmp-autres). 
-Pour rappel, il s'agit des prévisions de la série brute qui, en appliquant le filtre symétrique de Henderson sur la série prolongée, donne les mêmes estimations que les moyennes mobiles asymétriques. 
-Les prévisions du modèle ARIMA sont naïve et ne prennent pas en compte le point de retournement, contrairement aux autres méthodes.
+La qualité des estimations intermédiaires peut également être analysée grâces aux prévisions implicites des différentes méthodes (figures \@ref(fig:ce16ov-previmp-lp) et \@ref(fig:ce16ov-previmp-autres)). 
+Pour rappel, il s'agit des prévisions de la série brute qui, en appliquant le filtre symétrique de Henderson sur la série prolongée, donnent les mêmes estimations que les moyennes mobiles asymétriques. 
+Les prévisions du modèle ARIMA sont naïves et ne prennent pas en compte le point de retournement, contrairement aux autres méthodes.
 Autour du point de retournement, les prévisions implicites de la méthode FST sont peu plausibles, essentiellement du fait de la moyenne mobile utilisée pour l'estimation en temps réel.
 Enfin, la paramétrisation locale du filtre QL permet d'aboutir à des prévisions bien plus cohérentes même si le déphasage n'est pas modifié.
 
-
-
+<!-- plus cohérentes que lesquelles? elles m’ont l’air de remonter systématiquement, c’est vraiment une caractéristique ok? -->
+<!-- je pense qu’il manque une conclusion un peu générale, avec du recul: une fois que tu prends tout ça en compte, qu’est-ce qu’il faut choisir? tu dois faire ce travail, ce n’est pas au lecteur de le faire (il le fera à coup sûr, sauf s’il s’appelle James Stock, moins bien que toi) -->
 ```{r ce16ov-previmp-lp, echo=FALSE, out.width="95%", fig.cap="Prévisions implicites liées aux estimations successives de la tendance-cycle des ventes au détail aux États-Unis avec les méthodes polynomiales locales."}
 series <- "CE16OV"
 date <- "fev2001"

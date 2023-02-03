@@ -30,7 +30,7 @@ if(is_html){
 
 # Résumé {-}
 
-
+<!-- je ne relis pas l’anglais pour l’instant, je relirai la version qui sera finalisée. je pense que c’est un peu long pour un résumé. en l’état, ça me paraît entre le 2 pages et l’abstract, ça peut plutôt servir de base à un 2 pages, tu ajoutes un graphique et détaille plus ce que tu fais, et on serait sur un format 2 pages -->
 :::: {.abstract}
 `r if (is_html) '
 :::{.title}
@@ -43,19 +43,22 @@ Au centre de la série,  des moyennes mobiles symétriques sont appliquées^[
 C’est-à-dire que pour estimer la tendance-cycle à la date $t$,  on utilise autant de points dans le passé que dans le futur et le même poids est associé aux observations passées et futures.
 ].
 Cependant, en raison du manque d'observations futures, les estimations en temps réel doivent s'appuyer sur des moyennes mobiles asymétriques.
-C’est ce qui est par exemple fait dans les méthodes de désaisonnalisation les plus utilisées, X-13ARIMA, qui prolonge la série sur 1 an par un modèle ARIMA.
+C’est ce qui est par exemple fait dans les méthodes de désaisonnalisation les plus utilisées, X-13ARIMA, qui prolongent la série sur 1 an par un modèle ARIMA.
 Les prévisions étant des combinaisons linéaires du passé,  cela revient en réalité à utiliser des moyennes mobiles asymétriques dont les coefficients sont optimisés par rapport à la prévision avec une longueur d’avance.
 
 La construction de moyennes mobiles asymétriques performantes en termes de fidélité (préservation du signal), de révision, de lissage et de déphasage (délais dans la détection de points de retournement) est un sujet de recherche toujours ouvert.
-Cette étude décrit et compare des approches récentes pour la construction de moyennes mobiles asymétriques, utilisées pour l’estimation en temps réel de la tendance-cycle : filtres polynomiaux locaux [@proietti2008; @GrayThomson1996] ; méthodes basées sur une optimisation sous contrainte d’une somme pondérée de critères de qualité des moyennes mobiles [@ch15HBSA; @trilemmaWMR2019] ; et filtres basés sur les espaces de Hilbert à noyau reproduisant (RKHS) @dagumbianconcini2008.
+Cette étude décrit et compare des approches récentes pour la construction de moyennes mobiles asymétriques, utilisées pour l’estimation en temps réel de la tendance-cycle : filtres polynomiaux locaux [@proietti2008; @GrayThomson1996] ; méthodes basées sur une optimisation sous contrainte d’une somme pondérée de critères de qualité des moyennes mobiles [@ch15HBSA; @trilemmaWMR2019] ; et filtres basés sur les espaces de Hilbert à noyau reproduisant (RKHS) [@dagumbianconcini2008].
 Elle montre également comment les filtres polynomiaux locaux peuvent être étendus pour inclure un critère de temporalité afin de minimiser le déphasage.
 Enfin,  cette étude montre qu'il est possible d'établir une approche unificatrice générale qui permet de reproduire l’ensemble des méthodes étudiées.
 
-La comparaison des méthodes sur séries simulées montre qu'il est important d'adapter la longueur du filtre à la variabilité de la série. 
-Même si certains filtres RKHS pourraient donner des résultats satisfaisant en termes de délais dans la détection des points de retournement, leur utilisation doit être limitées aux premières estimations de la tendances-cycles. Lorsque l'on se rapproche de l'estimation finale (i.e., lorsque beaucoup de points dans le futur sont connus), d'autres méthodes devraient être utilisées afin de limiter les révisions. Les filtres RKHS sont par ailleurs sujets à problèmes d'optimisation.
-Enfin, lorsque la longueur du filtre est adapté à la variabilité de la série, chercher à conserver des tendances polynomiales de degré supérieur à un semble introduire de la variance dans les estimations (et donc plus de révisions) sans gain significatif en termes de détection de point de retournement.
+La comparaison des méthodes sur séries simulées montre qu'il est important d'adapter la longueur du filtre à la variabilité de la série.
+<!-- remplacer "dans le futur" par quelque chose mieux dit que: après la date d’estimation, ou après la date à laquelle on cherche à identifier un retournement ... -->
+Même si certains filtres RKHS pourraient donner des résultats satisfaisants en termes de délais dans la détection des points de retournement, leur utilisation devrait être limitée aux premières estimations de la tendance-cycle. Lorsque l'on se rapproche de l'estimation finale (i.e., lorsque beaucoup de points dans le futur sont connus), d'autres méthodes devraient être utilisées afin de limiter les révisions. 
+<!-- expliquer brièvement quels problèmes -->
+Les filtres RKHS sont par ailleurs sujets à problèmes d'optimisation.
+Enfin, lorsque la longueur du filtre est adaptée à la variabilité de la série, chercher à conserver des tendances polynomiales de degré supérieur à un semble introduire de la variance dans les estimations (et donc plus de révisions) sans gain significatif en termes de détection de point de retournement.
 
-Cette étude est reproductible. En particulier, toutes les méthodes décrites sont implémentées dans le *package* `r fa_r_project` `rjd3filters` (https://github.com/palatej/rjd3filters) et tous les codes utilisées sont disponibles sous https://github.com/InseeFrLab/XXXXXXXXX.
+Cette étude est reproductible. En particulier, toutes les méthodes décrites sont implémentées dans le *package* `r fa_r_project` `rjd3filters` (https://github.com/palatej/rjd3filters) et tous les codes utilisés sont disponibles sous https://github.com/InseeFrLab/XXXXXXXXX.
 ::::
 
 

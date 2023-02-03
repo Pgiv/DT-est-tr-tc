@@ -365,7 +365,7 @@ Dans les applications empiriques, la paramétrisation locale finale correspond �
 ## Extension avec le critère de *timeliness* {#subsec-lptimeliness}
 
 Un inconvénient de la méthode précédente est que le déphasage n'est pas contrôlé. 
-Il est en revanche possible de généraliser davantage la modélisation en ajoutant le critère de *timeliness* définit par @ch15HBSA dans l'équation \@ref(eq:lppasym). 
+Il est en revanche possible de généraliser davantage la modélisation en ajoutant le critère de *timeliness* défini par @ch15HBSA dans l'équation \@ref(eq:lppasym). 
 <!-- ref de jean palate? -->
 C'est ce qui a été proposé par Jean Palate, puis codé en Java^[https://github.com/palatej/jdemetra-core.] et intégré dans `rjd3filters`.
 
