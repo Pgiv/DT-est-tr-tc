@@ -34,7 +34,7 @@ On a :
 \end{align}
 
 L'intervalle $[0,\pi]$ peut être coupé en deux : une partie dite *pass-band* $[0,\omega_1]$ (l'intervalle de fréquences qui contient le signal cible) et une partie dite *stop-band*  $[\omega_1,\pi]$ (l'intervalle de fréquences associé aux résidus).
-<!-- (je ne vois pas le (4.1) dans le document, mais je vois bien à quelle équation il fait référence quand je clique dessus) -->
+
 L'erreur de l'équation \@ref(eq:msedef) peut être décomposée en 4 quantités :
 \begin{align*}
 Accuracy =A_w(\theta)&= 2\int_0^{\omega_1}\left(\rho_s(\omega)-\rho_\theta(\omega)\right)^{2}h(\omega)\ud\omega\\
