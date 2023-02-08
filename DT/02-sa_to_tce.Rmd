@@ -18,8 +18,7 @@ Dans ce cas, la tendance et le cycle sont estimés conjointement : les deux comp
 Toutes ces composantes étant inobservées, l'estimation de l'une dépend de l'estimation des autres.
 Ainsi, même si dans ce rapport, nous nous intéresserons aux méthodes d'extraction de tendance-cycle, celles-ci ne peuvent s'étudier indépendamment du processus du désaisonnalisation.
 Ce lien explique également que toutes les méthodes utilisées dans ce rapport sont implémentées dans les bibliothèques de Java de JDemetra+^[Voir https://github.com/jdemetra/jdemetra-core.], le logiciel de désaisonnalisation recommandé par Eurostat.
-<!-- il manque quelque chose après "ensemble des" -->
-Une interface `r fa_r_project` à l'ensemble des a été développée autour des méthodes présentées dans cette étude, grâce au *package* `rjd3filters`^[Disponible sur https://github.com/palatej/rjd3filters.].
+Une interface `r fa_r_project` autour des méthodes présentées dans cette étude est disponible dans le *package* `rjd3filters`^[Disponible sur https://github.com/palatej/rjd3filters.].
  
 Les filtres linéaires (ou moyennes mobiles) sont omniprésents dans la désaisonnalisation et l'estimation des différentes composantes.
 Au centre de la série, des filtres dits symétriques sont appliqués (pour estimer une composante à la date $t$, on utilise autant de points après $t$ qu'avant $t$).
@@ -46,13 +45,11 @@ D'une part, cela permet de faire une première revue de la littérature sur les 
 D'autre part, cela permet de montrer les liens entre toutes ces approches et de les comparer en utilisant une même méthodologie.
  
 Pour cela nous utiliserons l'approche générale de @ch15HBSA (section \@ref(subsec-formulegen)) qui ont également proposé une procédure globale pour construire des moyennes mobiles asymétriques permettant de minimiser les effets de déphasage (section \@ref(subsec-GuggemosEtAl)).
-<!-- pb lien annexe -->
 Des diagrammes synthétiques des liens entre les différentes méthodes étudiées sont présentés dans l'annexe \@ref(an-diag).
  
 Nous nous intéresserons uniquement aux estimations intermédiaires de la tendance-cycle faites en temps réels.
 Le filtre symétrique utilisé pour les estimations finales ne sera pas remis en cause et sera celui d'Henderson.
-<!-- phrase à finir -->
-Nous nous concentrons également sur les méthodes qui pourraient être implémentées dans X-13ARIMA et qui pourra.
+Nous nous concentrons également sur les méthodes qui pourraient être implémentées dans X-13ARIMA et remplacer la méthode actuellement utilisée (prolongement de la série par modèle ARIMA puis utilisation d'un filtre symétrique).
 Pour maintenir la cohérence avec l'approche non paramétrique de X-13ARIMA, nous nous concentrons sur les méthodes d'extraction non paramétriques.
 C'est pourquoi ni les filtres de l'approche de @trilemmaWMR2019 (section \@ref(sec-WildiMcLeroy)), ni d'autres approches basées sur des modèles ne sont, pour l'instant, utilisées dans les simulations.
 Même si les différentes méthodes sont comparées en les appliquant sur des séries déjà désaisonnalisées, elles peuvent être intégrées dans l'algorithme de désaisonnalisation X-11 grâce à la fonction `rjd3filters::x11()`.
