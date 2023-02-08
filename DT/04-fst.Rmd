@@ -1,14 +1,17 @@
 # D'une formule générale sur la construction des filtres asymétriques à l'approche FST {#sec-formulegen}
 
-## formule générale de construction des filtres asymétriques {#subsec-formulegen}
+## Formule générale de construction des filtres asymétriques {#subsec-formulegen}
 
 Pour établir une formule générale englobant les principaux filtres linéaires, @ch15HBSA définissent deux critères. 
 En changeant légèrement les notations utilisées par les auteurs afin d'avoir une formulation plus générale, ces deux critères peuvent s'écrire :
 \begin{align}
-I(\theta,q,y_t,u_t)&=\E{(\Delta^{q}M_\theta y_t-u_t)^{2}} (\#eq:formulegen1) \\
+I(\theta,q,y_t,u_t)&=\E{(\Delta^{q}(M_\theta y_t-u_t))^{2}} (\#eq:formulegen1) \\
 J(\theta,f, \omega_1,\omega_2)&=\int_{\omega_1}^{\omega_2} f\left[\rho_\theta(\omega), \varphi_\theta (\omega), \omega\right] \ud \omega (\#eq:formulegen2)
 \end{align}
-où $y_t$ est la série étudiée, $u_t$ une série de référence et $\Delta$ est l'opérateur différence ($\Delta y_t=y_t-y_{t-1}$ et $\Delta^q=\underbrace{\Delta \circ \dots \circ \Delta}_{q\text{ fois}}$ pour $q\in\N$).
+où $y_t$ est la série étudiée, $u_t$ une série de référence^[
+La série de référence est en général un estimateur robuste de la tendance-cycle de $Y_t$ que l'on cherche à approcher par application de la moyenne mobile $M_\theta$ sur les observations $y_t$.
+Cet estimateur peut également dépendre de $M_\theta$
+] et $\Delta$ est l'opérateur différence ($\Delta y_t=y_t-y_{t-1}$ et $\Delta^q=\underbrace{\Delta \circ \dots \circ \Delta}_{q\text{ fois}}$ pour $q\in\N$).
 Dans la majorité des cas, la fonction $f$ ne dépendra que de la fonction de gain, $\rho_\theta$, et de la fonction de déphasage, $\varphi_\theta$.
 Dans ce cas, par simplification on écrira $f\left[\rho_\theta(\omega), \varphi_\theta (\omega), \omega\right] = f\left[\rho_\theta(\omega), \varphi_\theta (\omega)\right]$.
 
@@ -22,6 +25,7 @@ s.t. & C\theta=a
 \end{cases}
 $$
 <!-- je ne comprends pas bien comment est u, comment la fonction est choisie, son rôle ... est-ce que tu penses qu’il faudrait donner un peu plus d’infos au lecteur à ce moment? -->
+<!-- Rep AQLT : note de bas de page ajoutée plus haut -->
 C'est en particulier le cas de l'approche *Fidelity-Smoothness-Timeliness* (FST) développée par les mêmes auteurs.
 
 ## Approche *Fidelity-Smoothness-Timeliness* (FST) {#subsec-GuggemosEtAl}
@@ -62,8 +66,10 @@ $$
 $$
 Comme fonction de pénalité, les auteurs suggèrent de prendre $f\colon(\rho,\varphi)\mapsto\rho^2\sin(\varphi)^2$. 
 Cela permet notamment d'avoir une *timeliness* qui peut s'écrire comme une forme quadratique positive ($T_g(\theta)=\theta'T\theta$ avec $T$ une matrice carré symétrique d'ordre $p+f+1$, voir @ch15HBSA pour la démonstration).
-Dans cet article nous utilisons $\omega_1=0$ et $\omega_2=2\pi/12$ : on ne s'intéresse qu'à des séries mensuelles et au déphasage qui impactent les cycles d'au minimum 12 mois.
-<!-- pas évident pourquoi ce choix de omega_2 implique de regarder des déphasages d’aun moins 12 mois? -->
+Dans cet article nous utilisons $\omega_1=0$ et $\omega_2=2\pi/12$ : on ne s'intéresse qu'à des séries mensuelles et au déphasage qui impactent les cycles d'au minimum 12 mois^[
+En effet, dans le domaine des fréquences, la fréquence $2\pi/12$ correspond aux évènements qui se répètent toutes les 12 périodes.
+Pour une série mensuelle, la période correspond au mois : $\omega_2=2\pi/12$ corresponds donc aux cycles de 12 mois.
+].
 
 En somme, l'approche FST consiste à minimiser une somme pondérée de ces trois critères sous certaines contraintes (généralement préservation polynomiale).
 
