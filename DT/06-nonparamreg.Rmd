@@ -438,24 +438,24 @@ $$
 Pour le filtre central, les auteurs cherchent à avoir un estimateur $\hat g_t$ qui soit sans biais (ce qui implique que $\theta$ conserve les tendances de degré $d$) et qui minimise une somme pondérée d'un critère de *fidelity* et d'un critère de *smoothness* :
 \begin{equation}
 Q=\alpha\underbrace{\E{(\hat{g}_{t}-g_{t})^{2}}}_{=F_{GT}}+
-(1-\alpha)\underbrace{\E{ (\Delta^{p+1}\hat{g}_{t})^{2}} }_{=S_{GT}}
+(1-\alpha)\underbrace{\E{ (\Delta^{d+1}\hat{g}_{t})^{2}} }_{=S_{GT}}
 (\#eq:graythomsonindicators)
 \end{equation}
 La solution est un filtre symétrique qui peut s'écrire sous la forme
 \[
-\theta=E_{\alpha}^{-1}X\left[X'E_{\alpha}^{-1}X\right]^{-1}e_{1}\text{ avec }E_{\alpha}=\alpha\left(\sigma^{2}I+\Omega\right)+(1-\alpha)\left(\sigma^{2}B_{p+1}+\Gamma\right)
+\theta=E_{\alpha}^{-1}X\left[X'E_{\alpha}^{-1}X\right]^{-1}e_{1}\text{ avec }E_{\alpha}=\alpha\left(\sigma^{2}I+\Omega\right)+(1-\alpha)\left(\sigma^{2}B_{d+1}+\Gamma\right)
 \]
 où :
 \[
 \begin{cases}
 \Omega_{jk} & =cov\left(\xi_{t+j}-\xi_{t},\xi_{t+k}-\xi_{t}\right)\\
-\Gamma_{jk} & =cov\left(\Delta^{p+1}\xi_{t+j},\Delta^{p+1}\xi_{t+k}\right)\\
-\sigma^{2}\left(B_{p+1}\right)_{jk} & =cov\left(\Delta^{p+1}\varepsilon_{t+j},\Delta^{p+1}\varepsilon_{t+k}\right)
+\Gamma_{jk} & =cov\left(\Delta^{d+1}\xi_{t+j},\Delta^{d+1}\xi_{t+k}\right)\\
+\sigma^{2}\left(B_{d+1}\right)_{jk} & =cov\left(\Delta^{d+1}\varepsilon_{t+j},\Delta^{d+1}\varepsilon_{t+k}\right)
 \end{cases}.
 \]
 Les deux critères utilisés dans le programme de minimisation \@ref(eq:graythomsonindicators) sont des cas particuliers du critère $I$ défini dans l'équation \@ref(eq:formulegen1) :
 \begin{align*}
-F_{GT}(\theta)&=I(\theta,0,y_t,M_\theta y_t)\\
+F_{GT}(\theta)&=I(\theta,0,y_t,g_t)\\
 S_{GT}(\theta)&=I(\theta,d+1,y_t,0).
 \end{align*}
 La formule générale définie dans la section \@ref(subsec-formulegen) permet donc de retrouver les filtres de @GrayThomson1996.
