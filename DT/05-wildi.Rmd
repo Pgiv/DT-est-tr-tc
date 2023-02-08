@@ -1,8 +1,8 @@
 # Filtres dépendant des données : trilemme ATS {#sec-WildiMcLeroy}
 
 @trilemmaWMR2019 proposent une approche dépendante des données (*data-dependent*) pour calculer des filtres linéaires.
-Ils décomposent l'erreur quadratique moyenne de révision en un trilemme de trois quantités appelées *accuracy* (précision), *timeliness* (temporalité) et *smoothness* (lissage), d'où son nom *ATS-trilemna*.
-<!-- trilemma ou trilemna ? -->
+Ils décomposent l'erreur quadratique moyenne de révision en un trilemme de trois quantités appelées *accuracy* (précision), *timeliness* (temporalité) et *smoothness* (lissage), d'où son nom *ATS-trilemma*.
+
 Soient :
 
 - $\left\{ y_{t}\right\}$ notre série temporelle en entrée^[
@@ -88,10 +88,10 @@ C'est pourquoi elle n'est pour l'instant pas comparée aux autres.
 Pour avoir des critères qui ne dépendent pas des données, une idée serait de fixer la densité spectrale, par exemple à celle d'un bruit blanc ($h_{WN}(x)=1$) ou d'une marche aléatoire ($h_{RW}(x)=\frac{1}{2(1-\cos(x))}$). 
 C'est ce qui est implémenté dans la fonction `rjd3filters::dfa_filter()`.
 
-:::: {.summary_box data-latex="{ATS-trilemna -- Wildi et McElroy (2019)}"}
+:::: {.summary_box data-latex="{ATS-trilemma -- Wildi et McElroy (2019)}"}
 `r if (is_html) '
 :::{.title}
-ATS-trilemna - @trilemmaWMR2019
+ATS-trilemma - @trilemmaWMR2019
 :::
 '`
 - Les valeurs des différents critères peuvent être comparées et les poids associés peuvent être interprétés.
