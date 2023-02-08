@@ -3,10 +3,12 @@
 .RData
 .Ruserdata
 .DS_Store
-Stage_3A_cache
+*_cache
 *.aux
 *.log
 *.synctex.gz
 img/bookdown
 _book
 _bookdown_files
+DT_*
+data/.*
