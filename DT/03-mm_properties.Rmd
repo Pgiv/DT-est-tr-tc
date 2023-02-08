@@ -19,7 +19,8 @@ Dans ce cas, la quantité $h=p=f$ est appelée *fenêtre* (*bandwidth*).
 
 ## Gain et fonction de déphasage
 
-Soit $X_t=\e^{-i\omega t}$ avec $\omega\in[0,\pi]$. La moyenne mobile $M_\theta$ transforme $X_t$ en :
+Soit $X_t=\e^{-i\omega t}$ une série harmonique avec $\omega\in[0,\pi]$. 
+La moyenne mobile $M_\theta$ transforme $X_t$ en :
 $$
 Y_t = M_{\theta}X_t = \sum_{k=-p}^{+f} \theta_k \e^{-i \omega (t+k)}
 = \left(\sum_{k=-p}^{+f} \theta_k \e^{-i \omega k}\right)\cdot X_t.
@@ -34,10 +35,10 @@ $$
 où $\rho_\theta(\omega)=G_\theta(\omega)=\lvert\Gamma_\theta(\omega)\rvert$ est la fonction de *gain* ou *d'amplitude* et $\varphi_\theta(\omega)$ est le *déphasage* (*phase shift* ou *time shift*)^[
 Cette fonction est parfois définie comme  $\phi_\theta(\omega)=\frac{\varphi_\theta(\omega)}{\omega}$ pour mesurer le déphasage en termes de période.
 ]. 
-<!-- petit phi, non? -->
-Pour tous les filtres symétriques on a $\Phi_\theta(\omega)\equiv 0 \;(modulo\;{\pi})$.
-<!-- définir harmonique? -->
-En somme, appliquer une moyenne mobile à une série harmonique la modifie de deux façons :
+Pour tous les filtres symétriques on a $\phi_\theta(\omega)\equiv 0 \;(modulo\;{\pi})$.
+<!-- définir harmonique? C'est fait plus haut maintenant -->
+
+En somme, appliquer une moyenne mobile à une série harmonique (de la forme $X_t=\e^{-i\omega t}$) la modifie de deux façons :
 
 - en la multipliant par un coefficient égal à $\rho_{\theta}\left(\omega\right)$ (gain) ;
 
@@ -79,6 +80,7 @@ $$
 \sum_{k=-p}^{+f}k\theta_k=0.
 $$
 <!-- (très mineur: tu peux écrire de manière plus concise avec j dans [0,d], car k^0=1) -->
+<!-- Rep AQLT : Effectivement mais je trouve que l'on perd en lisibilité -->
 - De manière générale, $M_\theta$ conserves les tendances de degré $d$ si et seulement si :
 $$
 \sum_{k=-p}^{+f}\theta_k=1
@@ -173,11 +175,12 @@ Voir section \@ref(subsec-GuggemosEtAl) pour plus de détails.
 @trilemmaWMR2019 proposent une approche qui s’appuie sur la décomposition de l'erreur quadratique moyenne entre le filtre symétrique et le filtre asymétrique en quatre quantités : *Accuracy* ($A_w$, précision), *Timeliness* ($T_w$, déphasage), *Smoothness* ($S_w$, lissage) et *Residual* ($R_w$, résidus).
 Voir section \@ref(sec-WildiMcLeroy) pour plus de détails.
 <!-- fixée celle d’un bruit blanc: il manque quelque chose jepense -->
+<!-- Rep : tentative de clarification en changeant la formulation -->
 ```{r, include=FALSE}
 title <- "Critères de qualité d'une moyenne mobile $\\theta=(\\theta_k)_{-p\\leq k\\leq f}$ définie par une fonction de gain $\\rho_{\\theta}$ et une fonction de déphasage $\\varphi_\\theta$."
 footnotes <- c("$X_g$ critères provenant de @ch15HBSA et $X_w$ critères provenant de @trilemmaWMR2019.",
                "$\\rho_s$ et $\\varphi_s$ représentent le gain et la fonction de déphasage du filtre symétrique d'Henderson.",
-               "$h$ est la densité spectrale de la série en entrée, fixée celle d'un bruit blanc, $h_{WN}(x)=1$, ou d'une marche aléatoire, $h_{RW}(x)=\\frac{1}{2(1-\\cos(x))}$."
+               "$h$ est la densité spectrale de la série en entrée, considérée comme étant celle d'un bruit blanc ($h_{WN}(x)=1$) ou d'une marche aléatoire ($h_{RW}(x)=\\frac{1}{2(1-\\cos(x))}$)."
 )
 ```
 
