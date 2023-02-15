@@ -11,12 +11,13 @@ Une moyenne mobile est une méthode statistique qui consiste à appliquer une mo
 Ainsi, la méthode de désaisonnalisation X-13ARIMA-SEATS utilise des moyennes mobiles de Henderson et des moyennes mobiles composites pour estimer les principales composantes d'une série chronologique. 
 Au centre de la série, des filtres symétriques sont appliqués. 
 <!-- ou en temps réel plutôt qu’au bord de l’échantillon. Mais le pb se pose aussi peut-être en début d’échantillon -->
-En revanche au bord de l’échantillon, en raison de l’absence d’observations futures, toutes ces méthodes doivent s'appuyer sur des filtres asymétriques pour estimer les points les plus récents. 
-<!-- applique au singulier? -->
-Par exemple, même si X-13ARIMA-SEATS appliquent des moyennes symétriques aux prévisions obtenues à partir d'un modèle ARIMA, cela revient à appliquer des filtres asymétriques en fin de série, car les valeurs prédites sont des combinaisons linéaires de valeurs passées. 
+<!-- Rep AQLT : en temps réel c'est bien, en début d'échantillon le problème se pose aussi mais comme les valeurs passées ne sont jamais connues l'enjeu est plus faible --> 
+En revanche, pour les estimations récentes, en raison de l’absence d’observations futures, toutes ces méthodes doivent s'appuyer sur des filtres asymétriques pour estimer les points les plus récents. 
+Par exemple, même si X-13ARIMA-SEATS applique des moyennes symétriques aux prévisions obtenues à partir d'un modèle ARIMA, cela revient à appliquer des filtres asymétriques en fin de série, car les valeurs prédites sont des combinaisons linéaires de valeurs passées. 
 
 <!-- une référence pour la 2e partie de la phrase? -->
-Si ces moyennes mobiles asymétriques ont de bonnes propriétés concernant la taille des révisions futures induites par le processus de lissage^[Voir par exemple @pierce1980SA.], elles induisent également des déphasages qui retardent en général la détection en temps réel des points de retournement.
+<!-- Rep AQLT : pas de référence particulière, c'est une propriété statistique non étudiée en général -->
+Si ces moyennes mobiles asymétriques ont de bonnes propriétés concernant la taille des révisions futures induites par le processus de lissage^[Voir par exemple @pierce1980SA.], elles induisent également, par construction, des déphasages qui retardent en général la détection en temps réel des points de retournement (voir section \@ref(sec-propMM)).
 
 L'objectif de cette étude est de décrire et de comparer les approches récentes permettant l’extraction de tendance-cycle : filtres polynomiaux locaux, méthodes fondées sur une optimisation des propriétés des filtres, et filtres fondés sur les espaces de Hilbert à noyau reproduisant (RKHS).  
 Toutes ces méthodes sont implémentées dans le *package* `r fa_r_project` `rjd3filters`^[https://github.com/palatej/rjd3filters.], tous les résultats de cette étude sont facilement reproductibles.
