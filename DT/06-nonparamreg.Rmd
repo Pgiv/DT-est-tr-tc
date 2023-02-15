@@ -4,14 +4,20 @@ Comme notamment montré par @Loader1999, la régression locale est un cas partic
 Supposons que l'on ait un ensemble de points $(x_i,y_i)_{1\leq i\leq n}$. 
 La régression non paramétrique consiste à supposer qu'il existe une fonction $\mu$, à estimer, telle que $y_i=\mu(x_i)+\varepsilon_i$ avec $\varepsilon_i$ un terme d'erreur.
 D'après le théorème de Taylor, pour tout point $x_0$, si $\mu$ est différentiable $d$ fois, alors :
-$$
+\begin{equation}
 \forall x \::\:\mu(x) = \mu(x_0) + \mu'(x_0)(x-x_0)+\dots +
-\frac{\mu^{(d)}(x_0)}{d!}(x-x_0)^d+R_d(x),
-$$
+\frac{\mu^{(d)}(x_0)}{d!}(x-x_0)^d+R_d(x), (\#eq:taylor)
+\end{equation}
 où $R_d$ est un terme résiduel négligeable au voisinage de $x_0$. 
 Dans un voisinage $h(x_0)$ autour de $x_0$, $\mu$ peut être approchée par un polynôme de degré $d$. 
 La quantité $h(x_0)$ est appelée *fenêtre* (*bandwidth*).
-Si $\varepsilon_i$ est un bruit blanc, on peut donc estimer par les moindres carrés $\mu(x_0)$ en utilisant les observations qui sont dans $\left[x_0-h(x_0),x_0+h(x_0)\right]$.
+Si $\varepsilon_i$ est un bruit blanc, on peut donc estimer par les moindres carrés $\mu(x_0)$ en utilisant les observations qui sont dans $\left[x_0-h(x_0),x_0+h(x_0)\right]$.  
+
+De nombreuses méthodes d'extraction de la tendance-cycle sont basées sur la régression non-paramétrique.
+Elles supposent que la tendance est localement polynomiale (ce qui est justifié par l'équation \@ref(eq:taylor)) et utilisent différentes méthodes d'estimation pour en déduire des moyennes mobiles symétriques et asymétriques.  
+Ainsi, @GrayThomson1996 (section\@ref(subsec-graythomson)) proposent un cadre statistique complet permettant notamment de modéliser l'erreur d'approximation de la tendance par des polynômes locaux.
+Toutefois, la spécification de cette erreur étant en générale complexe, des modélisations plus simples peuvent être préférées, comme celle de @proietti2008 (section \@ref(sec-proietti)).  
+Enfin, @dagumbianconcini2008 (section \@ref(#sec-rkhs)) proposent une modélisation similaire de la tendance-cycle mais utilisant la théorie des espaces de Hilbert à noyau reproduisant pour l'estimation, ce qui a notamment l'avantage de faciliter le calcul des différentes moyennes mobiles à différentes fréquences temporelles.  
 
 ## Régression polynomiale : approche de Proietti et Luati {#sec-proietti}
 
@@ -501,7 +507,7 @@ Minimiser des critères de révision serait donc préférable puisque cela revie
 Ainsi, même si au centre de la série le choix des poids entre les deux critères contrôle indirectement le niveau des indicateurs, ce n'est plus le cas en fin de série.
 De plus, en fin de série, cela pourrait introduire des déphasages plus importants car $S_{GT}$ dépend du temps et des valeurs passées (du fait de l'utilisation de l'opérateur différence).
 
-Inversement, @ch15HBSA justifie de ne pas intégrer le critère de révision dans leur problème car ce critère est fortement corrélé à une combinaison fixée, donc non ajustable par l'utilisateur, des critères *fidelity* et *timeliness*.
+Inversement, @ch15HBSA justifient de ne pas intégrer le critère de révision dans leur problème car ce critère est fortement corrélé à une combinaison fixée, donc non ajustable par l'utilisateur, des critères *fidelity* et *timeliness*.
 ::::
 
 
