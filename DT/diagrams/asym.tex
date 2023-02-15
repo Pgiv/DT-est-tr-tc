@@ -6,7 +6,7 @@
 \node at (3,0) [generalbox, max width=8cm] (formulegen){
 \[
 \begin{cases}
-I(\theta,q,y_t,u_t)=\E{(\Delta^{q}M_\theta y_t-u_t)^{2}} \\
+I(\theta,q,y_t,u_t)=\E{(\Delta^{q}(M_\theta y_t-u_t))^{2}} \\
 J(\theta, f, \omega_1,\omega_2)=\int_{\omega_1}^{\omega_2} f\left[\phi_\theta(\omega), \varphi_\theta (\omega)\right] \ud \omega
 \end{cases}
 \]
@@ -254,7 +254,7 @@ $d=1$
 \draw[edgegeneral] (formulegen.west)-|(graythomsonequiv) node[pos = 0.8, right]{
 $y_t=\sum_{j=0}^d\beta_jt^j+\xi_t+\varepsilon_t$,  avec $\varepsilon_t$ bruit blanc $\V{\varepsilon_t}=\sigma^2$ et $\xi_t$ non corrélé à $\varepsilon_t$,  $\Omega = \V{(\xi_{t-h},\dots,\xi_{t+h})}$
 \begin{align*}
-\min R(\theta)& =\E{\left(M_{\theta^s} y_t) - M_{\theta} y_t)\right)^2}
+\min R(\theta)& =\E{\left(M_{\theta^s} y_t - M_{\theta} y_t\right)^2}
 \\&= I(\theta,\,0,\,y_t,\,M_{\theta^s} y_t) \\
 sc.\quad&  X'_{d}\theta=e_1\text{ ou } X'_{d-1}\theta=e_1
 \end{align*}
