@@ -1,8 +1,9 @@
 # Filtres dépendant des données : trilemme ATS {#sec-WildiMcLeroy}
 
 @trilemmaWMR2019 proposent une approche dépendante des données (*data-dependent*) pour calculer des filtres linéaires.
-Ils décomposent l'erreur quadratique moyenne de révision en un trilemme de trois quantités appelées *accuracy* (précision), *timeliness* (temporalité) et *smoothness* (lissage), d'où son nom *ATS-trilemna*.
-<!-- trilemma ou trilemna ? -->
+L'idée est la même que pour le filtre FST : les moyennes mobiles sont calculées par minimisation d'une somme pondérée de critères de qualité, mais les critères sont calculés différemment.
+Les auteurs décomposent l'erreur quadratique moyenne de révision en un trilemme de trois quantités appelées *accuracy* (précision), *timeliness* (temporalité) et *smoothness* (lissage), d'où son nom *ATS-trilemma*.
+
 Soient :
 
 - $\left\{ y_{t}\right\}$ notre série temporelle en entrée^[
@@ -34,7 +35,7 @@ On a :
 \end{align}
 
 L'intervalle $[0,\pi]$ peut être coupé en deux : une partie dite *pass-band* $[0,\omega_1]$ (l'intervalle de fréquences qui contient le signal cible) et une partie dite *stop-band*  $[\omega_1,\pi]$ (l'intervalle de fréquences associé aux résidus).
-<!-- (je ne vois pas le (4.1) dans le document, mais je vois bien à quelle équation il fait référence quand je clique dessus) -->
+
 L'erreur de l'équation \@ref(eq:msedef) peut être décomposée en 4 quantités :
 \begin{align*}
 Accuracy =A_w(\theta)&= 2\int_0^{\omega_1}\left(\rho_s(\omega)-\rho_\theta(\omega)\right)^{2}h(\omega)\ud\omega\\
@@ -88,13 +89,13 @@ C'est pourquoi elle n'est pour l'instant pas comparée aux autres.
 Pour avoir des critères qui ne dépendent pas des données, une idée serait de fixer la densité spectrale, par exemple à celle d'un bruit blanc ($h_{WN}(x)=1$) ou d'une marche aléatoire ($h_{RW}(x)=\frac{1}{2(1-\cos(x))}$). 
 C'est ce qui est implémenté dans la fonction `rjd3filters::dfa_filter()`.
 
-:::: {.summary_box data-latex="{ATS-trilemna -- Wildi et McElroy (2019)}"}
+:::: {.summary_box data-latex="{ATS-trilemma -- Wildi et McElroy (2019)}"}
 `r if (is_html) '
 :::{.title}
-ATS-trilemna - @trilemmaWMR2019
+ATS-trilemma - @trilemmaWMR2019
 :::
 '`
-- Les valeurs des différents critères peuvent être comparées et les poids associés peuvent être interprétés.
+- Les valeurs des différents critères peuvent être comparées et les poids associés peuvent être interprétés (contrairement à la méthode FST).
 
 - Méthode généralisable aux cas multivariés.
 

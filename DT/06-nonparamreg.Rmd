@@ -4,14 +4,20 @@ Comme notamment montré par @Loader1999, la régression locale est un cas partic
 Supposons que l'on ait un ensemble de points $(x_i,y_i)_{1\leq i\leq n}$. 
 La régression non paramétrique consiste à supposer qu'il existe une fonction $\mu$, à estimer, telle que $y_i=\mu(x_i)+\varepsilon_i$ avec $\varepsilon_i$ un terme d'erreur.
 D'après le théorème de Taylor, pour tout point $x_0$, si $\mu$ est différentiable $d$ fois, alors :
-$$
+\begin{equation}
 \forall x \::\:\mu(x) = \mu(x_0) + \mu'(x_0)(x-x_0)+\dots +
-\frac{\mu^{(d)}(x_0)}{d!}(x-x_0)^d+R_d(x),
-$$
+\frac{\mu^{(d)}(x_0)}{d!}(x-x_0)^d+R_d(x), (\#eq:taylor)
+\end{equation}
 où $R_d$ est un terme résiduel négligeable au voisinage de $x_0$. 
 Dans un voisinage $h(x_0)$ autour de $x_0$, $\mu$ peut être approchée par un polynôme de degré $d$. 
 La quantité $h(x_0)$ est appelée *fenêtre* (*bandwidth*).
-Si $\varepsilon_i$ est un bruit blanc, on peut donc estimer par les moindres carrés $\mu(x_0)$ en utilisant les observations qui sont dans $\left[x_0-h(x_0),x_0+h(x_0)\right]$.
+Si $\varepsilon_i$ est un bruit blanc, on peut donc estimer par les moindres carrés $\mu(x_0)$ en utilisant les observations qui sont dans $\left[x_0-h(x_0),x_0+h(x_0)\right]$.  
+
+De nombreuses méthodes d'extraction de la tendance-cycle sont basées sur la régression non-paramétrique.
+Elles supposent que la tendance est localement polynomiale (ce qui est justifié par l'équation \@ref(eq:taylor)) et utilisent différentes méthodes d'estimation pour en déduire des moyennes mobiles symétriques et asymétriques.  
+Ainsi, @GrayThomson1996 (section\@ref(subsec-graythomson)) proposent un cadre statistique complet permettant notamment de modéliser l'erreur d'approximation de la tendance par des polynômes locaux.
+Toutefois, la spécification de cette erreur étant en générale complexe, des modélisations plus simples peuvent être préférées, comme celle de @proietti2008 (section \@ref(sec-proietti)).  
+Enfin, @dagumbianconcini2008 (section \@ref(#sec-rkhs)) proposent une modélisation similaire de la tendance-cycle mais utilisant la théorie des espaces de Hilbert à noyau reproduisant pour l'estimation, ce qui a notamment l'avantage de faciliter le calcul des différentes moyennes mobiles à différentes fréquences temporelles.  
 
 ## Régression polynomiale : approche de Proietti et Luati {#sec-proietti}
 
@@ -27,8 +33,10 @@ $$
 \forall j\in\left\llbracket -h,h\right\rrbracket :\:
 y_{t+j}=m_{t+j}+\varepsilon_{t+j},\quad m_{t+j}=\sum_{i=0}^{d}\beta_{i}j^{i}.
 $$
-Le problème d'extraction de la tendance est équivalent à l'estimation de $m_t=\beta_0$. 
+Le problème d'extraction de la tendance est équivalent à l'estimation de $m_t=\beta_0$ (la constante dans la formule précédente). 
 <!-- est-ce que c’est le même beta_0 que celui du coef ^0 dans le polynome? ou c’est la vraie valeur de beta? -->
+<!-- Rep AQLT : il s'agit bien de la constante, les autres paramètres sont des variables de controle -->
+
 En notation matricielle :
 $$
 \underbrace{\begin{pmatrix}y_{t-h}\\
@@ -95,7 +103,7 @@ Le noyau uniforme est donc à éviter.
 ### Les différents noyaux {#sec-kernels}
 
 Dans les problèmes d'extraction du signal, les observations sont généralement pondérées par rapport à leur distance à la date $t$ : pour estimer la tendance-cycle à la date $t$, on accorde généralement plus d'importance aux observations qui sont proches de $t$.
-<!-- a moins qu’on ne désigne pas le noyau K par sa densité kappa? -->
+
 Dans le cas continu, un noyau $\kappa$ est une fonction positive, paire et intégrable telle que $\int_{-\infty}^{+\infty}\kappa(u) \ud u=1$ et $\kappa(u)=\kappa(-u)$. 
 Dans le cas discret, un noyau est un ensemble de poids $\kappa_j$, $j=0,\pm1,\dots,\pm h$ avec $\kappa_j \geq0$ et $\kappa_j=\kappa_{-j}$.
 
@@ -167,10 +175,10 @@ $$
 $$
 \kappa_j^{TP}=
 \begin{cases}
-  \frac{1}{3(2h-1)} & \text{ if }j=\pm h 
+  \frac{1}{3(2h-1)} & \text{ si }j=\pm h 
   \\
-  \frac{2}{3(2h-1)} & \text{ if }j=\pm (h-1)\\
-  \frac{1}{2h-1}& \text{ otherwise}
+  \frac{2}{3(2h-1)} & \text{ si }j=\pm (h-1)\\
+  \frac{1}{2h-1}& \text{ sinon}
 \end{cases}
 $$
 - noyau gaussien^[
@@ -186,20 +194,14 @@ $$
 $$
 ::::
 
-<!-- Let $x\in ]0,1[$ and $f_x(a,b)=\left(1-x^{a}\right)^{b}$. We have: -->
-<!-- \begin{align*} -->
-<!-- \frac{\partial}{\partial a}f(a,b) &=-a\ln (x)x^a(1-x^{a})^{b}>0 \\ -->
-<!-- \frac{\partfial}{\partial b}f(a,b)&=\ln(1-x^{a})(1-x^{a})^{b} <0 -->
-<!-- \end{align*} -->
-<!-- So: -->
 
 Les noyaux d'Henderson, trapézoïdal et gaussien sont particuliers :
 
 - Les fonctions noyau d'Henderson et trapézoïdal changent avec la fenêtre (les autres dépendent uniquement du rapport $j/(h+1)$).
 
 - Pour les noyaux trapézoïdal et gaussien, d'autres définitions pourraient être utilisées et ils sont donc définis arbitrairement.
-<!-- pas clair pour moi: c’est les constantes qui pourraient changer? le 1/3, 2/3 et 3/3 pour trapézoïdal? -->
-Le noyau trapézoïdal est implémenté dans `rjd3filters` car il permet de calculer les moyennes mobiles utilisées dans l'algorithme X-13ARIMA pour l'extraction des composantes saisonnières. 
+Pour le noyau trapézoïdal on pourrait par exemple prendre une pente utilisant moins de points (par exemple $\begin{cases}\frac{1}{4h} &\text{ si }j=\pm h \\ \frac{2}{4h}& \text{ sinon}\end{cases}$) ou donner un poids plus faible aux observations extrêmes (par exemple $\begin{cases}\frac{1}{6h-1} &\text{ si }j=\pm h \\ \frac{3}{6h-1}& \text{ sinon}\end{cases}$); pour le noyau gaussien on pourrait prendre une variable plus ou moins élevée.  
+Le noyau trapézoïdal implémenté dans `rjd3filters` permet de calculer les moyennes mobiles utilisées dans l'algorithme X-13ARIMA pour l'extraction des composantes saisonnières. 
 Il n'est pas adapté dans le cas de l'extraction de la tendance-cycle.
 
 
@@ -239,7 +241,7 @@ Elles sont également équivalentes à la troisième approche sous les mêmes co
 Cette méthode est appelée *direct asymmetric filter* (DAF).
 C'est cette méthode qui est utilisée pour l'estimation en temps réel dans la méthode de désaisonnalisation STL (*Seasonal-Trend decomposition based on Loess*, voir @cleveland90).
 Même si les estimations des filtres DAF sont sans biais, c'est au coût d'une plus grande variance dans les estimations. 
-<!-- pas sûr … -->
+
 Pour résoudre le problème de la variance des estimations des filtres en temps réel, @proietti2008 proposent une méthode générale pour construire les filtres asymétriques qui permet de faire un compromis biais-variance.
 Il s'agit d'une généralisation des filtres asymétriques de @musgrave1964set (utilisés dans l'algorithme de désaisonnalisation X-13ARIMA).
 
@@ -269,8 +271,7 @@ Lorsque $U=X$, la contrainte équivaut à préserver les polynômes de degré $d
 
 Lorsque $U=\begin{pmatrix}1&\cdots&1\end{pmatrix}'$, $Z=\begin{pmatrix}-h&\cdots&+h\end{pmatrix}'$, $\delta=\delta_1$, $D=\sigma^2I$ et lorsque le filtre symétrique est le filtre d'Henderson, on retrouve les filtres asymétriques de Musgrave.
 Ce filtre suppose que, pour l'estimation en temps réel, les données sont générées par un processus linéaire et que les filtres asymétriques préservent les constantes ($\sum v_i=\sum \theta_i=1$).
-<!-- sépare les 2 formules s’il ne faut pas penser que la parenthèse $\delta_1/\sigma=2/(R\sqrt{\pi})$ multiplie le ratio -->
-Ces filtres asymétriques dépendent du rapport $\lvert\delta_1/\sigma\rvert$, qui est lié à l'I-C ratio $R=\frac{\bar{I}}{\bar{C}}=\frac{\sum\lvert I_t-I_{t-1}\rvert}{\sum\lvert C_t-C_{t-1}\rvert}$ ($\delta_1/\sigma=2/(R\sqrt{\pi})$), qui est notamment utilisé dans X-13ARIMA pour déterminer la longueur du filtre d'Henderson^[
+Ces filtres asymétriques dépendent du rapport $\lvert\delta_1/\sigma\rvert$, qui est lié à l'I-C ratio $R=\frac{\bar{I}}{\bar{C}}=\frac{\sum\lvert I_t-I_{t-1}\rvert}{\sum\lvert C_t-C_{t-1}\rvert}$ (et l'on a $\delta_1/\sigma=2/(R\sqrt{\pi})$), qui est notamment utilisé dans X-13ARIMA pour déterminer la longueur du filtre d'Henderson^[
 Dans la majorité des cas un filtre de 13 termes est utilisé.
 Si le ratio est grand alors un filtre de 23 termes est utilisé (pour supprimer davantage de bruit) et si le ratio est petit un filtre de 9 termes est utilisé.
 ].
@@ -291,14 +292,17 @@ Pour les filtres en temps réel ($q=0$), plus le filtre asymétrique est complex
 Ce résultat varie lorsque $q$ augmente : pour $q=2$ le filtre QL a une plus grande *timeliness* que le filtre LC. 
 Ce résultat étonnant souligne le fait que le déphasage n'est pas contrôlé par l'approche de @proietti2008.
 
-<!-- si $A_w+S_w+T_w+R_w$ est une grandeur pertinente, ajouter une colonne avec cette somme ? je comprends aussi qu’on ne sait pas bien agréger les 3 F, S et T, donc difficile de dire a priori lequel on préfèrerait.
-peut-être ajouter un peu plus d’analyse économique de ces résultats ou de conséquence sur la pratique de l’économètre ? -->
 En termes de révision, ($A_w+S_w+T_w+R_w$), les filtres LC et QL donnent toujours de meilleurs résultats que les filtres CQ et DAF. 
 
+Ces propriétés « théoriques » sont conformes aux résultats empiriques observés dans la section \@ref(sec-comparison) : les révisions sont plus importantes pour les filtres CQ et DAF (ce qui conduit à plus de variabilité dans les estimations et à un délai plus grand dans la détection des points de retournement) ; et le filtre QL paramétrisé de manière globale (paramtère $R$ fixé pour tous les filtres asymétriques) peut conduire à un détection plus tardive des points de retournement que le filtre LC^[
+En effet, pour détecter un point de retournement à la date $t$, il est nécessaire de connaître au moins 2 points après cette date afin de s'assurer qu'il y a bien un retournement de tendance.
+].
 
-```{r criteriaLp, echo = FALSE}
-lp_diagnostics <- readRDS("data/lp_diagnostics_henderson.RDS")
+```{r criteriaLp, echo = FALSE, fig.note = "Avec $EQM_w=A_w + S_w + T_w + R_w$."}
 title <- "Critères de qualité des filters asymétriques ($q=0,1,2$) calculés par polynômes locaux en utilisant le noyau d'Henderson avec $h=6$ et $R=3,5$."
+
+lp_diagnostics <- readRDS("data/lp_diagnostics_henderson.RDS")
+lp_diagnostics[,"$ EQM_w $"] <- rowSums(lp_diagnostics[,grep("_w", colnames(lp_diagnostics), fixed = TRUE)])
 colnames(lp_diagnostics) <- gsub(" ?\\$ ?","$",colnames(lp_diagnostics))
 lp_diagnostics[,1] <- gsub(" ?\\$ ?","$",lp_diagnostics[,1])
 groupement <- table(lp_diagnostics[,1])
@@ -309,7 +313,8 @@ lp_diagnostics[,-1] %>%
         escape = FALSE,caption = title) %>% 
   kable_styling(latex_options=c(#"striped", 
       "hold_position")) %>%
-  pack_rows(index = groupement, escape = FALSE)
+  pack_rows(index = groupement, escape = FALSE)%>%
+    add_footnote_kable(stop_centering = TRUE)
 ```
 
 
@@ -366,7 +371,7 @@ Dans les applications empiriques, la paramétrisation locale finale correspond �
 
 Un inconvénient de la méthode précédente est que le déphasage n'est pas contrôlé. 
 Il est en revanche possible de généraliser davantage la modélisation en ajoutant le critère de *timeliness* défini par @ch15HBSA dans l'équation \@ref(eq:lppasym). 
-<!-- ref de jean palate? -->
+<!-- ref de jean palate? Rep AQLT : pas de référence, il l'a juste implémenté -->
 C'est ce qui a été proposé par Jean Palate, puis codé en Java^[https://github.com/palatej/jdemetra-core.] et intégré dans `rjd3filters`.
 
 En utilisant les mêmes notations que dans \@ref(subsec-lppasymf), $\theta$ le filtre symétrique et $v$ le filtre asymétrique. 
@@ -438,24 +443,24 @@ $$
 Pour le filtre central, les auteurs cherchent à avoir un estimateur $\hat g_t$ qui soit sans biais (ce qui implique que $\theta$ conserve les tendances de degré $d$) et qui minimise une somme pondérée d'un critère de *fidelity* et d'un critère de *smoothness* :
 \begin{equation}
 Q=\alpha\underbrace{\E{(\hat{g}_{t}-g_{t})^{2}}}_{=F_{GT}}+
-(1-\alpha)\underbrace{\E{ (\Delta^{p+1}\hat{g}_{t})^{2}} }_{=S_{GT}}
+(1-\alpha)\underbrace{\E{ (\Delta^{d+1}\hat{g}_{t})^{2}} }_{=S_{GT}}
 (\#eq:graythomsonindicators)
 \end{equation}
 La solution est un filtre symétrique qui peut s'écrire sous la forme
 \[
-\theta=E_{\alpha}^{-1}X\left[X'E_{\alpha}^{-1}X\right]^{-1}e_{1}\text{ avec }E_{\alpha}=\alpha\left(\sigma^{2}I+\Omega\right)+(1-\alpha)\left(\sigma^{2}B_{p+1}+\Gamma\right)
+\theta=E_{\alpha}^{-1}X\left[X'E_{\alpha}^{-1}X\right]^{-1}e_{1}\text{ avec }E_{\alpha}=\alpha\left(\sigma^{2}I+\Omega\right)+(1-\alpha)\left(\sigma^{2}B_{d+1}+\Gamma\right)
 \]
 où :
 \[
 \begin{cases}
 \Omega_{jk} & =cov\left(\xi_{t+j}-\xi_{t},\xi_{t+k}-\xi_{t}\right)\\
-\Gamma_{jk} & =cov\left(\Delta^{p+1}\xi_{t+j},\Delta^{p+1}\xi_{t+k}\right)\\
-\sigma^{2}\left(B_{p+1}\right)_{jk} & =cov\left(\Delta^{p+1}\varepsilon_{t+j},\Delta^{p+1}\varepsilon_{t+k}\right)
+\Gamma_{jk} & =cov\left(\Delta^{d+1}\xi_{t+j},\Delta^{d+1}\xi_{t+k}\right)\\
+\sigma^{2}\left(B_{d+1}\right)_{jk} & =cov\left(\Delta^{d+1}\varepsilon_{t+j},\Delta^{d+1}\varepsilon_{t+k}\right)
 \end{cases}.
 \]
 Les deux critères utilisés dans le programme de minimisation \@ref(eq:graythomsonindicators) sont des cas particuliers du critère $I$ défini dans l'équation \@ref(eq:formulegen1) :
 \begin{align*}
-F_{GT}(\theta)&=I(\theta,0,y_t,M_\theta y_t)\\
+F_{GT}(\theta)&=I(\theta,0,y_t,g_t)\\
 S_{GT}(\theta)&=I(\theta,d+1,y_t,0).
 \end{align*}
 La formule générale définie dans la section \@ref(subsec-formulegen) permet donc de retrouver les filtres de @GrayThomson1996.
@@ -504,7 +509,7 @@ Minimiser des critères de révision serait donc préférable puisque cela revie
 Ainsi, même si au centre de la série le choix des poids entre les deux critères contrôle indirectement le niveau des indicateurs, ce n'est plus le cas en fin de série.
 De plus, en fin de série, cela pourrait introduire des déphasages plus importants car $S_{GT}$ dépend du temps et des valeurs passées (du fait de l'utilisation de l'opérateur différence).
 
-Inversement, @ch15HBSA justifie de ne pas intégrer le critère de révision dans leur problème car ce critère est fortement corrélé à une combinaison fixée, donc non ajustable par l'utilisateur, des critères *fidelity* et *timeliness*.
+Inversement, @ch15HBSA justifient de ne pas intégrer le critère de révision dans leur problème car ce critère est fortement corrélé à une combinaison fixée, donc non ajustable par l'utilisateur, des critères *fidelity* et *timeliness*.
 ::::
 
 
@@ -531,20 +536,27 @@ Toutefois, il dépend indirectement des données si le filtre est calibré sur l
 
 La théorie des *Reproducing Kernel Hilbert Space* (RKHS) --- espaces de Hilbert à noyau reproduisant --- est une théorie générale dans l'apprentissage statistique non-paramétrique qui permet d'englober un grand nombre de méthodes.
 C'est par exemple le cas des méthodes de régression par moindres carrés pénalisés, des Support Vector Machine (SVM), du filtre d'Hodrick-Prescott (utilisé pour décomposer tendance et cycle) ou encore des moyennes mobiles telles que celle d'Henderson.
-Ainsi, @dagumbianconcini2008 utilise la théorie des RKHS pour approcher le filtre d'Henderson et en dériver des filtres asymétriques associés.
+Ainsi, @dagumbianconcini2008 utilisent la théorie des RKHS pour approcher le filtre d'Henderson et en dériver des filtres asymétriques associés.
 
 <!-- je pense que la plupart des lecteurs ne comprendront pas la phrase suivante: faut-il définir plus et préciser les différents termes ? -->
+<!-- Rep AQLT : tentative de vulgarisation ajoutée -->
 Un RKHS $\mathbb{L}^{2}(f_{0})$ est un espace de Hilbert caractérisé par un noyau qui permet de reproduire toutes les fonctions de cet espace.
-Il est caractérisé par une fonction de densité $f_0$ et un produit scalaire $\ps{\cdot}{\cdot}$ défini par :
+Dit autrement, un RKHS est un espace mathématiques de fonctions (ensemble des séries temporelles, ensemble des séries temporelles polynômiales d'un certain degré...) qui possède une structure permettant de résoudre de nombreux problèmes.
+En particulier, il est caractérisé par produit scalaire $\ps{\cdot}{\cdot}$ et une fonction de densité $f_0$ qui permettent notamment de mesurer la proximité entre deux éléments de son espace (par exemple entre différentes estimations de la tendance-cycle).
+Il est également à noyau reproduisant, ce qui signifie que tout élément de l'espace étudié (par exemple les tendances polynomiales locales) peut s'écrire à partir du produit scalaire et d'une certaine fonction (le noyau).
+Comme nous le verrons, cette propriété permet notamment de calculer des moyennes mobiles pour l'estimation de la tendance-cycle.
+
+Le produit scalaire $\ps{\cdot}{\cdot}$ défini par :
 $$
-\left\langle U(t),V(t)\right\rangle =\E{U(t)V(t)}=\int_{\R}U(t)V(t)f_{0}(t)\ud t\quad
+\left\langle U,V\right\rangle =\E{UV}=\int_{\R}U(t)V(t)f_{0}(t)\ud t\quad
 \forall U,V\in\mathbb{L}^{2}(f_{0}).
 $$
 La fonction $f_0$ pondère donc chaque valeur en fonction de sa position temporelle : il s'agit de la version continue des noyaux définis dans la partie \@ref(sec-kernels).
 
 Dans notre cas, on suppose que notre série initiale $y_t$ est désaisonnalisée et peut s'écrire comme la somme d'une tendance-cycle, $TC_t$, et d'une composante irrégulière, $I_t$ (qui peut être un bruit blanc ou suivre un modèle ARIMA) :
-$y_t=TC_t+I_t.$
-La tendance-cycle peut être déterministe ou stochastique. On suppose que c'est une fonction régulière du temps, elle peut être localement approchée par un polynôme de degré $d$ :
+$y_t=TC_t+I_t$.
+La tendance-cycle peut être déterministe ou stochastique. 
+On suppose que c'est une fonction régulière du temps, elle peut être localement approchée par un polynôme de degré $d$ :
 $$
 TC_{t+j}=TC_t(j)=a_0+a_1j+\dots+a_dj^d+\varepsilon_{t+j},\quad
 j\in\llbracket-h,h\rrbracket,
@@ -581,7 +593,8 @@ Cette solution s'écrit alors :
 (\#eq:rkhssoltc2)
 \end{equation}
 <!-- un nb fini de polynomes, puisque i est plus petit que d-1, forme une base orthonormée de L2? -->
-On peut, par ailleurs, montrer que $K_{d+1}$ s'écrit en fonction de $f_0$ et du noyau reproduisant $K(\cdot,\cdot)$ et que ce dernier peut s'écrire en fonction de polynômes $(P_i)_{i\in \llbracket 0, d-1 \rrbracket}$ qui forme une base orthonormée de $\mathbb L^2(f_0)$ (voir par exemple @berlinet1993) :
+<!-- Rep AQLT : je n'ai pas compris -->
+On peut, par ailleurs, montrer que $K_{d+1}$ s'écrit en fonction de $f_0$ et du noyau reproduisant $R_d(\cdot,\cdot)$ et que ce dernier peut s'écrire en fonction de polynômes $(P_i)_{i\in \llbracket 0, d-1 \rrbracket}$ qui forme une base orthonormée de $\mathbb L^2(f_0)$ (voir par exemple @berlinet1993) :
 $$
 K_{d+1}(t) = R_d(t,0)f_0(t) = \sum_{i=0}^dP_i(t)P_i(0)f_0(t).
 $$
@@ -725,8 +738,8 @@ Tous les critères utilisés lors de la sélection optimale du paramètre $b$ po
 
 Les critères $F_g$ et $S_g$ peuvent se déduire de $F_{GT}$ et $S_{GT}$.
 Les approches de @GrayThomson1996 et @ch15HBSA sont donc équivalentes pour la construction de filtres symétriques.
-<!-- en indice le beta_d? -->
-Notons $x_{t}=\begin{pmatrix}1 & t & t^{2} & \cdots & t^{d}\end{pmatrix}$, $\beta_{t}=\begin{pmatrix}\beta_{0} & \cdots & \beta^{d}\end{pmatrix}'$. 
+
+Notons $x_{t}=\begin{pmatrix}1 & t & t^{2} & \cdots & t^{d}\end{pmatrix}$, $\beta_{t}=\begin{pmatrix}\beta_{0} & \cdots & \beta_{d}\end{pmatrix}'$. 
 
 Pour le critère de *fidelity* :
 $$
@@ -747,7 +760,7 @@ D'où pour $q=d+1$ :
 $$
 S_{GT}(\theta)=\E{(\nabla^{q}\hat{g}_{t})^{2}}=\theta^{'}\left(\sigma^{2}B_{q}+\Gamma_{q}\right)\theta.
 $$
-On peut par ailleurs montrer que pour toute série temporelle $X_t$, 
+On peut, par ailleurs, montrer que pour toute série temporelle $X_t$, 
 $$
 \nabla^{q}(M_{\theta}X_{t})=\left(-1\right)^{q}\sum_{k\in\Z}\left(\nabla^{q}\theta_{k}\right)X_{t+k-q}
 $$
@@ -765,8 +778,7 @@ Dans ce sens, @henderson1916note a montré que les poids $w=(w_{-p},\dots w_{f})
 $$
 w_i = \kappa_i P\left(\frac{i}{p+f+1}\right)\text{ où }P\text{ est un polynôme de degré }d.
 $$
-<!-- est-ce qu’il faut définir diagramme des coefficients? -->
-Il a également montré l'inverse : toute moyenne mobile $\theta=(\theta_{-p},\dots, \theta_{f})$ qui préserve les tendances de degré $d$ et dont le diagramme des coefficients change au plus $d$ fois de signes peut être obtenue par une régression polynomiale locale de degré $p$ estimée par moindres carrés pondérés. 
+Il a également montré l'inverse : toute moyenne mobile $\theta=(\theta_{-p},\dots, \theta_{f})$ qui préserve les tendances de degré $d$ et dont le diagramme des coefficients (c'est-à-dire la courbe de $\theta_t$ en fonction de $t$) change au plus $d$ fois de signes peut être obtenue par une régression polynomiale locale de degré $p$ estimée par moindres carrés pondérés. 
 Pour cela il suffit de trouver un polynôme $P\left(\frac{X}{p+f+1}\right)$ de degré inférieur ou égal à $d$ et dont les changements de signes coïncident avec les changements de signes de $\theta$. 
 Le noyau associé est alors $\kappa_i=\frac{ \theta_i}{P\left(\frac{i}{p+f+1}\right)}$.
 C'est le cas de tous les filtres symétriques issues de l'approche FST et de la majorité des filtres asymétriques.

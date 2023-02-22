@@ -10,32 +10,30 @@ Une moyenne mobile est une méthode statistique qui consiste à appliquer une mo
 ]. 
 Ainsi, la méthode de désaisonnalisation X-13ARIMA-SEATS utilise des moyennes mobiles de Henderson et des moyennes mobiles composites pour estimer les principales composantes d'une série chronologique. 
 Au centre de la série, des filtres symétriques sont appliqués. 
-<!-- ou en temps réel plutôt qu’au bord de l’échantillon. Mais le pb se pose aussi peut-être en début d’échantillon -->
-En revanche au bord de l’échantillon, en raison de l’absence d’observations futures, toutes ces méthodes doivent s'appuyer sur des filtres asymétriques pour estimer les points les plus récents. 
-<!-- applique au singulier? -->
-Par exemple, même si X-13ARIMA-SEATS appliquent des moyennes symétriques aux prévisions obtenues à partir d'un modèle ARIMA, cela revient à appliquer des filtres asymétriques en fin de série, car les valeurs prédites sont des combinaisons linéaires de valeurs passées. 
+ 
+En revanche, pour les estimations en temps réel, en raison de l’absence d’observations futures, toutes ces méthodes doivent s'appuyer sur des filtres asymétriques pour estimer les points les plus récents. 
+Par exemple, même si X-13ARIMA-SEATS applique des moyennes symétriques aux prévisions obtenues à partir d'un modèle ARIMA, cela revient à appliquer des filtres asymétriques en fin de série, car les valeurs prédites sont des combinaisons linéaires de valeurs passées. 
 
 <!-- une référence pour la 2e partie de la phrase? -->
-Si ces moyennes mobiles asymétriques ont de bonnes propriétés concernant la taille des révisions futures induites par le processus de lissage^[Voir par exemple @pierce1980SA.], elles induisent également des déphasages qui retardent en général la détection en temps réel des points de retournement.
+<!-- Rep AQLT : pas de référence particulière, c'est une propriété statistique non étudiée en général -->
+Si ces moyennes mobiles asymétriques ont de bonnes propriétés concernant la taille des révisions futures induites par le processus de lissage^[Voir par exemple @pierce1980SA.], elles induisent également, par construction, des déphasages qui retardent en général la détection en temps réel des points de retournement (voir section \@ref(sec-propMM)).
 
-L'objectif de cette étude est de décrire et de comparer les approches récentes permettant l’extraction de tendance-cycle : filtres polynomiaux locaux, méthodes fondées sur une optimisation des propriétés des filtres, et filtres fondés sur les espaces de Hilbert à noyau reproduisant (RKHS).  
-Toutes ces méthodes sont implémentées dans le *package* `r fa_r_project` `rjd3filters`^[https://github.com/palatej/rjd3filters.], tous les résultats de cette étude sont facilement reproductibles.
-<!-- est-ce que ça vaudrait le coup d’expliquer en 1 mot les contributions des articles que tu cites? est-ce que ça vaut le coup de donner des précisions sur les séries simulées et réelles utilisées? 
-Je m’attends à trouver, dans une intro:
-- contexte (ok)
-- contribution à la littérature (qu’est-ce que tu apportes qui n’existe pas déjà?). On le devine un peu dans l’intro, mais ce n’est pas assez explicite je pense
-- motivation (ça va avec la contribution): pourquoi le lecteur a vraiment intérêt à prendre 30 min ou 1h pour lire ton article? si tu ne lui dis pas, il y a de bonnes chances qu’il en conclue qu’il n’y a pas d’intérêt pour lui.
-- tes résultats (ça manque)
-- voire une mise en perspective des résultats, ce qu’on peut en déduire.
+L'objectif de cette étude est de décrire et de comparer les approches récentes permettant l’extraction de tendance-cycle : filtres polynomiaux locaux, méthodes fondées sur une optimisation des propriétés des filtres --- *Fidelity-Smoothness-Timeliness* (FST) et *accuracy, timeliness, smoothness* (ATS) ---, et filtres fondés sur les espaces de Hilbert à noyau reproduisant (RKHS).  
+Bien que ces méthodes aient été présentées avec des approches générales de construction des filtres linéaires, leurs propriétés théoriques et leurs performances empiriques n'ont pas été comparées.
+Cette étude décrit l'ensemble de ces méthodes en développant une formulation générale pour la construction des filtres, permettant de mettre en exergue les spécificités de chacune.\
+Ainsi, les méthodes polynomiales ont l'avantage d'être simples et facilement compréhensibles, mais l'inconvénient est que le déphasage ne peut pas être contrôlé (ce qui peut introduire des délais plus importants dans la détection des points de retournement).
+Ils peuvent également prendre en compte des problèmes complexes (comme l'autocorrélation induite par l'utilisation d'un plan de sondage rotatif avec une période de recouvrement).
+Cette montre aussi comme les filtres polynomiaux peuvent être étendus en ajoutant un critère permettant de contrôler le déphasage ou en les paramétrisant localement.\
+Les RKHS permettent de construire facilement des filtres adaptés à toutes les fréquences (y compris des fréquences irrégulières) mais ont notamment l'inconvénient d'être numériquement instables (des problèmes d'optimisation peuvent apparaître, comme dans la méthode FST).\
+La méthode FST a l'avantage d'être analytiquement soluble mais a l'inconvénient d'être plus difficilement paramétrisable car les différents critères utilisés ne sont pas normalisés : les poids associés aux différents critères n'ont donc pas de sens.
 
-Ces items peuvent être rédigés en même temps. par ex tu décris tes résultats, et tu dis que ça c’est nouveau par rapport à la littérature, ou alors ça confirme ce que X a trouvé …
--->
-En raison du lien entre la désaisonnalisation et l'extraction de tendance-cycle (section \@ref(sec-SAtoTCE)), nous nous concentrons sur les méthodes non paramétriques qui peuvent être incluses dans X-13ARIMA-SEATS.
-Après une description des propriétés générales d'un filtre linéaire (section \@ref(sec-propMM)), nous décrivons une approche générale qui permet d'englober les différentes méthodes développées par @proietti2008, @GrayThomson1996, @ch15HBSA, @trilemmaWMR2019 et @dagumbianconcini2008 (sections \@ref(sec-formulegen) à \@ref(sec-nonparamreg)) et nous mettrons également en exergue les liens théoriques entre ces différentes variables.
-Enfin, dans la section \@ref(sec-comparison), nous comparons les différentes méthodes en termes de déphasage et de révisions, en les appliquant sur des séries simulées et réelles.
+Toutes ces méthodes sont également comparées empiriquement sur des séries simulées et sur des séries réelles.
+Cette analyse permet tout d'abord de montrer comment les problèmes d'optimisation des filtres issus des RKHS peuvent conduire à des filtres sous-optimaux (augmentation des révisions et du délai dans la détection des points de retournement).
+Ensuite, la méthode proposée pour paramétrer localement les filtres polynomiaux permet à la fois de détecter plus rapidement les points de retournement et de réduire les révisions dans les estimations successives de la tendance-cycle.
+Enfin, les résultats montrent que les futures études sur les méthodes d'estimations de la tendance-cycle peuvent se restreindre à celles qui modélisent des tendances locales de degré au plus 2 : modéliser des tendances plus complexes aboutit à plus de révisions sans gain en termes de détection des points de retournement.
+
+Cette étude est reproductible.
+En particulier, toutes les méthodes décrites sont implémentées dans le *package* `r fa_r_project` `rjd3filters`^[https://github.com/palatej/rjd3filters.] et tous les codes utilisés sont disponibles sous https://github.com/InseeFrLab/XXXXXXXXX.
 
     
 \newpage
-
-
-

@@ -5,7 +5,7 @@
 \node at (3,0) [generalbox, max width=8cm] (formulegen){
 \[
 \begin{cases}
-I(\theta,q,y_t,u_t)=\E{(\Delta^{q}M_\theta y_t-u_t)^{2}} \\
+I(\theta,q,y_t,u_t)=\E{(\Delta^{q}(M_\theta y_t-u_t))^{2}} \\
 J(\theta, f, \omega_1,\omega_2)=\int_{\omega_1}^{\omega_2} f\left[\phi_\theta(\omega), \varphi_\theta (\omega)\right] \ud \omega
 \end{cases}
 \]
@@ -139,7 +139,7 @@ Théorème d'Henderson (1916)%
 
 %% gray thomson
 \draw[edgegeneral] (graythompson.south |- 52, 52 |- formulegen.north)--(graythompson.south) node[midway, right]{
-$F_{GT}(\theta)=I(\theta,0,y_t,M_\theta y_t)$
+$F_{GT}(\theta)=I(\theta,0,y_t,\mu_t)$
 
 $S_{GT}(\theta)=I(\theta,d+1,y_t,0)$
 };
