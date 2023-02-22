@@ -299,8 +299,9 @@ En effet, pour détecter un point de retournement à la date $t$, il est nécess
 ].
 
 ```{r criteriaLp, echo = FALSE, fig.note = "Avec $EQM_w=A_w + S_w + T_w + R_w$."}
-lp_diagnostics <- readRDS("data/lp_diagnostics_henderson.RDS")
 title <- "Critères de qualité des filters asymétriques ($q=0,1,2$) calculés par polynômes locaux en utilisant le noyau d'Henderson avec $h=6$ et $R=3,5$."
+
+lp_diagnostics <- readRDS("data/lp_diagnostics_henderson.RDS")
 lp_diagnostics[,"$ EQM_w $"] <- rowSums(lp_diagnostics[,grep("_w", colnames(lp_diagnostics), fixed = TRUE)])
 colnames(lp_diagnostics) <- gsub(" ?\\$ ?","$",colnames(lp_diagnostics))
 lp_diagnostics[,1] <- gsub(" ?\\$ ?","$",lp_diagnostics[,1])
@@ -312,7 +313,8 @@ lp_diagnostics[,-1] %>%
         escape = FALSE,caption = title) %>% 
   kable_styling(latex_options=c(#"striped", 
       "hold_position")) %>%
-  pack_rows(index = groupement, escape = FALSE)
+  pack_rows(index = groupement, escape = FALSE)%>%
+    add_footnote_kable(stop_centering = TRUE)
 ```
 
 
