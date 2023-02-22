@@ -591,6 +591,7 @@ Cette solution s'écrit alors :
 (\#eq:rkhssoltc2)
 \end{equation}
 <!-- un nb fini de polynomes, puisque i est plus petit que d-1, forme une base orthonormée de L2? -->
+<!-- Rep AQLT : je n'ai pas compris -->
 On peut, par ailleurs, montrer que $K_{d+1}$ s'écrit en fonction de $f_0$ et du noyau reproduisant $R_d(\cdot,\cdot)$ et que ce dernier peut s'écrire en fonction de polynômes $(P_i)_{i\in \llbracket 0, d-1 \rrbracket}$ qui forme une base orthonormée de $\mathbb L^2(f_0)$ (voir par exemple @berlinet1993) :
 $$
 K_{d+1}(t) = R_d(t,0)f_0(t) = \sum_{i=0}^dP_i(t)P_i(0)f_0(t).
