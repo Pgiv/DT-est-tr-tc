@@ -18,16 +18,22 @@ Par exemple, même si X-13ARIMA-SEATS applique des moyennes symétriques aux pr�
 <!-- Rep AQLT : pas de référence particulière, c'est une propriété statistique non étudiée en général -->
 Si ces moyennes mobiles asymétriques ont de bonnes propriétés concernant la taille des révisions futures induites par le processus de lissage^[Voir par exemple @pierce1980SA.], elles induisent également, par construction, des déphasages qui retardent en général la détection en temps réel des points de retournement (voir section \@ref(sec-propMM)).
 
-L'objectif de cette étude est de décrire et de comparer les approches récentes permettant l’extraction de tendance-cycle : filtres polynomiaux locaux, méthodes fondées sur une optimisation des propriétés des filtres, et filtres fondés sur les espaces de Hilbert à noyau reproduisant (RKHS).  
+L'objectif de cette étude est de décrire et de comparer les approches récentes permettant l’extraction de tendance-cycle : filtres polynomiaux locaux, méthodes fondées sur une optimisation des propriétés des filtres --- *Fidelity-Smoothness-Timeliness* (FST) et *accuracy, timeliness, smoothness* (ATS) ---, et filtres fondés sur les espaces de Hilbert à noyau reproduisant (RKHS).  
 Bien que ces méthodes aient été présentées avec des approches générales de construction des filtres linéaires, leurs propriétés théoriques et leurs performances empiriques n'ont pas été comparées.
-Cette étude décrit l'ensemble de ces méthodes en développant une formulation générale pour la construction des filtres, permettant de mettre en exergue les spécificités de chacune, et compare leurs performances, en termes de révision et de délai dans la détection des points de retournement, sur des séries simulées et réelle.
-Elle montre également comment les filtres polynomiaux locaux peuvent être étendus pour contrôler le déphasage induit par l'utilisation de filtres asymétriques et proposent une méthode de paramétrisation locale de ces filtres.
+Cette étude décrit l'ensemble de ces méthodes en développant une formulation générale pour la construction des filtres, permettant de mettre en exergue les spécificités de chacune.\
+Ainsi, les méthodes polynomiales ont l'avantage d'être simples et facilement compréhensibles, mais l'inconvénient est que le déphasage ne peut pas être contrôlé (ce qui peut introduire des délais plus importants dans la détection des points de retournement).
+Ils peuvent également prendre en compte des problèmes complexes (comme l'autocorrélation induite par l'utilisation d'un plan de sondage rotatif avec une période de recouvrement).
+Cette montre aussi comme les filtres polynomiaux peuvent être étendus en ajoutant un critère permettant de contrôler le déphasage ou en les paramétrisant localement.\
+Les RKHS permettent de construire facilement des filtres adaptés à toutes les fréquences (y compris des fréquences irrégulières) mais ont notamment l'inconvénient d'être numériquement instables (des problèmes d'optimisation peuvent apparaître, comme dans la méthode FST).\
+La méthode FST a l'avantage d'être analytiquement soluble mais a l'inconvénient d'être plus difficilement paramétrisable car les différents critères utilisés ne sont pas normalisés : les poids associés aux différents critères n'ont donc pas de sens.
 
-Toutes ces méthodes sont implémentées dans le *package* `r fa_r_project` `rjd3filters`^[https://github.com/palatej/rjd3filters.], tous les résultats de cette étude sont facilement reproductibles.
+Toutes ces méthodes sont également comparées empiriquement sur des séries simulées et sur des séries réelles.
+Cette analyse permet tout d'abord de montrer comment les problèmes d'optimisation des filtres issus des RKHS peuvent conduire à des filtres sous-optimaux (augmentation des révisions et du délai dans la détection des points de retournement).
+Ensuite, la méthode proposée pour paramétrer localement les filtres polynomiaux permet à la fois de détecter plus rapidement les points de retournement et de réduire les révisions dans les estimations successives de la tendance-cycle.
+Enfin, les résultats montrent que les futures études sur les méthodes d'estimations de la tendance-cycle peuvent se restreindre à celles qui modélisent des tendances locales de degré au plus 2 : modéliser des tendances plus complexes aboutit à plus de révisions sans gain en termes de détection des points de retournement.
 
+Cette étude est reproductible.
+En particulier, toutes les méthodes décrites sont implémentées dans le *package* `r fa_r_project` `rjd3filters`^[https://github.com/palatej/rjd3filters.] et tous les codes utilisés sont disponibles sous https://github.com/InseeFrLab/XXXXXXXXX.
 
     
 \newpage
-
-
-
