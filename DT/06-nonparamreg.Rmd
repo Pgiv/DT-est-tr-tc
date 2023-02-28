@@ -541,7 +541,7 @@ Ainsi, @dagumbianconcini2008 utilisent la théorie des RKHS pour approcher le fi
 <!-- je pense que la plupart des lecteurs ne comprendront pas la phrase suivante: faut-il définir plus et préciser les différents termes ? -->
 <!-- Rep AQLT : tentative de vulgarisation ajoutée -->
 Un RKHS $\mathbb{L}^{2}(f_{0})$ est un espace de Hilbert caractérisé par un noyau qui permet de reproduire toutes les fonctions de cet espace.
-Dit autrement, un RKHS est un espace mathématiques de fonctions (ensemble des séries temporelles, ensemble des séries temporelles polynômiales d'un certain degré...) qui possède une structure permettant de résoudre de nombreux problèmes.
+Dit autrement, un RKHS est un espace mathématiques de fonctions (ensemble des séries temporelles, ensemble des séries temporelles polynomiales d'un certain degré...) qui possède une structure permettant de résoudre de nombreux problèmes.
 En particulier, il est caractérisé par un produit scalaire $\ps{\cdot}{\cdot}$ et une fonction de densité $f_0$ qui permettent notamment de mesurer la proximité entre deux éléments de son espace (par exemple entre différentes estimations de la tendance-cycle).
 Il est également à noyau reproduisant, ce qui signifie que tout élément de l'espace étudié (par exemple les tendances polynomiales locales) peut s'écrire à partir du produit scalaire et d'une certaine fonction (le noyau).
 Comme nous le verrons, cette propriété permet notamment de calculer des moyennes mobiles pour l'estimation de la tendance-cycle.
