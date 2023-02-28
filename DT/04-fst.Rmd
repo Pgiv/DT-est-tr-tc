@@ -68,7 +68,7 @@ Comme fonction de pénalité, les auteurs suggèrent de prendre $f\colon(\rho,\v
 Cela permet notamment d'avoir une *timeliness* qui peut s'écrire comme une forme quadratique positive ($T_g(\theta)=\theta'T\theta$ avec $T$ une matrice carré symétrique d'ordre $p+f+1$, voir @ch15HBSA pour la démonstration).
 Dans cet article nous utilisons $\omega_1=0$ et $\omega_2=2\pi/12$ : on ne s'intéresse qu'à des séries mensuelles et au déphasage qui impactent les cycles d'au minimum 12 mois^[
 En effet, dans le domaine des fréquences, la fréquence $2\pi/12$ correspond aux évènements qui se répètent toutes les 12 périodes.
-Pour une série mensuelle, la période correspond au mois : $\omega_2=2\pi/12$ corresponds donc aux cycles de 12 mois.
+Pour une série mensuelle, la période correspond au mois : $\omega_2=2\pi/12$ correspond donc aux cycles de 12 mois.
 ].
 
 En somme, l'approche FST consiste à minimiser une somme pondérée de ces trois critères sous certaines contraintes (généralement préservation polynomiale).
