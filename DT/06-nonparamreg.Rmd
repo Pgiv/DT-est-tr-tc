@@ -200,7 +200,7 @@ Les noyaux d'Henderson, trapézoïdal et gaussien sont particuliers :
 - Les fonctions noyau d'Henderson et trapézoïdal changent avec la fenêtre (les autres dépendent uniquement du rapport $j/(h+1)$).
 
 - Pour les noyaux trapézoïdal et gaussien, d'autres définitions pourraient être utilisées et ils sont donc définis arbitrairement.
-Pour le noyau trapézoïdal on pourrait par exemple prendre une pente utilisant moins de points (par exemple $\begin{cases}\frac{1}{4h} &\text{ si }j=\pm h \\ \frac{2}{4h}& \text{ sinon}\end{cases}$) ou donner un poids plus faible aux observations extrêmes (par exemple $\begin{cases}\frac{1}{6h-1} &\text{ si }j=\pm h \\ \frac{3}{6h-1}& \text{ sinon}\end{cases}$); pour le noyau gaussien on pourrait prendre une variable plus ou moins élevée.  
+Pour le noyau trapézoïdal on pourrait par exemple prendre une pente utilisant moins de points (par exemple $\begin{cases}\frac{1}{4h} &\text{ si }j=\pm h \\ \frac{2}{4h}& \text{ sinon}\end{cases}$) ou donner un poids plus faible aux observations extrêmes (par exemple $\begin{cases}\frac{1}{6h-1} &\text{ si }j=\pm h \\ \frac{3}{6h-1}& \text{ sinon}\end{cases}$); pour le noyau gaussien on pourrait prendre une variance plus ou moins élevée.  
 Le noyau trapézoïdal implémenté dans `rjd3filters` permet de calculer les moyennes mobiles utilisées dans l'algorithme X-13ARIMA pour l'extraction des composantes saisonnières. 
 Il n'est pas adapté dans le cas de l'extraction de la tendance-cycle.
 
