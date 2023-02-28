@@ -294,7 +294,7 @@ Ce résultat étonnant souligne le fait que le déphasage n'est pas contrôlé p
 
 En termes de révision, ($A_w+S_w+T_w+R_w$), les filtres LC et QL donnent toujours de meilleurs résultats que les filtres CQ et DAF. 
 
-Ces propriétés « théoriques » sont conformes aux résultats empiriques observés dans la section \@ref(sec-comparison) : les révisions sont plus importantes pour les filtres CQ et DAF (ce qui conduit à plus de variabilité dans les estimations et à un délai plus grand dans la détection des points de retournement) ; et le filtre QL paramétrisé de manière globale (paramtère $R$ fixé pour tous les filtres asymétriques) peut conduire à un détection plus tardive des points de retournement que le filtre LC^[
+Ces propriétés « théoriques » sont conformes aux résultats empiriques observés dans la section \@ref(sec-comparison) : les révisions sont plus importantes pour les filtres CQ et DAF (ce qui conduit à plus de variabilité dans les estimations et à un délai plus grand dans la détection des points de retournement) ; et le filtre QL paramétrisé de manière globale (paramètre $R$ fixé pour tous les filtres asymétriques) peut conduire à un détection plus tardive des points de retournement que le filtre LC^[
 En effet, pour détecter un point de retournement à la date $t$, il est nécessaire de connaître au moins 2 points après cette date afin de s'assurer qu'il y a bien un retournement de tendance.
 ].
 
