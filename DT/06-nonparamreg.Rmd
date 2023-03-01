@@ -92,7 +92,7 @@ Ainsi, la moyenne mobile $\theta$ préserve les polynômes de degré $d$.
 
 Concernant le choix des paramètres, l'idée générale qui prévaut est que le choix entre ces différents noyaux est secondaire^[
 Voir par exemple @cleveland1996smoothing ou @Loader1999.
-Les seules contraintes souhaitées sur le noyau est qu'il accorde un poids plus important à l'estimation centrale ($\kappa_0$) et qu'il décroit vers 0 lorsque l'on s'éloigne de l'estimation centrale.
+Les seules contraintes souhaitées sur le noyau est qu'il accorde un poids plus important à l'estimation centrale ($\kappa_0$) et qu'il décroit vers 0 lorsqu'on s'éloigne de l'estimation centrale.
 Le noyau uniforme est donc à éviter.
 ] et qu'il vaut mieux se concentrer sur deux autres paramètres :
 

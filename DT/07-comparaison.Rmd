@@ -38,14 +38,14 @@ Pour les régressions polynomiales locales, les filtres asymétriques sont calib
 Trois critères de qualité sont également calculés :
 
 1. Calcul du déphasage dans la détection des points de retournement. La définition de @Zellner1991 est utilisée pour déterminer les points de retournement :  
-    - on parle de redressement (*upturn*) lorsque l'on passe d'une phase de récession à une phase d'expansion de l'économie. 
+    - on parle de redressement (*upturn*) lorsqu'on passe d'une phase de récession à une phase d'expansion de l'économie. 
     C'est le cas à la date $t$ lorsque $y_{t-3}\geq y_{t-2}\geq y_{t-1}<y_t\leq y_{t+1}$.  
-    - on parle de ralentissement (*downturn*) lorsque l'on passe d'une phase d'expansion à une phase de récession.
+    - on parle de ralentissement (*downturn*) lorsqu'on passe d'une phase d'expansion à une phase de récession.
 C'est le cas à la date $t$ lorsque $y_{t-3}\leq y_{t-2}\leq y_{t-1}>y_t\geq y_{t+1}$.  
     Il faut donc au moins 2 mois pour détecter un point de retournement.  
     Le déphasage est souvent défini comme le nombre de mois nécessaires pour détecter le bon point de retournement (i.e., le point de retournement sur la composante cyclique).
     <!-- en temps réel, ce concept perd un peu de sa pertinence: conditionner à des observations futures n’est pas possible. si on est en temps réel, le filtre va nous donner un point de retournement, on ne sait pas ce que donneront les points suivants, mais il faut quand même décider maintenant. -->
-    <!-- Rep AQLT : même si je vois ton idée (on ne connait pas en avance) je trouve ce critère plus pertinent pour le choix du filtre en temps réel car on peut penser qu'une méthode qui minimise ce critère modifié donnera des points de retournement (en moyenne) plus fiables. Si l'on voit le problème autrement, lorsque l'on connait le point de retournement du fait d'une information externe, cela permet de rejeter les filtres qui donnent le bon point de retournement vite (cohérent avec l'info extérieure) mais qui conduisent à des révisions dans les estimations suivantes (pb de communication) -->
+    <!-- Rep AQLT : même si je vois ton idée (on ne connait pas en avance) je trouve ce critère plus pertinent pour le choix du filtre en temps réel car on peut penser qu'une méthode qui minimise ce critère modifié donnera des points de retournement (en moyenne) plus fiables. Si l'on voit le problème autrement, lorsqu'on connait le point de retournement du fait d'une information externe, cela permet de rejeter les filtres qui donnent le bon point de retournement vite (cohérent avec l'info extérieure) mais qui conduisent à des révisions dans les estimations suivantes (pb de communication) -->
     Nous utilisons ici un critère légèrement modifié : le déphasage est défini comme le nombre de mois nécessaires pour détecter le bon point de retournement sans aucune révision future.
     Il peut en effet arriver que le bon point de retournement soit détecté par des filtres asymétriques mais ne le soit pas avec l'estimation finale avec un filtre symétrique 
     (c'est le cas de 41 points de retournements sur l'ensemble des 9 séries avec les filtres asymétriques de Musgrave) ou qu'il y ait des révisions dans les estimations successives (c'est le cas de 7 points de retournements sur l'ensemble des 9 séries avec les filtres asymétriques de Musgrave).
@@ -110,7 +110,7 @@ Globalement, les filtres LC minimisent toujours les révisions (avec globalement
 Par ailleurs, c'est le filtre $b_{q,\varphi}$ qui conduit à le plus de révision entre l'avant-dernière et la dernière estimation, ce qui s'explique par la différence importante entre la courbe des coefficients de la dernière moyenne mobiles asymétrique et celle du filtre symétrique.
 Les autres filtres RKHS, $b_{q,\Gamma}$ et $b_{q,G}$ conduisent eux à de fortes révisions entre la quatrième et la cinquième estimation.
 
-Pour le filtre QL, il y a une forte révision entre la deuxième et la troisième estimation : cela peut venir du fait que pour la deuxième estimation (lorsque l'on connait un point dans le futur), le filtre QL associe un poids plus important à l'estimation en $t+1$ qu'à l'estimation en $t$, ce qui crée une discontinuité. 
+Pour le filtre QL, il y a une forte révision entre la deuxième et la troisième estimation : cela peut venir du fait que pour la deuxième estimation (lorsqu'on connait un point dans le futur), le filtre QL associe un poids plus important à l'estimation en $t+1$ qu'à l'estimation en $t$, ce qui crée une discontinuité. 
 Cette révision est fortement réduite avec la paramétrisation locale du filtre.
 Pour les filtres polynomiaux autres que le filtre LC, les révisions importantes à la première estimation étaient prévisibles au vu de la courbe des coefficients : un poids très important est associé à l'observation courante et il y une forte discontinuité entre la moyenne mobile utilisée pour l'estimation en temps réel (lorsqu'aucun point dans le futur n'est connu) et les autres moyennes mobiles.
 
@@ -171,7 +171,7 @@ Il est de deux mois pour les autres méthodes (QL, DAF et FST).
 
 La paramétrisation locale ne permet pas ici de réduire le déphasage mais permet de réduire les révisions.
 Les polynomiales CQ et DAF conduisent à plus de variabilité dans les estimations intermédiaires, en particulier en février 2001.
-Concernant les filtres RKHS, les estimations intermédiaires du filtre $b_{q,\varphi}$ semblent très erratiques, ce qui s'explique, encore une fois, par le fait que les moyennes mobiles asymétriques utilisées lorsque l'on se rapproche du cas symétrique sont éloignées de la moyenne mobile symétrique d'Henderson.
+Concernant les filtres RKHS, les estimations intermédiaires du filtre $b_{q,\varphi}$ semblent très erratiques, ce qui s'explique, encore une fois, par le fait que les moyennes mobiles asymétriques utilisées lorsqu'on se rapproche du cas symétrique sont éloignées de la moyenne mobile symétrique d'Henderson.
 Les filtres $b_{q,\Gamma}$ et $b_{q,G}$ conduisent à des estimations intermédiaires relativement constantes (estimations en temps réel proches des estimations lorsque quelques points dans le futur sont connus) : ces estimations intermédiaires (notamment celles en temps-réel) sont peu cohérentes en période de points de retournement et conduisent, dans ce cas, à un déphasage élevé.
 
 
@@ -242,10 +242,10 @@ La méthode proposée dans cet article pour l'estimation en temps-réel des para
 Concernant les méthodes basées sur les RKHS, les deux premières estimations des filtres $b_{q,\Gamma}$ et $b_{q,G}$ semblent peu cohérentes (ce qui a peu d'impact sur le déphasage puisqu'il faut au moins 2 mois pour détecter un point de retournement), comme les dernières estimations du filtre $b_{q,\varphi}$ (ce qui peut provenir d'un problème d'optimisation).
 Cela suggère que la méthode utilisée pour calibrer ces filtres n'est pas optimale pour tous les horizons de prévision.
 En effet, pour les premières estimations, on cherche plutôt à minimiser le déphasage ($b_{q,\varphi}$) et lorsque que l'on se rapproche du cas symétrique ($q \geq 4$) on cherche plutôt à minimiser les révisions ($b_{q,\Gamma}$ ou $b_{q,G}$).
-Les performances du filtre $b_{q,\varphi}$ pourraient ainsi sûrement être améliorées en utilisant d'autres moyennes mobiles lorsque l'on se rapproche du filtre symétrique ($q \geq 4$).
+Les performances du filtre $b_{q,\varphi}$ pourraient ainsi sûrement être améliorées en utilisant d'autres moyennes mobiles lorsqu'on se rapproche du filtre symétrique ($q \geq 4$).
 
 Pour le filtre FST, les poids retenus pour les simulations ($\alpha = 0,00$ *fidelity*, $\beta  =0,05$ *smoothness* et $\gamma = 0,95$ *timeliness*) semblent donner de bons résultats en termes de déphasage et de révisions (pour $q\geq1$).
-Les critères utilisés dans cette méthode n'étant pas normalisés, les poids retenus reviennent à donner un poids plus important à la *timeliness* pour les premières estimations et un poids plus important à la *smoothness* lorsque l'on se rapproche du cas d'utilisation du filtre symétrique.
+Les critères utilisés dans cette méthode n'étant pas normalisés, les poids retenus reviennent à donner un poids plus important à la *timeliness* pour les premières estimations et un poids plus important à la *smoothness* lorsqu'on se rapproche du cas d'utilisation du filtre symétrique.
 En effet, plus $q$ augmente (i.e. : plus on utilise de points dans le futur), plus le déphasage et donc le critère associé à la *timeliness* est petit : le poids associé à la *smoothness* augmente donc et les moyennes mobiles trouvées se rapproche du filtre symétrique d'Henderson (qui peut être construit en ne minimisant que la *smoothness*).
 En revanche, pour l'estimation en temps-réel ($q=0$), les statistiques sur les révisions suggèrent que l'on pourrait améliorer les résultats en utilisant d'autres pondérations (par exemple avec un poids non nul à la *fidelity*).
 Cela suggère également que si l'on utilisait la méthode ATS, où les critères sont normalisés, il faudrait sûrement associer un poids décroissant à la *timeliness* en fonction de l'horizon de prévision.

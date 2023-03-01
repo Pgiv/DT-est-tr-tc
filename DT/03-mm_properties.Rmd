@@ -128,7 +128,7 @@ In fine, cela revient à utiliser des moyennes mobiles asymétriques puisque les
 
 Inversement, à partir d'une moyenne mobile symétrique de référence, on peut déduire les prévisions implicites d'une moyenne mobile asymétrique.
 Notons $v=(v_{-h},\dots, v_{h})$ la moyenne mobile symétrique de référence et $w^0,\dots w^{h-1}$ une suite de moyennes mobiles asymétriques, d'ordre $h+1$ à $2h$ utilisée pour l'estimation des $h$ derniers points avec, pour convention, $w_t^q=0$ pour $t>q$.
-C'est-à-dire que $w^0=(w_{-h}^0,\dots, w_{0}^0)$ est utilisée pour l'estimation en temps réel (lorsque l'on ne connait aucun point dans le futur), $w^1=(w_{-h}^1,\dots, w_{1}^1)$ pour l'estimation de l'avant-dernier point (lorsque l'on ne connait qu'un point dans le futur), etc.
+C'est-à-dire que $w^0=(w_{-h}^0,\dots, w_{0}^0)$ est utilisée pour l'estimation en temps réel (lorsqu'on ne connait aucun point dans le futur), $w^1=(w_{-h}^1,\dots, w_{1}^1)$ pour l'estimation de l'avant-dernier point (lorsqu'on ne connait qu'un point dans le futur), etc.
 Notons également $y_{-h},\dots,y_{0}$ la série étudiée observée et $y_{1}^*,\dots y_h^*$ la prévision implicite induite par $w^0,\dots w^{h-1}$.
 Cela signifie, que pour tout $q$ on a :
 $$
