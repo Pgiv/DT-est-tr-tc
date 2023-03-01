@@ -6,55 +6,48 @@
 
 Cette étude s'intéresse aux différentes méthodes de construction de
 moyennes mobiles pour l'estimation en temps réel de la tendance-cycle et
-la détection rapide des points de retournement. Elle montre comment
-toutes les méthodes étudiées (filtres polynomiaux locaux, méthodes
-basées sur une optimisation sous contrainte d'une somme pondérée de
-critères de qualité des moyennes mobiles, et filtres basés sur les
-espaces de Hilbert à noyau reproduisant (RKHS)) peuvent s'écrire comme
-un cas particulier d'une formule générale de construction de moyennes
-mobiles. Cela permet de mettre en avant les similitudes et les
-différences entre les méthodes et ainsi les comparer plus facilement.
-Cette étude montre également deux prolongements possibles aux filtres
-polynomiaux locaux : l'ajout d'un critère permettant de contrôler le
-déphasage (délai dans la détection des points de retournement) et une
-façon de paramétriser localement ces filtres. Les méthodes sont
-également comparées entre elles sur des séries simulées et réelles. Cela
-permet de mettre en lumière l'impact de problèmes d'optimisation, dûs à
-l'existence de plusieurs extremum, dans les filtres issus des RKHS sur
-les révisions et le déphasage. Par ailleurs, cela montre que modéliser
-des tendances polynomiales trop complexes introduit plus de révisions
-sans diminuer le déphasage. Enfin, cela montre également comment, pour
-les filtres polynomiaux locaux, une paramétrisation locale permet une
-détection plus rapide des points de retournement et une réduction des
-révisions des estimations de la tendance-cycle.
+la détection rapide des points de retournement. Elle montre comment les
+méthodes étudiées peuvent s'écrire comme un cas particulier d'une
+formule générale de construction de moyennes mobiles, ce qui permet de
+décrire leurs similitudes et ainsi les comparer plus facilement. Elle
+décrit également deux prolongements possibles aux filtres polynomiaux
+locaux : l'ajout d'un critère permettant de contrôler le déphasage
+(délai dans la détection des points de retournement) et une façon de
+paramétriser localement ces filtres. La comparaison des méthodes sur des
+séries simulées et réelles montre que : les problèmes d'optimisation des
+filtres issus des RKHS augmentent le déphasage et les révisions des
+estimations de la tendance-cycle ; modéliser des tendances polynomiales
+trop complexes introduit plus de révisions sans diminuer le déphasage ;
+pour les filtres polynomiaux locaux, une paramétrisation locale permet
+une réduction du déphasage et des révisions.
+
+Mots clés : séries temporelles, tendance-cycle, désaisonnalisation
+points de retournement.
 
 \hypertarget{abstract}{%
 \section*{Abstract}\label{abstract}}
 \addcontentsline{toc}{section}{Abstract}
 
-This paper describes and compares different approaches to build
-asymmetric filters: local polynomials filters, methods based on an
-optimization of filters' properties (Fidelity-Smoothness-Timeliness,
-FST, approach and a data-dependent filter) and filters based on
-Reproducing Kernel Hilbert Space. It also describes how local
-polynomials filters can be extended to include a timeliness criterion to
-minimize phase shift. All these methods can be seen as a special case of
-a general unifying framework to derive linear filters.
+Cette étude s'intéresse aux différentes méthodes de construction de
+moyennes mobiles pour l'estimation en temps réel de la tendance-cycle et
+la détection rapide des points de retournement. Elle montre comment les
+méthodes étudiées peuvent s'écrire comme un cas particulier d'une
+formule générale de construction de moyennes mobiles, ce qui permet de
+décrire leurs similitudes et ainsi les comparer plus facilement. Elle
+décrit également deux prolongements possibles aux filtres polynomiaux
+locaux : l'ajout d'un critère permettant de contrôler le déphasage
+(délai dans la détection des points de retournement) et une façon de
+paramétriser localement ces filtres. La comparaison des méthodes sur des
+séries simulées et réelles montre que : les problèmes d'optimisation des
+filtres issus des RKHS augmentent le déphasage et les révisions des
+estimations de la tendance-cycle ; modéliser des tendances polynomiales
+trop complexes introduit plus de révisions sans diminuer le déphasage ;
+pour les filtres polynomiaux locaux, une paramétrisation locale permet
+une réduction du déphasage et des révisions.
 
-This paper shows that, when the length of the filter is adapted to the
-variability of the series, constraining asymmetric filters to preserve
-constant trends (and not necessarily polynomial ones) reduce revision
-error and time lag. Therefore, future studies on the subject can focus
-on these filters. Moreover, with RKHS filters some optimisation issues
-can occurs and they might lead to erratic estimation. They might be able
-to produce satisfying results in terms of phase-shift and revisions, but
-they should be avoid for the last estimates of the trend-cycle
-component: other methods should then be prefered to reduce revisions
-with the final estimates.
+Mots clés : séries temporelles, tendance-cycle, désaisonnalisation
+points de retournement.
 
-All the methods are implemented in the \faIcon{r-project} package
-\texttt{rjd3filters} and the results can be easily reproduced. The
-programs used, and a web version of this report, are available at
-\url{https://github.com/InseeFrLab/XXXXXXXXX}.
+JEL Classification: E32, E37.
 
 \newpage
