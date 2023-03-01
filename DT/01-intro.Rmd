@@ -28,9 +28,9 @@ Les RKHS permettent de construire facilement des filtres adaptés à toutes les 
 La méthode FST a l'avantage d'être analytiquement soluble mais a l'inconvénient d'être plus difficilement paramétrisable car les différents critères utilisés ne sont pas normalisés : les poids associés aux différents critères n'ont donc pas de sens.
 
 Toutes ces méthodes sont également comparées empiriquement sur des séries simulées et sur des séries réelles.
-Cette analyse permet tout d'abord de montrer comment les problèmes d'optimisation des filtres issus des RKHS peuvent probablement conduire à des filtres sous-optimaux (augmentation des révisions et du délai dans la détection des points de retournement).
+Cette analyse permet tout d'abord de montrer comment les problèmes d'optimisation des filtres issus des RKHS peuvent conduire à des filtres sous-optimaux (augmentation des révisions et du délai dans la détection des points de retournement).
 Ensuite, la méthode proposée pour paramétrer localement les filtres polynomiaux permet à la fois de détecter plus rapidement les points de retournement et de réduire les révisions dans les estimations successives de la tendance-cycle.
-Enfin, les résultats montrent que les futures études sur les méthodes d'estimations de la tendance-cycle peuvent se restreindre à celles qui modélisent des tendances locales de degré au plus 2 : modéliser des tendances plus complexes aboutit à plus de révisions sans gain en termes de détection des points de retournement.
+Enfin, les résultats montrent que les futures études sur les méthodes d'estimations de la tendance-cycle peuvent probablement se restreindre à celles qui modélisent des tendances locales de degré au plus 2 : modéliser des tendances plus complexes aboutit à plus de révisions sans gain en termes de détection des points de retournement.
 
 Cette étude est reproductible.
 En particulier, toutes les méthodes décrites sont implémentées dans le *package* `r fa_r_project` `rjd3filters`^[https://github.com/palatej/rjd3filters.] et tous les codes utilisés sont disponibles sous https://github.com/InseeFrLab/XXXXXXXXX.
