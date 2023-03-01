@@ -3,7 +3,7 @@
 La plupart des indicateurs macroéconomiques (PIB, production, consommation, etc.) sont affectés par des effets saisonniers et des effets jours ouvrables qui perturbent l'analyse des évolutions infra-annuelles et les comparaisons spatiales.
 C'est pourquoi les séries chronologiques sont généralement corrigées des variations saisonnières et des jours ouvrables, la *désaisonnalisation* étant le processus consistant à supprimer leurs effets.
  
-Pour effectuer la désaisonnalisation, les méthodes de désaisonnalisation les plus populaires sont TRAMO-SEATS, une méthode paramétrique basée sur les modèles ARIMA (voir par exemple @maravall2004program), et X-13ARIMA-SEATS, une méthode non-paramétrique basée sur les moyennes mobiles (voir par exemple @ladiray2011seasonal).
+Pour effectuer la désaisonnalisation, les méthodes de désaisonnalisation les plus populaires sont TRAMO-SEATS, une méthode paramétrique fondée sur les modèles ARIMA (voir par exemple @maravall2004program), et X-13ARIMA-SEATS, une méthode non-paramétrique fondée sur les moyennes mobiles (voir par exemple @ladiray2011seasonal).
 Ces méthodes supposent que toute série temporelle $X_t$ peut se décomposer en quatre composantes :
  
 1. Une composante saisonnière $S_t$.

@@ -13,7 +13,7 @@ Dans un voisinage $h(x_0)$ autour de $x_0$, $\mu$ peut être approchée par un p
 La quantité $h(x_0)$ est appelée *fenêtre* (*bandwidth*).
 Si $\varepsilon_i$ est un bruit blanc, on peut donc estimer par les moindres carrés $\mu(x_0)$ en utilisant les observations qui sont dans $\left[x_0-h(x_0),x_0+h(x_0)\right]$.  
 
-De nombreuses méthodes d'extraction de la tendance-cycle sont basées sur la régression non-paramétrique.
+De nombreuses méthodes d'extraction de la tendance-cycle sont fondées sur la régression non-paramétrique.
 Elles supposent que la tendance est localement polynomiale (ce qui est justifié par l'équation \@ref(eq:taylor)) et utilisent différentes méthodes d'estimation pour en déduire des moyennes mobiles symétriques et asymétriques.  
 Ainsi, @GrayThomson1996 (section\@ref(subsec-graythomson)) proposent un cadre statistique complet permettant notamment de modéliser l'erreur d'approximation de la tendance par des polynômes locaux.
 Toutefois, la spécification de cette erreur étant en générale complexe, des modélisations plus simples peuvent être préférées, comme celle de @proietti2008 (section \@ref(sec-proietti)).  

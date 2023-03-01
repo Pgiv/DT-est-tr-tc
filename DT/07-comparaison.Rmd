@@ -239,7 +239,7 @@ La paramétrisation locale des filtres polynomiaux locaux permet d'améliorer la
 Même lorsque le déphasage n'est pas diminué, elle permet de réduire les révisions et d'avoir des estimations plus cohérentes, notamment en termes de prévisions implicites.
 La méthode proposée dans cet article pour l'estimation en temps-réel des paramètres locaux, bien que naïve et grandement perfectible, permet tout de même d'améliorer les estimations.
 
-Concernant les méthodes basées sur les RKHS, les deux premières estimations des filtres $b_{q,\Gamma}$ et $b_{q,G}$ semblent peu cohérentes (ce qui a peu d'impact sur le déphasage puisqu'il faut au moins 2 mois pour détecter un point de retournement), comme les dernières estimations du filtre $b_{q,\varphi}$ (ce qui peut provenir d'un problème d'optimisation).
+Concernant les méthodes fondées sur les RKHS, les deux premières estimations des filtres $b_{q,\Gamma}$ et $b_{q,G}$ semblent peu cohérentes (ce qui a peu d'impact sur le déphasage puisqu'il faut au moins 2 mois pour détecter un point de retournement), comme les dernières estimations du filtre $b_{q,\varphi}$ (ce qui peut provenir d'un problème d'optimisation).
 Cela suggère que la méthode utilisée pour calibrer ces filtres n'est pas optimale pour tous les horizons de prévision.
 En effet, pour les premières estimations, on cherche plutôt à minimiser le déphasage ($b_{q,\varphi}$) et lorsque que l'on se rapproche du cas symétrique ($q \geq 4$) on cherche plutôt à minimiser les révisions ($b_{q,\Gamma}$ ou $b_{q,G}$).
 Les performances du filtre $b_{q,\varphi}$ pourraient ainsi sûrement être améliorées en utilisant d'autres moyennes mobiles lorsqu'on se rapproche du filtre symétrique ($q \geq 4$).
@@ -270,7 +270,7 @@ C'est ainsi que le *Nonlinear Dagum Filter* (NLDF) a été développé et consis
     b. effectuer une nouvelle correction des points atypiques en utilisant un seuil bien plus strict et appliquer ensuite le filtre symétrique de 13 termes. 
     En supposant une distribution normale cela revient à modifier 48 % des valeurs de l'irrégulier.   
     
-Une piste d'étude serait alors d'étudier plus précisément l'effet des points atypiques sur l'estimation de la tendance-cycle et la détection des points de retournement, mais aussi d'explorer de nouveaux types de filtres asymétriques basés sur des méthodes robustes (comme les régressions locales robustes, les médianes mobiles, etc.).
+Une piste d'étude serait alors d'étudier plus précisément l'effet des points atypiques sur l'estimation de la tendance-cycle et la détection des points de retournement, mais aussi d'explorer de nouveaux types de filtres asymétriques fondés sur des méthodes robustes (comme les régressions locales robustes, les médianes mobiles, etc.).
  
 
 
