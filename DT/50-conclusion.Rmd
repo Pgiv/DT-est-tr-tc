@@ -40,7 +40,3 @@ Pour limiter leur impact, dans X-13ARIMA une forte correction des points atypiqu
 Cela amène donc à étudier l'impact de ces points sur l'estimation de la tendance-cycle et des points de retournement, mais aussi à explorer de nouveaux types de filtres asymétriques fondés sur des méthodes robustes (comme les régressions locales robustes ou les médianes mobiles).
 
 
-
-
-
-\newpage

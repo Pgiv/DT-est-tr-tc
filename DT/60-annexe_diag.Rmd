@@ -17,7 +17,7 @@ if(is_latex){
 ```
 
 
-<!-- <!-- Diagrammes générés une seule fois pour la création des fichiers --> -->
+<!-- Diagrammes générés une seule fois pour la création des fichiers -->
 <!-- ```{r diag-gen-sym, echo=FALSE, engine='tikz', fig.ext=if (is_latex) 'pdf' else 'png', fig.cap="Synthèse des méthodes de construction de moyennes mobiles symétriques $\\theta=(\\theta_{-h},\\dots,\\theta_{h})$ de $2h+1$ termes.", engine.opts = list(template = "img/tikz2pdf.tex"), fig.lecture = notations, out.extra = out.extra, out.width = out.width,fig.pos="!ht", eval=FALSE} -->
 <!-- \input{diagrams/sym.tex} -->
 <!-- ``` -->
