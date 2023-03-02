@@ -49,4 +49,3 @@ knitr::include_graphics(img)
 img <- sprintf("img/filters_used/%s.%s", tolower("fst"), fig.ext)
 knitr::include_graphics(img)
 ```
-
