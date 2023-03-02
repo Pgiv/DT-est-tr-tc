@@ -36,6 +36,9 @@ jobs:
 # gh-action from Cecilapp/GitHub-Pages-deploy
   checkout-and-deploy:
    runs-on: ubuntu-latest
+   defaults:
+     run:
+       working-directory: ${{ env.working-directory }}
    needs: bookdown
    steps:
      - name: Checkout
