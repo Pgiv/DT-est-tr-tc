@@ -13,7 +13,7 @@ Dans un voisinage $h(x_0)$ autour de $x_0$, $\mu$ peut être approchée par un p
 La quantité $h(x_0)$ est appelée *fenêtre* (*bandwidth*).
 Si $\varepsilon_i$ est un bruit blanc, on peut donc estimer par les moindres carrés $\mu(x_0)$ en utilisant les observations qui sont dans $\left[x_0-h(x_0),x_0+h(x_0)\right]$.  
 
-De nombreuses méthodes d'extraction de la tendance-cycle sont basées sur la régression non-paramétrique.
+De nombreuses méthodes d'extraction de la tendance-cycle sont fondées sur la régression non-paramétrique.
 Elles supposent que la tendance est localement polynomiale (ce qui est justifié par l'équation \@ref(eq:taylor)) et utilisent différentes méthodes d'estimation pour en déduire des moyennes mobiles symétriques et asymétriques.  
 Ainsi, @GrayThomson1996 (section\@ref(subsec-graythomson)) proposent un cadre statistique complet permettant notamment de modéliser l'erreur d'approximation de la tendance par des polynômes locaux.
 Toutefois, la spécification de cette erreur étant en générale complexe, des modélisations plus simples peuvent être préférées, comme celle de @proietti2008 (section \@ref(sec-proietti)).  
@@ -92,7 +92,7 @@ Ainsi, la moyenne mobile $\theta$ préserve les polynômes de degré $d$.
 
 Concernant le choix des paramètres, l'idée générale qui prévaut est que le choix entre ces différents noyaux est secondaire^[
 Voir par exemple @cleveland1996smoothing ou @Loader1999.
-Les seules contraintes souhaitées sur le noyau est qu'il accorde un poids plus important à l'estimation centrale ($\kappa_0$) et qu'il décroit vers 0 lorsque l'on s'éloigne de l'estimation centrale.
+Les seules contraintes souhaitées sur le noyau est qu'il accorde un poids plus important à l'estimation centrale ($\kappa_0$) et qu'il décroit vers 0 lorsqu'on s'éloigne de l'estimation centrale.
 Le noyau uniforme est donc à éviter.
 ] et qu'il vaut mieux se concentrer sur deux autres paramètres :
 
@@ -200,7 +200,7 @@ Les noyaux d'Henderson, trapézoïdal et gaussien sont particuliers :
 - Les fonctions noyau d'Henderson et trapézoïdal changent avec la fenêtre (les autres dépendent uniquement du rapport $j/(h+1)$).
 
 - Pour les noyaux trapézoïdal et gaussien, d'autres définitions pourraient être utilisées et ils sont donc définis arbitrairement.
-Pour le noyau trapézoïdal on pourrait par exemple prendre une pente utilisant moins de points (par exemple $\begin{cases}\frac{1}{4h} &\text{ si }j=\pm h \\ \frac{2}{4h}& \text{ sinon}\end{cases}$) ou donner un poids plus faible aux observations extrêmes (par exemple $\begin{cases}\frac{1}{6h-1} &\text{ si }j=\pm h \\ \frac{3}{6h-1}& \text{ sinon}\end{cases}$); pour le noyau gaussien on pourrait prendre une variable plus ou moins élevée.  
+Pour le noyau trapézoïdal on pourrait par exemple prendre une pente utilisant moins de points (par exemple $\begin{cases}\frac{1}{4h} &\text{ si }j=\pm h \\ \frac{2}{4h}& \text{ sinon}\end{cases}$) ou donner un poids plus faible aux observations extrêmes (par exemple $\begin{cases}\frac{1}{6h-1} &\text{ si }j=\pm h \\ \frac{3}{6h-1}& \text{ sinon}\end{cases}$); pour le noyau gaussien on pourrait prendre une variance plus ou moins élevée.  
 Le noyau trapézoïdal implémenté dans `rjd3filters` permet de calculer les moyennes mobiles utilisées dans l'algorithme X-13ARIMA pour l'extraction des composantes saisonnières. 
 Il n'est pas adapté dans le cas de l'extraction de la tendance-cycle.
 
@@ -294,7 +294,7 @@ Ce résultat étonnant souligne le fait que le déphasage n'est pas contrôlé p
 
 En termes de révision, ($A_w+S_w+T_w+R_w$), les filtres LC et QL donnent toujours de meilleurs résultats que les filtres CQ et DAF. 
 
-Ces propriétés « théoriques » sont conformes aux résultats empiriques observés dans la section \@ref(sec-comparison) : les révisions sont plus importantes pour les filtres CQ et DAF (ce qui conduit à plus de variabilité dans les estimations et à un délai plus grand dans la détection des points de retournement) ; et le filtre QL paramétrisé de manière globale (paramtère $R$ fixé pour tous les filtres asymétriques) peut conduire à un détection plus tardive des points de retournement que le filtre LC^[
+Ces propriétés « théoriques » sont conformes aux résultats empiriques observés dans la section \@ref(sec-comparison) : les révisions sont plus importantes pour les filtres CQ et DAF (ce qui conduit à plus de variabilité dans les estimations et à un délai plus grand dans la détection des points de retournement) ; et le filtre QL paramétrisé de manière globale (paramètre $R$ fixé pour tous les filtres asymétriques) peut conduire à un détection plus tardive des points de retournement que le filtre LC^[
 En effet, pour détecter un point de retournement à la date $t$, il est nécessaire de connaître au moins 2 points après cette date afin de s'assurer qu'il y a bien un retournement de tendance.
 ].
 
@@ -541,12 +541,12 @@ Ainsi, @dagumbianconcini2008 utilisent la théorie des RKHS pour approcher le fi
 <!-- je pense que la plupart des lecteurs ne comprendront pas la phrase suivante: faut-il définir plus et préciser les différents termes ? -->
 <!-- Rep AQLT : tentative de vulgarisation ajoutée -->
 Un RKHS $\mathbb{L}^{2}(f_{0})$ est un espace de Hilbert caractérisé par un noyau qui permet de reproduire toutes les fonctions de cet espace.
-Dit autrement, un RKHS est un espace mathématiques de fonctions (ensemble des séries temporelles, ensemble des séries temporelles polynômiales d'un certain degré...) qui possède une structure permettant de résoudre de nombreux problèmes.
-En particulier, il est caractérisé par produit scalaire $\ps{\cdot}{\cdot}$ et une fonction de densité $f_0$ qui permettent notamment de mesurer la proximité entre deux éléments de son espace (par exemple entre différentes estimations de la tendance-cycle).
+Dit autrement, un RKHS est un espace mathématiques de fonctions (ensemble des séries temporelles, ensemble des séries temporelles polynomiales d'un certain degré...) qui possède une structure permettant de résoudre de nombreux problèmes.
+En particulier, il est caractérisé par un produit scalaire $\ps{\cdot}{\cdot}$ et une fonction de densité $f_0$ qui permettent notamment de mesurer la proximité entre deux éléments de son espace (par exemple entre différentes estimations de la tendance-cycle).
 Il est également à noyau reproduisant, ce qui signifie que tout élément de l'espace étudié (par exemple les tendances polynomiales locales) peut s'écrire à partir du produit scalaire et d'une certaine fonction (le noyau).
 Comme nous le verrons, cette propriété permet notamment de calculer des moyennes mobiles pour l'estimation de la tendance-cycle.
 
-Le produit scalaire $\ps{\cdot}{\cdot}$ défini par :
+Le produit scalaire $\ps{\cdot}{\cdot}$ est défini par :
 $$
 \left\langle U,V\right\rangle =\E{UV}=\int_{\R}U(t)V(t)f_{0}(t)\ud t\quad
 \forall U,V\in\mathbb{L}^{2}(f_{0}).
@@ -592,9 +592,7 @@ Cette solution s'écrit alors :
 \widehat{TC}(t)=\int_{[-1,1]} y(t-s)K_{d+1}(s) \ud s.
 (\#eq:rkhssoltc2)
 \end{equation}
-<!-- un nb fini de polynomes, puisque i est plus petit que d-1, forme une base orthonormée de L2? -->
-<!-- Rep AQLT : je n'ai pas compris -->
-On peut, par ailleurs, montrer que $K_{d+1}$ s'écrit en fonction de $f_0$ et du noyau reproduisant $R_d(\cdot,\cdot)$ et que ce dernier peut s'écrire en fonction de polynômes $(P_i)_{i\in \llbracket 0, d-1 \rrbracket}$ qui forme une base orthonormée de $\mathbb L^2(f_0)$ (voir par exemple @berlinet1993) :
+On peut, par ailleurs, montrer que $K_{d+1}$ s'écrit en fonction de $f_0$ et du noyau reproduisant $R_d(\cdot,\cdot)$ et que ce dernier peut s'écrire en fonction de polynômes $(P_i)_{i\in \llbracket 0, d \rrbracket}$ qui forme une base orthonormée de $\mathbb P_d$ (voir par exemple @berlinet1993) :
 $$
 K_{d+1}(t) = R_d(t,0)f_0(t) = \sum_{i=0}^dP_i(t)P_i(0)f_0(t).
 $$

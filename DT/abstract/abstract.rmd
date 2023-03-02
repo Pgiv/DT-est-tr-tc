@@ -3,6 +3,7 @@ always_allow_html: true
 bibliography: "biblio.bib"
 ---
 
+
 ```{r, include=FALSE}
 is_html <- knitr::is_html_output()
 is_latex <- knitr::is_latex_output()
@@ -23,14 +24,40 @@ if(is_html){
         fa_r_project <- 'R'
     }
 }
-
 ```
 
 \thispagestyle{fancy}
 
+
 # Résumé {-}
 
-<!-- je ne relis pas l’anglais pour l’instant, je relirai la version qui sera finalisée. je pense que c’est un peu long pour un résumé. en l’état, ça me paraît entre le 2 pages et l’abstract, ça peut plutôt servir de base à un 2 pages, tu ajoutes un graphique et détaille plus ce que tu fais, et on serait sur un format 2 pages -->
+
+
+`r if (is_html) '
+Pour citer cet article :
+'`
+
+```{tikz, eval = FALSE, echo = is_html}
+@article{inseeDTG2023XX,
+  title={Estimation en temps r{\'e}el de la tendance cycle{ :} apport de l’utilisation de moyennes mobiles asym{\'e}triques},
+  author={Quartier{-la-}Tente, Alain},
+  journal={Document de travail Insee},
+  number={G2023/XX},
+  year={2023},
+  url={https://github.com/InseeFrLab/XXXX}
+}
+```
+
+
+`r if (is_html) '
+
+Ou 
+
+**Quartier-la-Tente A (2023)**, *Estimation en temps réel de la tendance-cycle : apport de l’utilisation des moyennes mobiles asymétriques*, Document de travail Insee, G2023/XX.
+
+'`
+
+
 :::: {.abstract}
 `r if (is_html) '
 :::{.title}
@@ -38,15 +65,14 @@ Résumé
 :::
 '`
 Cette étude s'intéresse aux différentes méthodes de construction de moyennes mobiles pour l'estimation en temps réel de la tendance-cycle et la détection rapide des points de retournement.
-Elle montre comment toutes les méthodes étudiées (filtres polynomiaux locaux, méthodes basées sur une optimisation sous contrainte d’une somme pondérée de critères de qualité des moyennes mobiles, et filtres basés sur les espaces de Hilbert à noyau reproduisant (RKHS)) peuvent s'écrire comme un cas particulier d'une formule générale de construction de moyennes mobiles.
-Cela permet de mettre en avant les similitudes et les différences entre les méthodes et ainsi les comparer plus facilement.
-Cette étude montre également deux prolongements possibles aux filtres polynomiaux locaux : l'ajout d'un critère permettant de contrôler le déphasage (délai dans la détection des points de retournement) et une façon de paramétriser localement ces filtres. 
-Les méthodes sont également comparées entre elles sur des séries simulées et réelles.
-Cela permet de mettre en lumière l'impact de problèmes d'optimisation, dûs à l'existence de plusieurs extremum, dans les filtres issus des RKHS sur les révisions et le déphasage.
-Par ailleurs, cela montre que modéliser des tendances polynomiales trop complexes introduit plus de révisions sans diminuer le déphasage.
-Enfin, cela montre également comment, pour les filtres polynomiaux locaux, une paramétrisation locale permet une détection plus rapide des points de retournement et une réduction des révisions des estimations de la tendance-cycle.
-::::
+Elle montre comment les méthodes étudiées peuvent s'écrire comme un cas particulier d'une formule générale de construction de moyennes mobiles, ce qui permet de décrire leurs similitudes et ainsi les comparer plus facilement.
+Elle décrit également deux prolongements possibles aux filtres polynomiaux locaux : l'ajout d'un critère permettant de contrôler le déphasage (délai dans la détection des points de retournement) et une façon de paramétriser localement ces filtres. 
+La comparaison des méthodes sur des séries simulées et réelles montre que : les problèmes d'optimisation des filtres issus des RKHS augmentent le déphasage et les révisions des estimations de la tendance-cycle ;
+modéliser des tendances polynomiales trop complexes introduit plus de révisions sans diminuer le déphasage ;
+pour les filtres polynomiaux locaux, une paramétrisation locale permet une réduction du déphasage et des révisions.
 
+Mots clés : séries temporelles, tendance-cycle, désaisonnalisation, points de retournement.
+::::
 
 # Abstract {-}
 
@@ -56,17 +82,16 @@ Enfin, cela montre également comment, pour les filtres polynomiaux locaux, une 
 Abstract
 :::
 '`
-This paper describes and compares different approaches to build asymmetric filters: local polynomials filters, methods based on an optimization of filters' properties (Fidelity-Smoothness-Timeliness, FST, approach and a data-dependent filter) and filters based on Reproducing Kernel Hilbert Space.
-It also describes how local polynomials filters can be extended to include a timeliness criterion to minimize phase shift.
-All these methods can be seen as a special case of a general unifying framework to derive linear filters.
+This paper focuses on different approaches to build moving averages for real-time trend-cycle estimation and fast turning point detection.
+It shows how all the studied methods can be written as a special case of a general unifying framework to derive linear filters, which allows to describe their similarities and thus compare them more easily.
+It also describes two possible extensions to local polynomial filters: the addition of a timeliness criterion to control the phase shift (delay in the detection of turning points) and a way to locally parameterize these filters.
+The comparison of the methods on simulated and real data shows that: the optimization problems of the filters from the RKHS theory increase the phase shift and the revisions of the trend-cycle estimates;
+modeling polynomial trends that are too complex introduces more revisions without decreasing the phase shift;
+for local polynomial filters, a local parameterization reduces the phase shift and the revisions.
 
-This paper shows that, when the length of the filter is adapted to the variability of the series, constraining asymmetric filters to preserve constant trends (and not necessarily polynomial ones) reduce revision error and time lag. 
-Therefore, future studies on the subject can focus on these filters.
-Moreover, with RKHS filters some optimisation issues can occurs and they might lead to erratic estimation.
-They might be able to produce satisfying results in terms of phase-shift and revisions, but they should be avoid for the last estimates of the trend-cycle component: other methods should then be prefered to reduce revisions with the final estimates.
-
-All the methods are implemented in the `r fa_r_project` package `rjd3filters` and the results can be easily reproduced.
-The programs used, and a web version of this report, are available at https://github.com/InseeFrLab/XXXXXXXXX.
+Keywords: time series, trend-cycle, seasonal adjustment, turning points.
 ::::
+
+JEL Classification: E32, E37.
 
 \newpage

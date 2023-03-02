@@ -38,14 +38,14 @@ Pour les régressions polynomiales locales, les filtres asymétriques sont calib
 Trois critères de qualité sont également calculés :
 
 1. Calcul du déphasage dans la détection des points de retournement. La définition de @Zellner1991 est utilisée pour déterminer les points de retournement :  
-    - on parle de redressement (*upturn*) lorsque l'on passe d'une phase de récession à une phase d'expansion de l'économie. 
+    - on parle de redressement (*upturn*) lorsqu'on passe d'une phase de récession à une phase d'expansion de l'économie. 
     C'est le cas à la date $t$ lorsque $y_{t-3}\geq y_{t-2}\geq y_{t-1}<y_t\leq y_{t+1}$.  
-    - on parle de ralentissement (*downturn*) lorsque l'on passe d'une phase d'expansion à une phase de récession.
+    - on parle de ralentissement (*downturn*) lorsqu'on passe d'une phase d'expansion à une phase de récession.
 C'est le cas à la date $t$ lorsque $y_{t-3}\leq y_{t-2}\leq y_{t-1}>y_t\geq y_{t+1}$.  
     Il faut donc au moins 2 mois pour détecter un point de retournement.  
     Le déphasage est souvent défini comme le nombre de mois nécessaires pour détecter le bon point de retournement (i.e., le point de retournement sur la composante cyclique).
     <!-- en temps réel, ce concept perd un peu de sa pertinence: conditionner à des observations futures n’est pas possible. si on est en temps réel, le filtre va nous donner un point de retournement, on ne sait pas ce que donneront les points suivants, mais il faut quand même décider maintenant. -->
-    <!-- Rep AQLT : même si je vois ton idée (on ne connait pas en avance) je trouve ce critère plus pertinent pour le choix du filtre en temps réel car on peut penser qu'une méthode qui minimise ce critère modifié donnera des points de retournement (en moyenne) plus fiables. Si l'on voit le problème autrement, lorsque l'on connait le point de retournement du fait d'une information externe, cela permet de rejeter les filtres qui donnent le bon point de retournement vite (cohérent avec l'info extérieure) mais qui conduisent à des révisions dans les estimations suivantes (pb de communication) -->
+    <!-- Rep AQLT : même si je vois ton idée (on ne connait pas en avance) je trouve ce critère plus pertinent pour le choix du filtre en temps réel car on peut penser qu'une méthode qui minimise ce critère modifié donnera des points de retournement (en moyenne) plus fiables. Si l'on voit le problème autrement, lorsqu'on connait le point de retournement du fait d'une information externe, cela permet de rejeter les filtres qui donnent le bon point de retournement vite (cohérent avec l'info extérieure) mais qui conduisent à des révisions dans les estimations suivantes (pb de communication) -->
     Nous utilisons ici un critère légèrement modifié : le déphasage est défini comme le nombre de mois nécessaires pour détecter le bon point de retournement sans aucune révision future.
     Il peut en effet arriver que le bon point de retournement soit détecté par des filtres asymétriques mais ne le soit pas avec l'estimation finale avec un filtre symétrique 
     (c'est le cas de 41 points de retournements sur l'ensemble des 9 séries avec les filtres asymétriques de Musgrave) ou qu'il y ait des révisions dans les estimations successives (c'est le cas de 7 points de retournements sur l'ensemble des 9 séries avec les filtres asymétriques de Musgrave).
@@ -107,10 +107,10 @@ Concernant les révisions, la variabilité de la série a peu d'impact sur les p
 Globalement, les filtres LC minimisent toujours les révisions (avec globalement peu d'impact de la paramétrisation locale des filtres) et les révisions sont plus importantes avec les filtres CQ, DAF et les filtres RKHS autres que $b_{q,\varphi}$.
 <!-- tu ne donne pas je crois ces raisons dans le paragraphe précédent … -->
 <!-- Rep AQLT : c'est effectivement un peu plus haut, je vais repréciser. -->
-Par ailleurs, c'est le filtre $b_{q,\varphi}$ qui conduit à le plus de révision entre l'avant-dernière et la dernière estimation, qui s'explique par la différence importante entre la courbe des coefficients de la dernière moyenne mobiles asymétrique et celle du filtre symétrique.
+Par ailleurs, c'est le filtre $b_{q,\varphi}$ qui conduit à le plus de révision entre l'avant-dernière et la dernière estimation, ce qui s'explique par la différence importante entre la courbe des coefficients de la dernière moyenne mobiles asymétrique et celle du filtre symétrique.
 Les autres filtres RKHS, $b_{q,\Gamma}$ et $b_{q,G}$ conduisent eux à de fortes révisions entre la quatrième et la cinquième estimation.
 
-Pour le filtre QL, il y a une forte révision entre la deuxième et la troisième estimation : cela peut venir du fait que pour la deuxième estimation (lorsque l'on connait un point dans le futur), le filtre QL associe un poids plus important à l'estimation en $t+1$ qu'à l'estimation en $t$, ce qui crée une discontinuité. 
+Pour le filtre QL, il y a une forte révision entre la deuxième et la troisième estimation : cela peut venir du fait que pour la deuxième estimation (lorsqu'on connait un point dans le futur), le filtre QL associe un poids plus important à l'estimation en $t+1$ qu'à l'estimation en $t$, ce qui crée une discontinuité. 
 Cette révision est fortement réduite avec la paramétrisation locale du filtre.
 Pour les filtres polynomiaux autres que le filtre LC, les révisions importantes à la première estimation étaient prévisibles au vu de la courbe des coefficients : un poids très important est associé à l'observation courante et il y une forte discontinuité entre la moyenne mobile utilisée pour l'estimation en temps réel (lorsqu'aucun point dans le futur n'est connu) et les autres moyennes mobiles.
 
@@ -119,7 +119,7 @@ Ainsi, pour cette méthode, utiliser le même ensemble de poids ($\alpha$, $\bet
 
 <!-- elles sont à peine plus grandes entre les estimations consécutives? en regardant vite le tableau, j’aurais plutôt envie de dire que c’est quasiment la même chose entre le panneau du haut et du bas -->
 <!-- Rep AQLT : sauf pour q=4, ajout d'une mot sur ce sujet  -->
-Le prolongement de la série par un modèle ARIMA donne des révisions avec les dernières estimations du même ordre de grandeur que le filtre LC mais des révisions légèrement plus importantes entre les estimations consécutive, notamment entre la quatrième et la cinquième estimation (on pouvait s'y attendre comme souligné dans la section \@ref(subec:mmetprev)).
+Le prolongement de la série par un modèle ARIMA donne des révisions avec les dernières estimations du même ordre de grandeur que le filtre LC mais des révisions légèrement plus importantes entre les estimations consécutives, notamment entre la quatrième et la cinquième estimation (on pouvait s'y attendre comme souligné dans la section \@ref(subec:mmetprev)).
 
 <!-- 2 points qui semblent très élevés, dans le tableau du bas, pour ARIMA q = 4 et b_{q,Tau} q=4 -->
 <!-- Rep AQLT : Pour ARIMA pas de raison que ce soit faible (comme indiqué dans le paragraphe précédent), pour les autres je ne trouve pas d'explication mais je vais ajouter une phrase dessus -->
@@ -152,7 +152,7 @@ Les séries étudiées correspondent à la base publiée en novembre 2022.
 <!-- tu écris l’emploi, mais dans les titres des figures, ce sont les ventes au détail -->
 <!-- Rep AQLT : C'est bien l'emploi, j'avais changé l'exemple car le précédent était pendant le COVID et j'ai oublié de mettre à jour le titre... -->
 La série étudiée est le niveau d'emploi aux États-Unis (série `CE160V`, utilisée en logarithme) autour du point de retournement de février 2001, cohérent avec la datation mensuelle des points de retournement.
-Ce point et cette série ont été choisis car le retournement conjoncturel est particulièrement visible sur la série brute (voir figures \@ref(fig:ce16ov-previmp-lp) et \@ref(fig:ce16ov-previmp-autres)), que cette série est utilisée pour la datation des cycles conjoncturelle de l'économie et que la base FRED-MD facilite la reproductibilité des résultats (grâce à la disponibilité des séries publiées aux dates passées).
+Ce point et cette série ont été choisis car le retournement conjoncturel est particulièrement visible sur la série brute (voir figures \@ref(fig:ce16ov-previmp-lp) et \@ref(fig:ce16ov-previmp-autres)), que cette série est utilisée pour la datation des cycles conjoncturels de l'économie et que la base FRED-MD facilite la reproductibilité des résultats (grâce à la disponibilité des séries publiées aux dates passées).
 <!-- peut être utile d’indiquer que tu as choisi ce point car il ressort clairement des données, tu peux même montrer la série pour qu’on en soit bien convaincu. -->
 Cette série a une variabilité moyenne^[
 La variabilité est déterminée en étudiant les séries jusqu'en janvier 2020.
@@ -169,9 +169,9 @@ Il est de deux mois pour les autres méthodes (QL, DAF et FST).
 <!-- donc c’est cool ou pas? si ça permet de mieux appréhender ce qu’il se passe en temps réel, mais que ça ne dégrade pas les estimations quand on est plus loin (ce qui est le risque principal à prendre des estimations trop locales, non?), alors c’est positif, non? D’un autre côté, tu ne peux pas être ultra assertif, car tu n’as qu’un exemple, et pas un résultat valable sur tout un échantillon -->
 <!-- Rep AQLT : j'avais inversé quelques chiffres j'ai l'impression mais oui je trouve que c'est globalement assez positif -->
 
-La paramétrisation locale ne permet pas ici de réduire le déphasage mais a permet de réduire les révisions.
+La paramétrisation locale ne permet pas ici de réduire le déphasage mais permet de réduire les révisions.
 Les polynomiales CQ et DAF conduisent à plus de variabilité dans les estimations intermédiaires, en particulier en février 2001.
-Concernant les filtres RKHS, les estimations intermédiaires du filtre $b_{q,\varphi}$ semblent très erratiques, ce qui s'explique, encore une fois, par le fait que les moyennes mobiles asymétriques utilisées lorsque l'on se rapproche du cas symétrique sont éloignées de la moyenne mobile symétrique d'Henderson.
+Concernant les filtres RKHS, les estimations intermédiaires du filtre $b_{q,\varphi}$ semblent très erratiques, ce qui s'explique, encore une fois, par le fait que les moyennes mobiles asymétriques utilisées lorsqu'on se rapproche du cas symétrique sont éloignées de la moyenne mobile symétrique d'Henderson.
 Les filtres $b_{q,\Gamma}$ et $b_{q,G}$ conduisent à des estimations intermédiaires relativement constantes (estimations en temps réel proches des estimations lorsque quelques points dans le futur sont connus) : ces estimations intermédiaires (notamment celles en temps-réel) sont peu cohérentes en période de points de retournement et conduisent, dans ce cas, à un déphasage élevé.
 
 
@@ -232,21 +232,21 @@ knitr::include_graphics(img)
 Bien que la méthodologie employée soit perfectible, plusieurs enseignements peuvent être tirés de cette analyse empirique.
 
 Sur les méthodes polynomiales locales, chercher à préserver des tendances polynomiales de degré supérieur à 2 (méthodes CQ et DAF) augmente la variance des estimations (et donc les révisions) et le délai pour détecter des points de retournement.
-Ainsi, l'estimation en temps réel des méthodes utilisant les filtres asymétriques direct (DAF) peut être facilement améliorée en utilisant le filtre LC ou QL. 
+Ainsi, l'estimation en temps réel des méthodes utilisant les filtres asymétriques directs (DAF) peut être facilement améliorée en utilisant le filtre LC ou QL. 
 C'est par exemple le cas de la méthode de désaisonnalisation STL (*Seasonal-Trend decomposition based on Loess*) proposée par @cleveland90 qui modélise par défaut une tendance locale de degré 1 : le gain à utiliser la méthode LC est donc dans ce cas limité mais il peut être important lorsque ce degré est modifié par l'utilisateur.
 
 La paramétrisation locale des filtres polynomiaux locaux permet d'améliorer la qualité des estimations, surtout pour le filtre QL.
 Même lorsque le déphasage n'est pas diminué, elle permet de réduire les révisions et d'avoir des estimations plus cohérentes, notamment en termes de prévisions implicites.
-La méthode proposée dans cette article pour l'estimation en temps-réel des paramètres locaux, bien que naïve et grandement perfectible, permet tout de même d'améliorer les estimations.
+La méthode proposée dans cet article pour l'estimation en temps-réel des paramètres locaux, bien que naïve et grandement perfectible, permet tout de même d'améliorer les estimations.
 
-Concernant les méthodes basées sur les RKHS, les deux premières estimations des filtres $b_{q,\Gamma}$ et $b_{q,G}$ semblent peu cohérentes (ce qui a peu d'impact sur le déphasage puisqu'il faut au moins 2 mois pour détecter un point de retournement), comme les dernières estimations du filtre $b_{q,\varphi}$ (ce qui peut provenir d'un problème d'optimisation).
+Concernant les méthodes fondées sur les RKHS, les deux premières estimations des filtres $b_{q,\Gamma}$ et $b_{q,G}$ semblent peu cohérentes (ce qui a peu d'impact sur le déphasage puisqu'il faut au moins 2 mois pour détecter un point de retournement), comme les dernières estimations du filtre $b_{q,\varphi}$ (ce qui peut provenir d'un problème d'optimisation).
 Cela suggère que la méthode utilisée pour calibrer ces filtres n'est pas optimale pour tous les horizons de prévision.
 En effet, pour les premières estimations, on cherche plutôt à minimiser le déphasage ($b_{q,\varphi}$) et lorsque que l'on se rapproche du cas symétrique ($q \geq 4$) on cherche plutôt à minimiser les révisions ($b_{q,\Gamma}$ ou $b_{q,G}$).
-Les performances du filtre $b_{q,\varphi}$ pourraient ainsi sûrement être améliorées en utilisant d'autres moyennes mobiles lorsque l'on l'on se rapproche du filtre symétrique ($q \geq 4$).
+Les performances du filtre $b_{q,\varphi}$ pourraient ainsi sûrement être améliorées en utilisant d'autres moyennes mobiles lorsqu'on se rapproche du filtre symétrique ($q \geq 4$).
 
-Pour le filtre FST, les poids retenus pour les simulations ($\alpha = 0,00$ *fidelity*, $\beta  =0,05$ *smoothness* et $\gamma = 0,95$ *timeliness*) semblent donner de bon résultats en termes de déphasage et de révisions (pour $q\geq1$).
-Les critères utilisés dans cette méthode n'étant pas normalisés, les poids retenus reviennent à donner un poids plus important à la *timeliness* pour les premières estimations et un poids plus important à la *smoothness* lorsque l'on se rapproche du cas d'utilisation du filtre symétrique.
-En effet, plus $q$ augmente (i.e. : plus on utilise de points dans le futur), plus le déphasage et donc le critère associé à la *timeliness* est petit : le poids associé à la *smoothness* augmente donc et les moyennes mobiles trouvées se rapproche du filtre symétrique d'Henderson (qui peut être construit en minimisant que la *smoothness*).
+Pour le filtre FST, les poids retenus pour les simulations ($\alpha = 0,00$ *fidelity*, $\beta  =0,05$ *smoothness* et $\gamma = 0,95$ *timeliness*) semblent donner de bons résultats en termes de déphasage et de révisions (pour $q\geq1$).
+Les critères utilisés dans cette méthode n'étant pas normalisés, les poids retenus reviennent à donner un poids plus important à la *timeliness* pour les premières estimations et un poids plus important à la *smoothness* lorsqu'on se rapproche du cas d'utilisation du filtre symétrique.
+En effet, plus $q$ augmente (i.e. : plus on utilise de points dans le futur), plus le déphasage et donc le critère associé à la *timeliness* est petit : le poids associé à la *smoothness* augmente donc et les moyennes mobiles trouvées se rapproche du filtre symétrique d'Henderson (qui peut être construit en ne minimisant que la *smoothness*).
 En revanche, pour l'estimation en temps-réel ($q=0$), les statistiques sur les révisions suggèrent que l'on pourrait améliorer les résultats en utilisant d'autres pondérations (par exemple avec un poids non nul à la *fidelity*).
 Cela suggère également que si l'on utilisait la méthode ATS, où les critères sont normalisés, il faudrait sûrement associer un poids décroissant à la *timeliness* en fonction de l'horizon de prévision.
 
@@ -259,18 +259,18 @@ Le choix de la méthode utilisée pour l'estimation de la tendance-cycle peut do
 
 2. D'autre part, les moyennes mobiles étant des opérateurs linéaires, ils sont sensibles à la présence de points atypiques.
 L'application directe des méthodes peut donc conduire donc à des estimations biaisées, du fait de leur présence, alors que les méthodes de désaisonnalisation (comme la méthode X-13ARIMA) ont un module de correction des points atypiques.
-Par ailleurs, comme notamment montré par @dagum1996new, le filtre symétrique final utilisé par X-13ARIMA pour extraire la tendance-cycle (et donc celui indirectement utilisé lorsque l'on applique les méthodes sur les séries désaisonnalisées) laisse passer environ 72 % des cycles de 9 ou 10 mois (généralement associés à du bruit plutôt qu'à la tendance-cycle.
+Par ailleurs, comme notamment montré par @dagum1996new, le filtre symétrique final utilisé par X-13ARIMA pour extraire la tendance-cycle (et donc celui indirectement utilisé lorsqu'on applique les méthodes sur les séries désaisonnalisées) laisse passer environ 72 % des cycles de 9 ou 10 mois (généralement associés à du bruit plutôt qu'à la tendance-cycle.
 Les filtres asymétriques finaux amplifient même les cycles de 9 ou 10 mois.
 Cela peut avoir pour conséquence l'introduction d'ondulations indésirables, c'est-à-dire la détection de faux points de retournement.
 Ce problème est réduit par la correction des points atypiques (ces cycles étant considérés comme de l'irrégulier). 
 C'est ainsi que le *Nonlinear Dagum Filter* (NLDF) a été développé et consiste à :
 
-    a. appliquer l'algorithme de correction des points atypique de X-13ARIMA sur la série désaisonnalisée, puis de la prolonger par un modèle ARIMA ;
+    a. appliquer l'algorithme de correction des points atypiques de X-13ARIMA sur la série désaisonnalisée, puis de la prolonger par un modèle ARIMA ;
     
     b. effectuer une nouvelle correction des points atypiques en utilisant un seuil bien plus strict et appliquer ensuite le filtre symétrique de 13 termes. 
     En supposant une distribution normale cela revient à modifier 48 % des valeurs de l'irrégulier.   
     
-Une piste d'étude serait alors d'étudier plus précisément l'impact des points sur l'estimation de la tendance-cycle et la détection des points de retournement, mais aussi d'explorer de nouveaux types de filtres asymétriques basés sur des méthodes robustes (comme les régressions locales robustes, les médianes mobiles, etc.).
+Une piste d'étude serait alors d'étudier plus précisément l'effet des points atypiques sur l'estimation de la tendance-cycle et la détection des points de retournement, mais aussi d'explorer de nouveaux types de filtres asymétriques fondés sur des méthodes robustes (comme les régressions locales robustes, les médianes mobiles, etc.).
  
 
 
