@@ -5,9 +5,6 @@ on:
      paths:
        - DT/**
        
-defaults:
-  run:
-    working-directory: DT
  
 
 name: renderbook
@@ -27,7 +24,7 @@ jobs:
       - name: Install rmarkdown
         run: Rscript -e 'install.packages(c("rmarkdown","bookdown", "kableExtra", "htmltools", "plot3D"))'
       - name: Render Book
-        run: Rscript -e 'bookdown::render_book("index.Rmd")'
+        run: Rscript -e 'bookdown::render_book("DT/index.Rmd")'
       - uses: actions/upload-artifact@v1
         with:
           name: _book
