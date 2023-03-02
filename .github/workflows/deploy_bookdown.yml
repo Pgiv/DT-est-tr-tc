@@ -36,7 +36,7 @@ jobs:
    runs-on: ubuntu-latest
    defaults:
      run:
-       working-directory: ${{ env.working-directory }}
+       working-directory: DT
    needs: bookdown
    steps:
      - name: Checkout
