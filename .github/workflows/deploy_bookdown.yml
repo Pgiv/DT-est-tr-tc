@@ -26,7 +26,7 @@ jobs:
       - uses: actions/upload-artifact@v1
         with:
           name: _book
-          path: _book/
+          path: DT/_book/
   
 # Need to first create an empty gh-pages branch
 # see https://pkgdown.r-lib.org/reference/deploy_site_github.html
@@ -51,8 +51,9 @@ jobs:
      - name: Deploy to GitHub Pages
        uses: Cecilapp/GitHub-Pages-deploy@v3
        env:
-          EMAIL: ${{ secrets.EMAIL }}               # must be a verified email
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }} # https://github.com/settings/tokens
-          BUILD_DIR: DT/_book/                     # "_site/" by default
+         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+       with:
+         email: actions@github.com
+         build_dir: DT/_book                 # "_site/" by default
     
  
