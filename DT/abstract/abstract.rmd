@@ -71,7 +71,7 @@ La comparaison des méthodes sur des séries simulées et réelles montre que : 
 modéliser des tendances polynomiales trop complexes introduit plus de révisions sans diminuer le déphasage ;
 pour les filtres polynomiaux locaux, une paramétrisation locale permet une réduction du déphasage et des révisions.
 
-Mots clés : séries temporelles, tendance-cycle, désaisonnalisation points de retournement.
+Mots clés : séries temporelles, tendance-cycle, désaisonnalisation, points de retournement.
 ::::
 
 # Abstract {-}
@@ -82,14 +82,14 @@ Mots clés : séries temporelles, tendance-cycle, désaisonnalisation points de 
 Abstract
 :::
 '`
-Cette étude s'intéresse aux différentes méthodes de construction de moyennes mobiles pour l'estimation en temps réel de la tendance-cycle et la détection rapide des points de retournement.
-Elle montre comment les méthodes étudiées peuvent s'écrire comme un cas particulier d'une formule générale de construction de moyennes mobiles, ce qui permet de décrire leurs similitudes et ainsi les comparer plus facilement.
-Elle décrit également deux prolongements possibles aux filtres polynomiaux locaux : l'ajout d'un critère permettant de contrôler le déphasage (délai dans la détection des points de retournement) et une façon de paramétriser localement ces filtres. 
-La comparaison des méthodes sur des séries simulées et réelles montre que : les problèmes d'optimisation des filtres issus des RKHS augmentent le déphasage et les révisions des estimations de la tendance-cycle ;
-modéliser des tendances polynomiales trop complexes introduit plus de révisions sans diminuer le déphasage ;
-pour les filtres polynomiaux locaux, une paramétrisation locale permet une réduction du déphasage et des révisions.
+This paper focuses on different approaches to build moving averages for real-time trend-cycle estimation and fast turning point detection.
+It shows how all the studied methods can be written as a special case of a general unifying framework to derive linear filters, which allows to describe their similarities and thus compare them more easily.
+It also describes two possible extensions to local polynomial filters: the addition of a timeliness criterion to control the phase shift (delay in the detection of turning points) and a way to locally parameterize these filters.
+The comparison of the methods on simulated and real data shows that: the optimization problems of the filters from the RKHS theory increase the phase shift and the revisions of the trend-cycle estimates;
+modeling polynomial trends that are too complex introduces more revisions without decreasing the phase shift;
+for local polynomial filters, a local parameterization reduces the phase shift and the revisions.
 
-Mots clés : séries temporelles, tendance-cycle, désaisonnalisation points de retournement.
+Keywords: time series, trend-cycle, seasonal adjustment, turning points.
 ::::
 
 JEL Classification: E32, E37.
