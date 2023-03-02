@@ -59,11 +59,6 @@ Ou
 
 
 :::: {.abstract}
-`r if (is_html) '
-:::{.title}
-Résumé
-:::
-'`
 Cette étude s'intéresse aux différentes méthodes de construction de moyennes mobiles pour l'estimation en temps réel de la tendance-cycle et la détection rapide des points de retournement.
 Elle montre comment les méthodes étudiées peuvent s'écrire comme un cas particulier d'une formule générale de construction de moyennes mobiles, ce qui permet de décrire leurs similitudes et ainsi les comparer plus facilement.
 Elle décrit également deux prolongements possibles aux filtres polynomiaux locaux : l'ajout d'un critère permettant de contrôler le déphasage (délai dans la détection des points de retournement) et une façon de paramétriser localement ces filtres. 
@@ -77,11 +72,6 @@ Mots clés : séries temporelles, tendance-cycle, désaisonnalisation, points de
 # Abstract {-}
 
 :::: {.abstract}
-`r if (is_html) '
-:::{.title}
-Abstract
-:::
-'`
 This paper focuses on different approaches to build moving averages for real-time trend-cycle estimation and fast turning point detection.
 It shows how all the studied methods can be written as a special case of a general unifying framework to derive linear filters, which allows to describe their similarities and thus compare them more easily.
 It also describes two possible extensions to local polynomial filters: the addition of a timeliness criterion to control the phase shift (delay in the detection of turning points) and a way to locally parameterize these filters.
