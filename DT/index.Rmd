@@ -5,7 +5,7 @@ date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 documentclass: article
 link-citations: yes
-description: "DT XXX"
+description: "DT G2023/XX"
 themeoptions: "coding=utf8,language=french"
 classoption: 'a4paper,french'
 lang: "fr"

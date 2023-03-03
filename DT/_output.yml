@@ -3,7 +3,7 @@ bookdown::gitbook:
   config:
     toc:
       before: |
-        <li><a href="./">DT XXXX</a></li>
+        <li><a href="./">DT G2023/XX</a></li>
     download: ["pdf", "tex"]
   includes:
     before_body: preamble.html
