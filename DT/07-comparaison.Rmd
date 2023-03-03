@@ -51,7 +51,7 @@ C'est le cas à la date $t$ lorsque $y_{t-3}\leq y_{t-2}\leq y_{t-1}>y_t\geq y_{
     (c'est le cas de 41 points de retournements sur l'ensemble des 9 séries avec les filtres asymétriques de Musgrave) ou qu'il y ait des révisions dans les estimations successives (c'est le cas de 7 points de retournements sur l'ensemble des 9 séries avec les filtres asymétriques de Musgrave).
     Finalement, relativement peu de points de retournement sont détectés à la bonne date avec l'estimation finale.
     Avec le filtre de Henderson de 13 termes, 18 sont correctement détectés sur les séries avec une faible variabilité (sur les 57 possibles), 11 sur les séries à variabilité moyenne et 12 sur les séries à forte variabilité.
-2. Calcul de deux critères de révisions : la moyenne des écarts relatifs entre la $q$\ieme{} estimation et la dernière estimation $MAE_{fe}(q)$ et la moyenne des écarts relatifs entre la $q$\ieme{} et la $q+1$\ieme{} estimation $MAE_{qe}(q)$
+2. Calcul de deux critères de révisions : la moyenne des écarts relatifs entre la $q$^e^ estimation et la dernière estimation $MAE_{fe}(q)$ et la moyenne des écarts relatifs entre la $q$^e^ et la $q+1$^e^ estimation $MAE_{qe}(q)$
 $$
 MAE_{fe}(q)=\mathbb E\left[
 \left|\frac{
