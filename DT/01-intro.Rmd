@@ -1,3 +1,5 @@
+\newpage
+
 # Introduction {-}
 
 L’analyse du cycle économique, et en particulier la détection rapide des points de retournement d'une série, est un sujet de première importance dans l'analyse de la conjoncture économique. 
