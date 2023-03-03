@@ -8,7 +8,7 @@ Ces méthodes sont également comparées aux estimations obtenues en prolongeant
 
 ## Séries simulées
 
-## Méthodologie
+### Méthodologie
 
 En suivant une méthodologie proche de celle de @DarneDagum2009, neuf séries mensuelles sont simulées entre janvier 1960 et décembre 2020 avec différent niveaux de variabilité. 
 Chaque série simulée $y_t= C_t+ T_t + I_t$ peut s'écrire comme la somme de trois composantes :
