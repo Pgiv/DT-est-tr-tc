@@ -1,7 +1,7 @@
 \newpage
 
 # Introduction {-}
-
+<!-- test-->
 L’analyse du cycle économique, et en particulier la détection rapide des points de retournement d'une série, est un sujet de première importance dans l'analyse de la conjoncture économique. 
 Pour cela, les indicateurs économiques sont généralement corrigés des variations saisonnières.
 Toutefois, afin d'améliorer leur lisibilité, il peut être nécessaire d'effectuer un lissage supplémentaire afin de réduire le bruit, et ainsi analyser la composante tendance-cycle.
