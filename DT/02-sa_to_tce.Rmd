@@ -1,8 +1,11 @@
 # De la désaisonnalisation à l'estimation tendance-cycle {#sec-SAtoTCE}
  
-La plupart des indicateurs macroéconomiques (PIB, production, consommation, etc.) sont affectés par des effets saisonniers et des effets jours ouvrables qui perturbent l'analyse des évolutions infra-annuelles et les comparaisons spatiales.
+La plupart des indicateurs macroéconomiques (PIB, production, consommation, etc.) sont affectés par des effets saisonniers et des effets jours ouvrables qui perturbent l'analyse des évolutions infra-annuelles et les comparaisons spatiales  <!-- spatiale un peu mystérieux - sauf si cela fait référence à l'économétrie spatiale - je propose de supprimer (ou alors : entre pays, entre unités géographiques-->
 C'est pourquoi les séries chronologiques sont généralement corrigées des variations saisonnières et des jours ouvrables, la *désaisonnalisation* étant le processus consistant à supprimer leurs effets.
  
+  <!-- Remarque générale : ici et après on aimerait une illustration avec des séries temporelles "réelles". Cela reste assez désincarnée-->
+  <!-- Remarque plus spécifique (mais aussi générale) : on parle de désaisonnalisation ici, mais sur les exemples les filtres sont appliqués à des séries désaisonnalisées (c'est bien ça)? Au final, je ne suis pas toalement au clair sur ce que font ou ne font pas ces différentes méthodes, et le lien entre elles --> 
+
 Pour effectuer la désaisonnalisation, les méthodes de désaisonnalisation les plus populaires sont TRAMO-SEATS, une méthode paramétrique fondée sur les modèles ARIMA (voir par exemple @maravall2004program), et X-13ARIMA-SEATS, une méthode non-paramétrique fondée sur les moyennes mobiles (voir par exemple @ladiray2011seasonal).
 Ces méthodes supposent que toute série temporelle $X_t$ peut se décomposer en quatre composantes :
  
@@ -20,7 +23,7 @@ Ainsi, même si dans ce rapport, nous nous intéresserons aux méthodes d'extrac
 Ce lien explique également que toutes les méthodes utilisées dans ce rapport sont implémentées dans les bibliothèques de Java de JDemetra+^[Voir https://github.com/jdemetra/jdemetra-core.], le logiciel de désaisonnalisation recommandé par Eurostat.
 Une interface `r fa_r_project` autour des méthodes présentées dans cette étude est disponible dans le *package* `rjd3filters`^[Disponible sur https://github.com/palatej/rjd3filters.].
  
-Les filtres linéaires (ou moyennes mobiles) sont omniprésents dans la désaisonnalisation et l'estimation des différentes composantes.
+Les filtres linéaires (ou moyennes mobiles) sont les outils les plus fréquemment utilisés pour la désaisonnalisation et l'estimation des différentes composantes.
 Au centre de la série, des filtres dits symétriques sont appliqués (pour estimer une composante à la date $t$, on utilise autant de points après $t$ qu'avant $t$).
 Pour extraire la tendance-cycle, le filtre symétrique le plus connu est celui de @henderson1916note, notamment utilisé dans l'algorithme X-13ARIMA.
 Cependant, en raison du manque d’observations futures, les estimations en temps réel doivent s’appuyer sur des moyennes mobiles asymétriques.
@@ -39,7 +42,7 @@ Les estimateurs non paramétriques peuvent également être reproduits en exploi
 @dagumbianconcini2008 (section \@ref(sec-rkhs)).
 
 Bien que ces auteurs aient proposé des approches générales pour construire des filtres linéaires, ils ne font référence qu'aux méthodes les plus classiques (Henderson, Musgrave, Hodrick-Prescott, etc.) sans faire le lien avec les autres méthodes récentes.
-Dans cette étude, nous proposons une approche unificatrice générale qui permettrait de reproduire l'ensemble de ces méthodes.
+Dans cette étude, nous proposons une approche unificatrice générale qui englobe l'ensemble de ces méthodes.
 Cela a un double intérêt.
 D'une part, cela permet de faire une première revue de la littérature sur les méthodes de construction des filtres linéaires pour l'analyse conjoncturelle.
 D'autre part, cela permet de montrer les liens entre toutes ces approches et de les comparer en utilisant une même méthodologie.
@@ -47,10 +50,10 @@ D'autre part, cela permet de montrer les liens entre toutes ces approches et de 
 Pour cela nous utiliserons l'approche générale de @ch15HBSA (section \@ref(subsec-formulegen)) qui ont également proposé une procédure globale pour construire des moyennes mobiles asymétriques permettant de minimiser les effets de déphasage (section \@ref(subsec-GuggemosEtAl)).
 Des diagrammes synthétiques des liens entre les différentes méthodes étudiées sont présentés dans l'annexe \@ref(an-diag).
  
-Nous nous intéresserons uniquement aux estimations intermédiaires de la tendance-cycle faites en temps réels.
-Le filtre symétrique utilisé pour les estimations finales ne sera pas remis en cause et sera celui d'Henderson.
+Nous nous intéresserons uniquement aux estimations intermédiaires de la tendance-cycle faites en temps réels.   <!-- ce paragraphe est un peu mystérieux : on s'y intéresse pourquoi? je suppose que c'est dans les exemples ? mais cela n'est pas très clair - plus généralement, je pense qu'il serait plus simple de présenter les illustrations sur données réelles au fur et à mesure -->
+Le filtre symétrique utilisé pour les estimations finales ne sera pas remis en cause et sera celui d'Henderson.   <!-- je ne suis pas sure de comprendre cette phrase - quelles estimations finales? -->
 Nous nous concentrons également sur les méthodes qui pourraient être implémentées dans X-13ARIMA et remplacer la méthode actuellement utilisée (prolongement de la série par modèle ARIMA puis utilisation d'un filtre symétrique).
-Pour maintenir la cohérence avec l'approche non paramétrique de X-13ARIMA, nous nous concentrons sur les méthodes d'extraction non paramétriques.
+Pour maintenir la cohérence avec l'approche non paramétrique de X-13ARIMA, nous nous concentrons sur les méthodes d'extraction non paramétriques. <!-- est-ce que c'est bien le cas partout? d'après la phrase suivante cela n'est vrai que pour les simulations, mais pas très clair-->
 C'est pourquoi ni les filtres de l'approche de @trilemmaWMR2019 (section \@ref(sec-WildiMcLeroy)), ni d'autres approches basées sur des modèles ne sont, pour l'instant, utilisées dans les simulations.
 Même si les différentes méthodes sont comparées en les appliquant sur des séries déjà désaisonnalisées, elles peuvent être intégrées dans l'algorithme de désaisonnalisation X-11 grâce à la fonction `rjd3filters::x11()`.
 L'ensemble des filtres utilisés sont résumés dans l'annexe \@ref(an-graphs).
