@@ -1,7 +1,7 @@
 \newpage
 
 # Introduction {-}
-<!-- test-->
+<!-- remarque générale : très intéressant, mais je pense que le DT est un peu éthéré, avec une longue partie théorique (qui pourrait être un peu réorganisée), et des applications pratiques qui viennent tard et qui ne collent finalement pas totalement aux textes. Et c'est bizarre de ne pas mettre du tout de séries réelles sur un DT sur les séries temporelles. Je proposerai de mettre un premier exemple avec des séries réelles (j'aurai préféré des séries françaises, mais ok pour les séries US en justifiant un peu - "à titre d'illustration, on utilise des séries qui ont l'avantage d'être stables..." ou qqch comme ça. Je laisserai les séries simulées pour la fin - on peut effectivement trouver que c'est intéressant en comparatifs - sachant qu'on rate une question, qui est de savoir si le processus sous-jacent est bien adapté au processus actuel-->
 L’analyse du cycle économique, et en particulier la détection rapide des points de retournement d'une série, est un sujet de première importance dans l'analyse de la conjoncture économique. 
 Pour cela, les indicateurs économiques sont généralement corrigés des variations saisonnières.
 Toutefois, afin d'améliorer leur lisibilité, il peut être nécessaire d'effectuer un lissage supplémentaire afin de réduire le bruit, et ainsi analyser la composante tendance-cycle.
@@ -18,9 +18,9 @@ Par exemple, même si X-13ARIMA-SEATS applique des moyennes symétriques aux pr�
 
 <!-- une référence pour la 2e partie de la phrase? -->
 <!-- Rep AQLT : pas de référence particulière, c'est une propriété statistique non étudiée en général -->
-Si ces moyennes mobiles asymétriques ont de bonnes propriétés concernant la taille des révisions futures induites par le processus de lissage^[Voir par exemple @pierce1980SA.], elles induisent également, par construction, des déphasages qui retardent en général la détection en temps réel des points de retournement (voir section \@ref(sec-propMM)).
+Si ces moyennes mobiles asymétriques ont de bonnes propriétés concernant la taille des révisions futures induites par le processus de lissage^[Voir par exemple @pierce1980SA.], elles induisent également, par construction, des déphasages qui retardent en général la détection en temps réel des points de retournement.
 
-L'objectif de cette étude est de décrire et de comparer les approches récentes permettant l’extraction de tendance-cycle : filtres polynomiaux locaux, méthodes fondées sur une optimisation des propriétés des filtres --- *Fidelity-Smoothness-Timeliness* (FST) et *accuracy, timeliness, smoothness* (ATS) ---, et filtres fondés sur les espaces de Hilbert à noyau reproduisant (RKHS).  
+L'objectif de cette étude est de décrire et de comparer les approches récentes permettant l’extraction de tendance-cycle : <--! sauf erreur de ma part, ce n'est pas le même ordre que la présentation effective des modèles. Cela serait sans doute plus clair pourtant--> filtres polynomiaux locaux, méthodes fondées sur une optimisation des propriétés des filtres --- *Fidelity-Smoothness-Timeliness* (FST) et *accuracy, timeliness, smoothness* (ATS) ---, et filtres fondés sur les espaces de Hilbert à noyau reproduisant (RKHS).  
 Bien que ces méthodes aient été présentées avec des approches générales de construction des filtres linéaires, leurs propriétés théoriques et leurs performances empiriques n'ont pas été comparées.
 Cette étude décrit l'ensemble de ces méthodes en développant une formulation générale pour la construction des filtres, permettant de mettre en exergue les spécificités de chacune.\
 Ainsi, les méthodes polynomiales ont l'avantage d'être simples et facilement compréhensibles, mais l'inconvénient est que le déphasage ne peut pas être contrôlé (ce qui peut introduire des délais plus importants dans la détection des points de retournement).
