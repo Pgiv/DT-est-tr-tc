@@ -1,10 +1,12 @@
 # Comparaison des différentes méthodes {#sec-comparison}
 
-Les différentes méthodes de construction de moyennes mobiles asymétriques sont comparées sur des données simulées et des données réelles. 
+Les différentes méthodes de construction de moyennes mobiles asymétriques sont comparées sur des données simulées et des données réelles. <!-- je trouve que les deux n'ont pas le même statut. Les données simulées sont notamment bcp plus proches des processus sous-jacents des méthodes, avec des belles sinusoides. C'est plus intéressant de savoir ce que cela donne sur des séries réelles. On pourrait mettre les résutlats sur données simulées en annexe, mettre des illustrations sur données réelles au fur et à mesure et récapituler dans cette seection desl performances des unes et des autres-->
+-->
 Pour toutes les séries, un filtre symétrique de 13 termes est utilisé.
 Ces méthodes sont également comparées aux estimations obtenues en prolongeant la série par un modèle ARIMA^[Le modèle ARIMA est déterminé automatiquement en n'utilisant pas de retard saisonnier (les séries étant désaisonnalisées) et en n'utilisant aucune variable extérieure (comme des régresseurs externes pour la correction des points atypiques).] puis en appliquant un filtre symétrique de Henderson de 13 termes.
 
-
+<!-- ici, je trouve que cela vaudrait la peine de préciser quels sont les dimensions sur lesquelles on compare les résutlats --> 
+<!-- dans les graphiques et tableaux, il faudrait être plus explicite sur les légendes, notamment détailler les acronymes, sinon elles sont illisibles-->
 
 ## Séries simulées
 
