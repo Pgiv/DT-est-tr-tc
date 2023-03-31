@@ -2,7 +2,7 @@
 
 @trilemmaWMR2019 proposent une approche dépendante des données (*data-dependent*) pour calculer des filtres linéaires.
 L'idée est la même que pour le filtre FST : les moyennes mobiles sont calculées par minimisation d'une somme pondérée de critères de qualité, mais les critères sont calculés différemment.
-Les auteurs décomposent l'erreur quadratique moyenne de révision en un trilemme de trois quantités appelées *accuracy* (précision), *timeliness* (temporalité) et *smoothness* (lissage), d'où son nom *ATS-trilemma*.
+Les auteurs décomposent l'erreur quadratique moyenne de révision en un trilemme de trois quantités appelées *accuracy* (précision), *timeliness* (temporalité)<!-- rapidité ou déphasage--> et *smoothness* (lissage), d'où son nom *ATS-trilemma*.
 
 Soient :
 
@@ -10,7 +10,7 @@ Soient :
 Par rapport à l'article originel, les notations ont été modifiées afin de garder une cohérence entre les différentes sections.
 ].
 
-- $\left\{TC_{t}\right\}$ le signal cible, i.e. la série lissée avec un filtre symétrique fini ou non, et soient respectivement $\Gamma_s$, $\rho_s$ et $\varphi_s$ les fonctions de transfert, de gain et de déphasage associées à ce filtre symétrique.
+- $\left\{TC_{t}\right\}$ la série lissée avec un filtre symétrique fini ou non (ie. le signal cible), et soient respectivement $\Gamma_s$, $\rho_s$ et $\varphi_s$ les fonctions de transfert, de gain et de déphasage associées à ce filtre symétrique.
 
 - $\left\{\widehat{TC}_{t}\right\}$ une estimation de $\left\{TC_{t}\right\}$, i.e. le résultat d'un filtre asymétrique (lorsque toutes les observations ne sont pas disponibles), et soient respectivement $\Gamma_\theta$, $\rho_\theta$ et $\varphi_\theta$ les fonctions de transfert, de gain et de déphasage associées à ce filtre asymétrique.
 
@@ -27,14 +27,14 @@ Si l'on suppose que la série $\left\{ y_{t}\right\}$ est faiblement stationnair
 \end{equation}
 Cette égalité peut également se généraliser aux processus intégrés non-stationnaires (par exemple en imposant une cointégration entre les deux signaux et en utilisant le pseudo-spectre, voir @optimrtfWMR2013).
 
-On a :
+On a :<!-- on est ok que cela ne correspond pas à la phrase précédente? (mais le paragraphe encore d'avant?). Du coup inversé, sinon ambiguité-->
 \begin{align}
 \left|\Gamma_s(\omega)-\Gamma_\theta(\omega)\right|^{2} & =\rho_s(\omega)^{2}+\rho_\theta(\omega)^{2}+2\rho_s(\omega)\rho_\theta(\omega)\left(1-\cos(\varphi_s(\omega)-\varphi_\theta(\omega)\right) \nonumber\\
  & =\left(\rho_s(\omega)-\rho_\theta(\omega)\right)^{2}+4\rho_s(\omega)\rho_\theta(\omega)\sin^{2}\left(\frac{\varphi_s(\omega)-\varphi_\theta(\omega)}{2}\right)
  (\#eq:msedecomp)
 \end{align}
 
-L'intervalle $[0,\pi]$ peut être coupé en deux : une partie dite *pass-band* $[0,\omega_1]$ (l'intervalle de fréquences qui contient le signal cible) et une partie dite *stop-band*  $[\omega_1,\pi]$ (l'intervalle de fréquences associé aux résidus).
+L'intervalle $[0,\pi]$ peut être coupé en deux : une partie dite *pass-band* $[0,\omega_1]$ (l'intervalle de fréquences qui contient le signal cible) et une partie dite *stop-band*  $[\omega_1,\pi]$ (l'intervalle de fréquences associé aux résidus).<!-- pas clair pour moi : comment on définit omega_1 - c'est un paramètre imposé ou un résultat de l'estiamtion?-->
 
 L'erreur de l'équation \@ref(eq:msedef) peut être décomposée en 4 quantités :
 \begin{align*}
@@ -46,7 +46,7 @@ Residual =R_w(\theta)&= 8\int_{\omega_1}^\pi\rho_s(\omega)\rho_\theta(\omega)\si
 
 
 
-:::: {.remarque data-latex=""}
+:::: {.remarque data-latex=""}<!-- je pense que ce n'est pas utile dans le texte : mettre en footnote si tu veux garder-->
 Afin d'avoir des définitions cohérentes entre les différentes sections, les formules des quatre critères ont été légèrement modifiées par rapport à ceux définis par @trilemmaWMR2019 :
 
 - dans cette étude, l'intervalle d'intégration est $[0,\pi]$ plutôt que $[-\pi,\pi]$ (toutes les fonctions étant paires cela revient à multiplier par 2 toutes les intégrales) ;
