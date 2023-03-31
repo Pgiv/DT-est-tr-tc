@@ -1,5 +1,6 @@
 # Quelques propriétés sur les moyennes mobiles {#sec-propMM}
 
+<!-- ici et après, on pourrait illustrer avec des séries réelles, et le lissage par exemple -->
 Cette section présente les définitions et les propriétés des moyennes mobiles utiles pour comprendre les méthodes présentées dans les prochaines sections. 
 Pour plus de détails sur les moyennes mobiles, voir par exemple @ch12HBSA.
 
@@ -17,7 +18,8 @@ Si de plus on a $\forall k:\:\theta_{-k} = \theta_k$, la moyenne mobile $M_\thet
 Dans ce cas, la quantité $h=p=f$ est appelée *fenêtre* (*bandwidth*).
 
 
-## Gain et fonction de déphasage
+## Fonctions de gain et de déphasage 
+<!-- Je comprends que l'objectif de cette partie est de donner une interprétation aux gains et au déphasages. Cependant, si les concepts ont été définis en traitement du signal pour lesquels les harmoniques sont assez logiques, un lecteur naif se demande quel est le rapport avec des séries temporelles classiques. Je suppose que l'argument est qu'on peut tjs décomposer par Fourier, c'est bien ça? Mais du coup, si on a une décomposition en plusieurs harmoniques, est-ce qu'on s'attends à avoir les mêmes gains/déphasages (peut être question stupide)? Dans tous les cas, je pense qu'il faut une intro du style "Pour interpréter les  notions de gain et de déphasage, il est utile de l'illustrer par des séries harmoniques.   -->
 
 Soit $X_t=\e^{-i\omega t}$ une série harmonique avec $\omega\in[0,\pi]$. 
 La moyenne mobile $M_\theta$ transforme $X_t$ en :
@@ -35,7 +37,7 @@ $$
 où $\rho_\theta(\omega)=G_\theta(\omega)=\lvert\Gamma_\theta(\omega)\rvert$ est la fonction de *gain* ou *d'amplitude* et $\varphi_\theta(\omega)$ est le *déphasage* (*phase shift* ou *time shift*)^[
 Cette fonction est parfois définie comme  $\phi_\theta(\omega)=\frac{\varphi_\theta(\omega)}{\omega}$ pour mesurer le déphasage en termes de période.
 ]. 
-Pour tous les filtres symétriques on a $\phi_\theta(\omega)\equiv 0 \;(modulo\;{\pi})$.
+Pour tous les filtres symétriques on a $\phi_\theta(\omega)\equiv 0 \;(modulo\;{\pi})$. <!-- je crois que c'est varphi?-->
 <!-- définir harmonique? C'est fait plus haut maintenant -->
 
 En somme, appliquer une moyenne mobile à une série harmonique (de la forme $X_t=\e^{-i\omega t}$) la modifie de deux façons :
@@ -46,7 +48,7 @@ En somme, appliquer une moyenne mobile à une série harmonique (de la forme $X_
 Lorsque $\varphi_\theta(\omega)/\omega>0$ le déphasage est positif : le point de retournement est détecté avec retard.
 ].
 
-
+<!-- pour des séries temporelles réelles, ces fonctions se déduisent...--> 
 ## Propriétés souhaitables d'une moyenne mobile
 
 Pour décomposer une série temporelle en une composante saisonnière, une tendance-cycle et l'irrégulier, l'algorithme de décomposition X-11 (utilisé dans X-13ARIMA) utilise une succession de moyennes mobiles ayant toutes des contraintes spécifiques.
@@ -58,7 +60,7 @@ Dans cette sous-section nous décrivons deux types de contraintes :
 
 ### Préservation de tendances
 
-Il est souvent souhaitable qu'une moyenne mobile conserve certaines tendances.
+Il est souvent souhaitable qu'une moyenne mobile conserve certaines tendances.<!-- en fait l'objectif ici est de se concentrer sur l'extraction tendance-cycle. Donc est-ce qu'on ne porurait pas introduire cette idée de manière moins générale?--> 
 Une moyenne mobile $M_\theta$ conserve une fonction du temps $f(t)$ si $\forall t:\:M_\theta f(t)=f(t)$.
 
 Nous avons les propriétés suivantes pour la moyenne mobile $M_\theta$ :
@@ -92,8 +94,8 @@ $$
 
 ### Réduction du bruit
 
-Toutes les séries temporelles sont affectées par du bruit qui peut brouiller l'extraction du signal.
-C'est pourquoi on cherche à réduire ce bruit (en réduisant sa variance) tout en conservant le signal (en utilisant les propriétés vues dans les sections précédentes).
+Toutes les séries temporelles sont affectées par du bruit qui peut brouiller l'extraction de la tendance et du cycle.<!-- ici et plus bas, il faut éviter d'utiliser ces termes - même si les méthodes viennent du traitement du signal -->
+C'est pourquoi on cherche à réduire ce bruit (en réduisant sa variance) tout en conservant les évolutions pertinentes.
 La somme des carrés des coefficients $\sum_{k=-p}^{+f}\theta_k^2$ est le rapport de *réduction de la variance*.
 
 En effet, soit $\{\varepsilon_t\}$ une suite de variables aléatoires indépendantes avec $\E{\varepsilon_t}=0$, $\V{\varepsilon_t}=\sigma^2$.
@@ -107,13 +109,13 @@ $$
 ## Estimation en temps réel et moyennes mobiles asymétriques {#sec-mmasym}
 
 
+### Moyennes mobiles asymétriques et prévision {#subec:mmetprev}
+
 Pour les filtres symétriques, la fonction de déphasage est égale à zéro (modulo $\pi$).
 Il n'y a donc aucun retard dans la détection de points de retournement.
 Ils ne peuvent toutefois pas être utilisés au début et à la fin de la série car aucune valeur passée/future n'est connue.
+En début et en fin de série, les moyennes mobiles asymétriques ne peuvent être utilisées du fait du manque de données disponibles. <!-- ces deux phrases sont très semblables : est-ce qu'on ne peut pas merger les deux idées?--> 
 
-### Moyennes mobiles asymétriques et prévision {#subec:mmetprev}
-
-En début et en fin de série, les moyennes mobiles asymétriques ne peuvent être utilisées du fait du manque de données disponibles.
 Une solution est de prolonger la série par prévision pour ensuite appliquer le filtre symétrique.
 Cette méthode semble remonter à @deforest1877adjustment qui suggère également de modéliser en fin de période une tendance polynomiale de degré au plus trois :
 
