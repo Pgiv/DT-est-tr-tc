@@ -5,10 +5,10 @@ Elles sont par exemple utilisées pour réduire le bruit d'un indicateur afin d'
 
 Le premier apport de cette étude est d'unifier la théorie autour des méthodes de construction des filtres asymétriques pour l'estimation en temps réel de la tendance-cycle.
 Toutes ces méthodes peuvent se voir comme des cas particuliers d'une formulation générale de construction des moyennes mobiles, ce qui permet de montrer leurs similitudes et leurs différences et ainsi les comparer plus facilement.
-Elles sont par ailleurs facilement mobilisables et comparables grâce à leur implémentation dans le *package* `r fa_r_project` `rjd3filters`.
+Elles sont par ailleurs facilement mobilisables et comparables grâce à leur implémentation dans le *package* `r fa_r_project` `rjd3filters`. <!-- en fait je trouve que cela pourrait apparaître dès l'introduction, c'est quand même une contribution hyper importante et c'est simplement implicite-->
 Celui-ci permet d'utiliser plusieurs outils, comme la construction des prévisions implicites, qui peuvent aider les statisticiens à évaluer la qualité des estimations récentes des différents filtres.
 
-La comparaison des différentes méthodes, bien que perfectible, permet de tirer quelques enseignements pour la construction de ces moyennes mobiles.
+La comparaison des différentes méthodes, bien que perfectible <!-- bof-->, permet de tirer quelques enseignements pour la construction de ces moyennes mobiles.
 
 Premièrement, en période de retournement conjoncturel, des filtres asymétriques utilisés comme alternative au prolongement de la série par modèle ARIMA peuvent permettre de réduire les révisions des estimations intermédiaires de la tendance-cycle et une détection plus rapide des points de retournement.
 
