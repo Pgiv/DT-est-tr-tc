@@ -1,6 +1,7 @@
 # D'une formule générale sur la construction des filtres asymétriques à l'approche FST {#sec-formulegen}
 
-## Formule générale de construction des filtres asymétriques {#subsec-formulegen}
+<!-- est-ce que c'est le filtre FST qu'on veut présenter en premier? Au final, sauf si j'ai mal copmris, mais j'ai l'impression que celui qui est le plus utile -->
+## Formule générale de construction des filtres asymétriques {#subsec-formulegen}<!-- je pense que cette partie devrait aller plus haut, pour se concentrer sur le filtre présenté ici-->
 
 Pour établir une formule générale englobant les principaux filtres linéaires, @ch15HBSA définissent deux critères. 
 En changeant légèrement les notations utilisées par les auteurs afin d'avoir une formulation plus générale, ces deux critères peuvent s'écrire :
@@ -32,7 +33,7 @@ C'est en particulier le cas de l'approche *Fidelity-Smoothness-Timeliness* (FST)
 
 Pour construire les moyennes mobiles symétriques, @GrunRehommeLadiray1994 et @GrayThomson1996 proposent un programme de minimisation sous contrainte qui fait un compromis entre réduction de la variance et « lissage » de la tendance. 
 @ch15HBSA étendent ces approches en les appliquant à la construction des filtres asymétriques et en ajoutant un critère permettant de contrôler le déphasage. 
-Il s'agit de l'approche *Fidelity-Smoothness-Timeliness* --- Fidélité-Lissage-Temporalité --- (FST).
+Il s'agit de l'approche *Fidelity-Smoothness-Timeliness* --- Fidélité-Lissage-Déphasage --- (FST).
 Pour la construction des filtres asymétriques, un quatrième critère pourrait également être rajouté qui prendrait en compte les révisions par rapport à l'utilisation d'un filtre symétrique de référence (cette méthode pourrait alors être appelée la méthode FRST --- *Fidelity-Revisions-Smoothness-Timeliness*).
 Cependant, le *package* `rjd3filters` n'ayant implémenté que l'approche FST, nous nous restreignons dans cette étude à la description de l'approche sans critère de révision.
 
