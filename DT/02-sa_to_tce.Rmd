@@ -1,5 +1,5 @@
 # De la désaisonnalisation à l'estimation tendance-cycle {#sec-SAtoTCE}
- 
+ <-- le statut de cette partie n'est pas clair : on dirait un peu une autre intro avec une revue de littérature . Je pense que tu pourrais laisser les éléments strictement littérature et mettre en intro les aspects plus pratiques de la fin (en particulier, sur le fait que tu proposes un package qui peut e^tre implémenté dans ARIMA-3. -->
 La plupart des indicateurs macroéconomiques (PIB, production, consommation, etc.) sont affectés par des effets saisonniers et des effets jours ouvrables qui perturbent l'analyse des évolutions infra-annuelles et les comparaisons spatiales  <!-- spatiale un peu mystérieux - sauf si cela fait référence à l'économétrie spatiale - je propose de supprimer (ou alors : entre pays, entre unités géographiques-->
 C'est pourquoi les séries chronologiques sont généralement corrigées des variations saisonnières et des jours ouvrables, la *désaisonnalisation* étant le processus consistant à supprimer leurs effets.
  
@@ -33,7 +33,7 @@ Dans la littérature, différentes approches ont été envisagées pour l'extrac
 Parmi les plus récentes, on peut citer :
  
 - Les *Model-Based Approach*  --- approches fondées sur les modèles --- supposent la spécification d'un modèle stochastique pour la tendance (modèle ARIMA, modèle d'espace d'état, etc.) et les estimations sont obtenues en minimisant une fonction de pénalité, généralement l'erreur quadratique moyenne.
-C'est par exemple le cas du filtre de Kalman, du filtre de Wiener-Kolmogorov (utilisé dans TRAMO-SEATS) et de l'Approche par Filtre Direct de @trilemmaWMR2019 (section \@ref(sec-WildiMcLeroy)).
+C'est par exemple le cas du filtre de Kalman, du filtre de Wiener-Kolmogorov (utilisé dans TRAMO-SEATS) et de l'Approche par Filtre Direct (AFD) de @trilemmaWMR2019 (section \@ref(sec-WildiMcLeroy)).
  
 - Les méthodes d'extraction non paramétriques ne supposent pas que la structure d'un modèle est fixe et peuvent être facilement appliquées à n'importe quelle série temporelle.
 C'est par exemple le cas des filtres d'Henderson et de @musgrave1964set (utilisés dans X-13ARIMA).
@@ -42,20 +42,22 @@ Les estimateurs non paramétriques peuvent également être reproduits en exploi
 @dagumbianconcini2008 (section \@ref(sec-rkhs)).
 
 Bien que ces auteurs aient proposé des approches générales pour construire des filtres linéaires, ils ne font référence qu'aux méthodes les plus classiques (Henderson, Musgrave, Hodrick-Prescott, etc.) sans faire le lien avec les autres méthodes récentes.
+<-- je trouve que cela répète l'introduction (et que cela a plus sa place dans l'introduction-->
 Dans cette étude, nous proposons une approche unificatrice générale qui englobe l'ensemble de ces méthodes.
 Cela a un double intérêt.
 D'une part, cela permet de faire une première revue de la littérature sur les méthodes de construction des filtres linéaires pour l'analyse conjoncturelle.
 D'autre part, cela permet de montrer les liens entre toutes ces approches et de les comparer en utilisant une même méthodologie.
- 
+   
 Pour cela nous utiliserons l'approche générale de @ch15HBSA (section \@ref(subsec-formulegen)) qui ont également proposé une procédure globale pour construire des moyennes mobiles asymétriques permettant de minimiser les effets de déphasage (section \@ref(subsec-GuggemosEtAl)).
-Des diagrammes synthétiques des liens entre les différentes méthodes étudiées sont présentés dans l'annexe \@ref(an-diag).
- 
-Nous nous intéresserons uniquement aux estimations intermédiaires de la tendance-cycle faites en temps réels.   <!-- ce paragraphe est un peu mystérieux : on s'y intéresse pourquoi? je suppose que c'est dans les exemples ? mais cela n'est pas très clair - plus généralement, je pense qu'il serait plus simple de présenter les illustrations sur données réelles au fur et à mesure -->
-Le filtre symétrique utilisé pour les estimations finales ne sera pas remis en cause et sera celui d'Henderson.   <!-- je ne suis pas sure de comprendre cette phrase - quelles estimations finales? -->
-Nous nous concentrons également sur les méthodes qui pourraient être implémentées dans X-13ARIMA et remplacer la méthode actuellement utilisée (prolongement de la série par modèle ARIMA puis utilisation d'un filtre symétrique).
+Des diagrammes synthétiques des liens entre les différentes méthodes étudiées sont présentés dans l'annexe \@ref(an-diag).<-- cette phrase n'est pas utile dans cette partie-->
+  
+ <-- ici, ce n'est pas très clair si on parle de l'ensemble du document ou juste des applications pratiques sur les simulations. Par ailleurs, je pense que ce serait mieux dans l'intro-->
+Pour ces comparaisons, nous nous concentrons sur les estimations intermédiaires de la tendance-cycle faites en temps réels, les estimations finales reposant sur le filtre symétrique "classique" d'Henderson. <!-- ce paragraphe est un peu mystérieux : dans la partie théorique, j'ai l'impression que la présentation est plus large. Si c'est vraiment le centre d'intérêt principal, ce qui intuitivement se justifie (mais mériterait d'être explicité), les parties théoriques pourraient être plus explicite --> <!-- je ne suis pas sure de comprendre cette phrase - quelles estimations finales? ok à la relecture, mais il y a un pb avec la phrase précédente : je fais des propositions de modifications, mais à voir si cela correspond à l'idée-->
+De manière pratique, nous nous concentrons sur des méthodes qui pourraient être implémentées dans X-13ARIMA, en complément ou remplacement de la méthode actuellement utilisée (prolongement de la série par modèle ARIMA puis utilisation d'un filtre symétrique). 
 Pour maintenir la cohérence avec l'approche non paramétrique de X-13ARIMA, nous nous concentrons sur les méthodes d'extraction non paramétriques. <!-- est-ce que c'est bien le cas partout? d'après la phrase suivante cela n'est vrai que pour les simulations, mais pas très clair-->
 C'est pourquoi ni les filtres de l'approche de @trilemmaWMR2019 (section \@ref(sec-WildiMcLeroy)), ni d'autres approches basées sur des modèles ne sont, pour l'instant, utilisées dans les simulations.
-Même si les différentes méthodes sont comparées en les appliquant sur des séries déjà désaisonnalisées, elles peuvent être intégrées dans l'algorithme de désaisonnalisation X-11 grâce à la fonction `rjd3filters::x11()`.
-L'ensemble des filtres utilisés sont résumés dans l'annexe \@ref(an-graphs).
+
+Même si les différentes méthodes sont comparées en les appliquant sur des séries déjà désaisonnalisées, elles peuvent être intégrées dans l'algorithme de désaisonnalisation X-11 grâce à la fonction `rjd3filters::x11()`. <-- le "même" n'est vraiment pas clair : elles sont comparées pour les applications pratiques du DT, mais en général, elles peuvent être appliquées. A la limite, inverser la présentatoin  : les différentes méthodes peuvent être intégrées dans l'algorithme de désaisonnalisation X-11 grâce à la fonction `rjd3filters::x11(), même si dans les comparaisons ici on les utilise sur des séries déjà désaisonnalisées. --> 
+L'ensemble des filtres utilisés sont résumés dans l'annexe \@ref(an-graphs). <-- je mettrai cela plus loin-->
  
 
