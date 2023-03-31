@@ -114,11 +114,12 @@ $$
 Pour les filtres symétriques, la fonction de déphasage est égale à zéro (modulo $\pi$).
 Il n'y a donc aucun retard dans la détection de points de retournement.
 Ils ne peuvent toutefois pas être utilisés au début et à la fin de la série car aucune valeur passée/future n'est connue.
-En début et en fin de série, les moyennes mobiles asymétriques ne peuvent être utilisées du fait du manque de données disponibles. <!-- ces deux phrases sont très semblables : est-ce qu'on ne peut pas merger les deux idées?--> 
+En début et en fin de série, les moyennes mobiles asymétriques ne peuvent être utilisées du fait du manque de données disponibles. <!-- ces deux phrases sont très semblables : est-ce qu'on ne peut pas merger les deux idées :en gros, on ne peut pas passer de moyennes mobiles aux bords (si j'étais de mauvaise foi, on pourrait tjs prendre nun filtre asymértique avec f=0)--> 
 
-Une solution est de prolonger la série par prévision pour ensuite appliquer le filtre symétrique.
-Cette méthode semble remonter à @deforest1877adjustment qui suggère également de modéliser en fin de période une tendance polynomiale de degré au plus trois :
 
+Une solution est de prolonger la série par prévision, par exemple par une tendance polynomiale, pour ensuite appliquer le filtre symétrique. <!-- plus bas, on détaille plus de solutions, et de manière plus claire (ou alors, on décrit plus simplement les différentes étapes. Je pense qu'on pourrait être exhaustif ici --> 
+Cette méthode semble remonter à @deforest1877adjustment 
+<!-- je pense que la citation, et la mention du degré au plus 3, pourrait aller en footnote: ici il ne s'agit pas de faire l'historique. Sauf si le degré 3 est devenu un standard dans la littérature - mais plus bas j'ai l'impression qu'on est plus général-->
 :::{.quote data-latex=""}
 « *As the first $m$ and last $m$ terms of the series cannot be reached directly by the formula, the series should be graphically extended by m terms at both ends, first plotting the observations on paper as ordinates, and then extending the curve along what seems to be its probable course, and measuring the ordinates of the extended portions.*
 *It is not necessary that this extension should coincide with what would be the true course of the curve in those parts. *
@@ -126,9 +127,9 @@ Cette méthode semble remonter à @deforest1877adjustment qui suggère égalemen
 :::
 
 C'est également l'approche utilisée dans la méthode de désaisonnalisation X-13ARIMA qui prolonge la série sur 1 an par un modèle ARIMA.
-In fine, cela revient à utiliser des moyennes mobiles asymétriques puisque les prévisions sont des combinaisons linéaires du passé !
+In fine, cela revient à utiliser des moyennes mobiles asymétriques puisque les prévisions sont des combinaisons linéaires du passé. 
 
-Inversement, à partir d'une moyenne mobile symétrique de référence, on peut déduire les prévisions implicites d'une moyenne mobile asymétrique.
+Inversement, à partir d'une moyenne mobile symétrique de référence, on peut déduire les prévisions implicites d'une moyenne mobile asymétrique. <!-- en fait je ne suis pas sure de comprendre le côté opérationnel sous-jacent : c'est mathématiquement vrai, mais qu'est-ce qu'on en fait pratiquement? -->
 Notons $v=(v_{-h},\dots, v_{h})$ la moyenne mobile symétrique de référence et $w^0,\dots w^{h-1}$ une suite de moyennes mobiles asymétriques, d'ordre $h+1$ à $2h$ utilisée pour l'estimation des $h$ derniers points avec, pour convention, $w_t^q=0$ pour $t>q$.
 C'est-à-dire que $w^0=(w_{-h}^0,\dots, w_{0}^0)$ est utilisée pour l'estimation en temps réel (lorsqu'on ne connait aucun point dans le futur), $w^1=(w_{-h}^1,\dots, w_{1}^1)$ pour l'estimation de l'avant-dernier point (lorsqu'on ne connait qu'un point dans le futur), etc.
 Notons également $y_{-h},\dots,y_{0}$ la série étudiée observée et $y_{1}^*,\dots y_h^*$ la prévision implicite induite par $w^0,\dots w^{h-1}$.
@@ -162,9 +163,11 @@ C'est ce qui implémenté dans la fonction `rjd3filters::implicit_forecast()`.
 
 Comme notamment souligné par @wildischis2004, étendre la série par prévision d'un modèle ARIMA revient à calculer des filtres asymétriques dont les coefficients sont optimisés par rapport à la prévision à horizon d’une période --- *one-step ahead forecasting*.
 Autrement dit, on cherche à minimiser les révisions entre la première et la dernière estimation (avec le filtre symétrique).
-Cependant, puisque les coefficients du filtre symétrique décroissent lentement, il faudrait également s'intéresser à la performance des prévisions à horizon de plusieurs périodes --- *multi-step ahead forecasting*.
+Cependant, puisque les coefficients du filtre symétrique décroissent lentement, il faudrait également s'intéresser à la performance des prévisions à horizon de plusieurs périodes --- *multi-step ahead forecasting*. <!-- pas totalement certaine de faire facilement le lien, mais je trouve que l'argument suivant est plus parlant : est-ce qu'on ne pourrait pas inverser les deux ? -->
 Par ailleurs, le déphasage induit par les filtres asymétriques n'est pas contrôlé : on pourrait préférer avoir une détection plus rapide des points de retournement et une révision plus grande plutôt que de juste minimiser les révisions entre la première et la dernière estimation.
 C'est pourquoi il peut être nécessaire de définir des critères alternatifs pour juger la qualité des moyennes mobiles asymétriques.
+
+<!-- je trouverai plus logique et moins perturbant de mettre ici le début de la partie suivante (formule générale de construction des filtres asymétriques)--> 
 
 ### Indicateurs de qualité des moyennes mobiles asymétriques
 
