@@ -174,10 +174,9 @@ C'est pourquoi il peut être nécessaire de définir des critères alternatifs p
 Pour les filtres asymétriques, la majorité des critères proviennent de ceux définis par @ch15HBSA et @trilemmaWMR2019 pour construire les filtres asymétriques. 
 Ils sont résumés dans le tableau \@ref(tab:QC) et calculables avec la fonction `rjd3filters::diagnostic_matrix()`.
 
-@ch15HBSA proposent une approche générale pour dériver des filtres linéaires, fondée sur un problème d'optimisation de trois critères : *Fidelity* ($F_g$, réduction de la variance), *Smoothness* ($S_g$, lissage) et *Timeliness* ($T_g$, déphasage).
-Voir section \@ref(subsec-GuggemosEtAl) pour plus de détails.
+@ch15HBSA proposent une approche générale pour dériver des filtres linéaires, fondée sur un problème d'optimisation de trois critères : *Fidelity* ($F_g$, Fidélité <!--c'est comme cela que c'est traduit plus tard-->), *Smoothness* ($S_g$, lissage) et *Timeliness* ($T_g$, rapidité <!-- en anglais le terme de timeliness se réfère explicitement à une notion de fraicheur des données. Quand on traduit par déphasage, ou temporalité plus bas, on reste sur un registre neutre qui n'est pas celui du terme anglais il me semble -->). La fidélité peut être directement relié à la réduction de variance créée par le filtre <!-- pour bien comprendre le terme de fidélité: on veut qu'elle soit pas trop forte. Mais par  ailleurs, la réduction de variance est introduite plus haut pour parler de réduction du bruit, que spontanement (peut être à tord) j'associe aussi au lissage-->  et la rapidité à la notion de déphasage, qu'on souhaite là encore faible.  
 
-@trilemmaWMR2019 proposent une approche qui s’appuie sur la décomposition de l'erreur quadratique moyenne entre le filtre symétrique et le filtre asymétrique en quatre quantités : *Accuracy* ($A_w$, précision), *Timeliness* ($T_w$, déphasage), *Smoothness* ($S_w$, lissage) et *Residual* ($R_w$, résidus).
+@trilemmaWMR2019 proposent une approche qui s’appuie sur la décomposition de l'erreur quadratique moyenne entre le filtre symétrique et le filtre asymétrique en quatre quantités : *Accuracy* ($A_w$, précision), *Timeliness* ($T_w$, déphasage <!-- même remarque que plu shaut (et cela vaut aussi plus bas)-->), *Smoothness* ($S_w$, lissage) et *Residual* ($R_w$, résidus).
 Voir section \@ref(sec-WildiMcLeroy) pour plus de détails.
 <!-- fixée celle d’un bruit blanc: il manque quelque chose jepense -->
 <!-- Rep : tentative de clarification en changeant la formulation -->
