@@ -37,6 +37,6 @@ Enfin, les résultats montrent que les futures études sur les méthodes d'estim
 Cette étude est reproductible.
 En particulier, toutes les méthodes décrites sont implémentées dans le *package* `r fa_r_project` `rjd3filters`^[https://github.com/palatej/rjd3filters.] et tous les codes utilisés sont disponibles sous https://github.com/InseeFrLab/XXXXXXXXX.
 
-<--! ici une annonce de plan ne serait pas de trop : on se perd un peu, surtout qu'il y a parfois des redites (notamment dans la partie immédiatement suivante, et entre partie un peu générale et les méthdoes particulières -->
+<!-- ici une annonce de plan ne serait pas de trop, on se perd un peu dans le plan et le statut des différentes parties, surtout qu'il y a parfois des redites (notamment dans la partie immédiatement suivante, et entre partie un peu générale et les méthdoes particulières -->
     
 \newpage
